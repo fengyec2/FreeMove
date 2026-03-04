@@ -1,4 +1,7 @@
 # FreeMove
+
+[简体中文](README.zh-CN.md) · [English](README.md)
+
 [![license](https://img.shields.io/github/license/ImDema/FreeMove.svg)](https://github.com/imDema/FreeMove/blob/master/LICENSE.txt)
 
 Move directories freely without breaking installations or shortcuts
