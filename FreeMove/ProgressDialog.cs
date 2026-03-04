@@ -1,4 +1,4 @@
-﻿// FreeMove -- Move directories without breaking shortcuts or installations 
+// FreeMove -- Move directories without breaking shortcuts or installations 
 //    Copyright(C) 2020  Luca De Martini
 
 //    This program is free software: you can redistribute it and/or modify
@@ -31,6 +31,7 @@ namespace FreeMove
     public partial class ProgressDialog : Form
     {
         private bool cancellable = true;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool Cancellable {
             get => cancellable;
             set
@@ -41,6 +42,7 @@ namespace FreeMove
         }
 
         private const int BAR_RESOLUTION = 1024;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string Message
         {
             set => label_Message.Text = value;
