@@ -66,11 +66,19 @@ jobs:
       - name: Build and Publish
         run: dotnet publish ${{ env.Project_Name }}/${{ env.Project_Name }}.csproj -c ${{ env.BUILD_CONFIG }} -r ${{ matrix.runtime }} --self-contained false /p:PublishSingleFile=false
 
+      - name: Prepare and Zip Artifacts
+        shell: pwsh
+        run: |
+          $publishPath = "${{ env.Project_Name }}/bin/${{ env.BUILD_CONFIG }}/${{ env.Target }}/${{ matrix.runtime }}/publish"
+          $zipName = "${{ env.Project_Name }}-${{ matrix.runtime }}-${{ env.ARTIFACT_NAME }}.zip"
+          Compress-Archive -Path "$publishPath/*" -DestinationPath "$zipName"
+          echo "ZIP_PATH=$zipName" >> $env:GITHUB_ENV
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v7
         with:
           name: ${{ env.Project_Name }}-${{ matrix.runtime }}-${{ env.ARTIFACT_NAME }}
-          path: ${{ env.Project_Name }}/bin/${{ env.BUILD_CONFIG }}/${{ env.Target }}/${{ matrix.runtime }}/publish/${{ env.Project_Name }}.exe
+          path: ${{ env.Project_Name }}-${{ matrix.runtime }}-${{ env.ARTIFACT_NAME }}.zip
           retention-days: 30
 
   release:
@@ -143,7 +151,7 @@ jobs:
           body_path: RELEASE_NOTES.md
           draft: true
           prerelease: ${{ github.event.inputs.prerelease }}
-          files: ./artifacts/**/*.exe
+          files: ./artifacts/**/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
