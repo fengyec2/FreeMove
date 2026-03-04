@@ -29,7 +29,9 @@ scoop install freemove
 
 Run the executable and use the GUI
 
-> Note: this program requires administrator privileges for its core functionality
+>[!NOTE]
+>
+> This program requires administrator privileges for its core functionality
 
 ## Recommendations
 You should not move important system directories as they can break core functionalities like Windows Update and Windows Store Apps.
@@ -39,7 +41,7 @@ You should not move important system directories as they can break core function
 That said, moving directories contained in the previously mentioned directories should not cause any problem. So you are free to move `C:\Program Files\HugeProgramIDontWantOnMySSD` without any problem.
 
 ## Screenshots
-![Screenshot](http://i.imgur.com/fW6ZEg3.png)
+![Screenshot](https://imgur.com/3J8gXpE.png)
 
 ## Uninstalling moved programs
 Uninstall the program just as you would normally without deleting the junction. The uninstaller will work normally leaving an empty directory in the location you moved the program to, and the directory link in the original location, both of which you can then delete manually

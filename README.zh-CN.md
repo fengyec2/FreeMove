@@ -1,4 +1,3 @@
-````markdown
 # FreeMove
 
 [English](README.md) · [简体中文](README.zh-CN.md)
@@ -30,23 +29,25 @@ scoop install freemove
 
 运行可执行文件并使用图形界面
 
-> 注意：此程序的核心功能需要管理员权限
+>[!NOTE]
+>
+> 此程序的核心功能需要管理员权限
 
 ## 建议
 你不应该移动重要的系统目录，因为它们可能会破坏诸如 Windows Update 和 Windows Store 应用之类的核心功能。
 
 `C:\Users` - `C:\Documents and Settings` - `C:\Program Files` - `C:\Program Files (x86)` 不应被移动。如果你仍然想移动，请自行承担风险。要将目录移回，请参阅 readme 的最后部分。
 
-也就是说，移动前面提到的目录中包含的子目录通常不会导致问题。所以你可以安全地移动 `C:\Program Files\HugeProgramIDontWantOnMySSD`。
+也就是说，移动前面提到的目录中所包含的子目录通常不会导致问题。所以你可以安全地移动 `C:\Program Files\HugeProgramIDontWantOnMySSD`。
 
 ## 屏幕截图
-![Screenshot](http://i.imgur.com/fW6ZEg3.png)
+![Screenshot](https://imgur.com/CBEoA5J.png)
 
 ## 卸载已移动的程序
-像平常一样卸载程序，不要删除联接点。卸载程序会正常工作，留下一个空目录在你移动程序后的新位置，以及原位置的目录链接，你可以手动删除这些内容。
+像平常一样卸载程序，不要删除联接点。卸载程序会正常工作，并留下一个空目录在你移动程序后的新位置，以及原位置的目录链接。你可以手动删除这些内容。
 
 ## 将程序移回原位
-删除旧位置的联接点（这不会删除内容），然后将目录移动回其原始位置。
+删除旧位置的联接点（这不会删除其下的文件或目录），然后将目录移动回其原始位置。
 
 ## 贡献
 
@@ -55,5 +56,3 @@ scoop install freemove
 我独自编写了该工具，目前我是唯一的开发者，目前我在攻读博士学位，因其他项目繁忙无法开发新功能。
 
 我会继续关注该项目并管理可能的贡献，如果你有兴趣贡献，请在 issue 中留言或在已有 issue 下评论。
-
-````
