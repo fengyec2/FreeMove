@@ -49,7 +49,7 @@ jobs:
           dotnet-version: '6.0.x' # Use .NET 6.0 SDK to build net48 project
 
       - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1
+        uses: microsoft/setup-msbuild@v2
 
       - name: Determine Build Configuration
         id: config
