@@ -30,9 +30,56 @@ namespace FreeMove
     {
         #region SymLink
         //External dll functions
-        [DllImport("kernel32.dll")]
-        static extern bool CreateSymbolicLink(
-        string lpSymlinkFileName, string lpTargetFileName, SymbolicLink dwFlags);
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        static extern bool CreateSymbolicLink(string lpSymlinkFileName, string lpTargetFileName, SymbolicLink dwFlags);
+
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        static extern IntPtr CreateFile(
+            string lpFileName,
+            uint dwDesiredAccess,
+            uint dwShareMode,
+            IntPtr lpSecurityAttributes,
+            uint dwCreationDisposition,
+            uint dwFlagsAndAttributes,
+            IntPtr hTemplateFile);
+
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        static extern bool DeviceIoControl(
+            IntPtr hDevice,
+            uint dwIoControlCode,
+            IntPtr lpInBuffer,
+            uint nInBufferSize,
+            IntPtr lpOutBuffer,
+            uint nOutBufferSize,
+            out uint lpBytesReturned,
+            IntPtr lpOverlapped);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool CloseHandle(IntPtr hObject);
+
+        const uint GENERIC_READ = 0x80000000;
+        const uint FILE_SHARE_READ = 0x00000001;
+        const uint OPEN_EXISTING = 3;
+        const uint FILE_FLAG_OPEN_REPARSE_POINT = 0x00200000;
+        const uint FILE_FLAG_BACKUP_SEMANTICS = 0x02000000;
+        const uint FSCTL_GET_REPARSE_POINT = 0x000900A8;
+        const uint IO_REPARSE_TAG_SYMLINK = 0xA000000C;
+        const uint IO_REPARSE_TAG_MOUNT_POINT = 0xA0000003;
+
+        [StructLayout(LayoutKind.Sequential)]
+        struct REPARSE_DATA_BUFFER
+        {
+            public uint ReparseTag;
+            public ushort ReparseDataLength;
+            public ushort Reserved;
+            public ushort SubstituteNameOffset;
+            public ushort SubstituteNameLength;
+            public ushort PrintNameOffset;
+            public ushort PrintNameLength;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x3FF0)]
+            public byte[] PathBuffer;
+        }
 
         enum SymbolicLink
         {
@@ -43,6 +90,67 @@ namespace FreeMove
         public static bool MakeLink(string directory, string symlink)
         {
             return CreateSymbolicLink(symlink, directory, SymbolicLink.Directory);
+        }
+
+        /// <summary>
+        /// 判断路径是否为重解析点（符号链接或挂载点）
+        /// </summary>
+        public static bool IsReparsePoint(string path)
+        {
+            try
+            {
+                FileAttributes attributes = File.GetAttributes(path);
+                return (attributes & FileAttributes.ReparsePoint) == FileAttributes.ReparsePoint;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 获取符号链接或挂载点的目标路径
+        /// </summary>
+        public static string GetSymbolicLinkTarget(string path)
+        {
+            IntPtr handle = CreateFile(path, GENERIC_READ, FILE_SHARE_READ, IntPtr.Zero, OPEN_EXISTING, FILE_FLAG_OPEN_REPARSE_POINT | FILE_FLAG_BACKUP_SEMANTICS, IntPtr.Zero);
+            if (handle == IntPtr.Zero || handle == new IntPtr(-1)) return null;
+
+            try
+            {
+                int bufferSize = Marshal.SizeOf(typeof(REPARSE_DATA_BUFFER));
+                IntPtr bufferPtr = Marshal.AllocHGlobal(bufferSize);
+                try
+                {
+                    uint bytesReturned;
+                    bool success = DeviceIoControl(handle, FSCTL_GET_REPARSE_POINT, IntPtr.Zero, 0, bufferPtr, (uint)bufferSize, out bytesReturned, IntPtr.Zero);
+                    if (!success) return null;
+
+                    REPARSE_DATA_BUFFER reparseData = (REPARSE_DATA_BUFFER)Marshal.PtrToStructure(bufferPtr, typeof(REPARSE_DATA_BUFFER));
+
+                    if (reparseData.ReparseTag == IO_REPARSE_TAG_SYMLINK)
+                    {
+                        string target = Encoding.Unicode.GetString(reparseData.PathBuffer, reparseData.SubstituteNameOffset, reparseData.SubstituteNameLength);
+                        if (target.StartsWith(@"\??\")) target = target.Substring(4);
+                        return target;
+                    }
+                    else if (reparseData.ReparseTag == IO_REPARSE_TAG_MOUNT_POINT)
+                    {
+                        string target = Encoding.Unicode.GetString(reparseData.PathBuffer, reparseData.SubstituteNameOffset, reparseData.SubstituteNameLength);
+                        if (target.StartsWith(@"\??\")) target = target.Substring(4);
+                        return target;
+                    }
+                }
+                finally
+                {
+                    Marshal.FreeHGlobal(bufferPtr);
+                }
+            }
+            finally
+            {
+                CloseHandle(handle);
+            }
+            return null;
         }
         #endregion
 

@@ -1,4 +1,4 @@
-﻿// FreeMove -- Move directories without breaking shortcuts or installations 
+// FreeMove -- Move directories without breaking shortcuts or installations 
 //    Copyright(C) 2020  Luca De Martini
 
 //    This program is free software: you can redistribute it and/or modify
@@ -39,6 +39,10 @@ namespace FreeMove
         {
             //Initialize UI elements
             InitializeComponent();
+            
+            // 初始化目录浏览器事件
+            directoryBrowser1.SourceSelected += (s, path) => textBox_From.Text = path;
+            directoryBrowser1.TargetSelected += (s, path) => textBox_To.Text = path;
         }
 
         private async void Form1_Load(object sender, EventArgs e)
@@ -130,6 +134,9 @@ namespace FreeMove
             bool isChinese = (!string.IsNullOrEmpty(lang) ? lang : current).StartsWith("zh", StringComparison.OrdinalIgnoreCase);
             zhToolStripMenuItem.Checked = !isChinese;
             chineseToolStripMenuItem.Checked = isChinese;
+
+            // 刷新目录浏览器语言
+            directoryBrowser1.ApplyLanguage();
         }
 
         private bool PreliminaryCheck(string source, string destination)

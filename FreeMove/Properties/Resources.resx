@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -369,5 +369,32 @@ Info → About:
 
 Language:
     - English / Chinese: Switch the user interface language (the application will restart to apply the change).</value>
+  </data>
+  <data name="Button_SetSource" xml:space="preserve">
+    <value>← Set Source</value>
+  </data>
+  <data name="Button_SetTarget" xml:space="preserve">
+    <value>→ Set Target</value>
+  </data>
+  <data name="Column_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Column_Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Column_TargetPath" xml:space="preserve">
+    <value>Target Path</value>
+  </data>
+  <data name="Menu_SetSource" xml:space="preserve">
+    <value>Set as Source</value>
+  </data>
+  <data name="Menu_SetTarget" xml:space="preserve">
+    <value>Set as Target</value>
+  </data>
+  <data name="Type_Symlink" xml:space="preserve">
+    <value>Symbolic Link</value>
+  </data>
+  <data name="Type_Folder" xml:space="preserve">
+    <value>Folder</value>
   </data>
 </root>

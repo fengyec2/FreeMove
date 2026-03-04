@@ -1,4 +1,4 @@
-﻿// FreeMove -- Move directories without breaking shortcuts or installations 
+// FreeMove -- Move directories without breaking shortcuts or installations 
 //    Copyright(C) 2020  Luca De Martini
 
 //    This program is free software: you can redistribute it and/or modify
@@ -74,13 +74,19 @@ namespace FreeMove
             this.chineseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chkBox_createDest = new System.Windows.Forms.CheckBox();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.splitContainer_Form1 = new System.Windows.Forms.SplitContainer();
+            this.directoryBrowser1 = new FreeMove.DirectoryBrowser();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer_Form1)).BeginInit();
+            this.splitContainer_Form1.Panel1.SuspendLayout();
+            this.splitContainer_Form1.Panel2.SuspendLayout();
+            this.splitContainer_Form1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 31);
+            this.label1.Location = new System.Drawing.Point(12, 10);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 0;
@@ -88,14 +94,14 @@ namespace FreeMove
             // 
             // textBox_From
             // 
-            this.textBox_From.Location = new System.Drawing.Point(82, 31);
+            this.textBox_From.Location = new System.Drawing.Point(82, 10);
             this.textBox_From.Name = "textBox_From";
             this.textBox_From.Size = new System.Drawing.Size(383, 21);
             this.textBox_From.TabIndex = 1;
             // 
             // button_BrowseFrom
             // 
-            this.button_BrowseFrom.Location = new System.Drawing.Point(475, 31);
+            this.button_BrowseFrom.Location = new System.Drawing.Point(475, 10);
             this.button_BrowseFrom.Name = "button_BrowseFrom";
             this.button_BrowseFrom.Size = new System.Drawing.Size(75, 21);
             this.button_BrowseFrom.TabIndex = 2;
@@ -105,7 +111,7 @@ namespace FreeMove
             // 
             // button_BrowseTo
             // 
-            this.button_BrowseTo.Location = new System.Drawing.Point(475, 54);
+            this.button_BrowseTo.Location = new System.Drawing.Point(475, 33);
             this.button_BrowseTo.Name = "button_BrowseTo";
             this.button_BrowseTo.Size = new System.Drawing.Size(75, 21);
             this.button_BrowseTo.TabIndex = 4;
@@ -115,7 +121,7 @@ namespace FreeMove
             // 
             // textBox_To
             // 
-            this.textBox_To.Location = new System.Drawing.Point(82, 55);
+            this.textBox_To.Location = new System.Drawing.Point(82, 34);
             this.textBox_To.Name = "textBox_To";
             this.textBox_To.Size = new System.Drawing.Size(383, 21);
             this.textBox_To.TabIndex = 3;
@@ -123,7 +129,7 @@ namespace FreeMove
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 55);
+            this.label2.Location = new System.Drawing.Point(12, 34);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(23, 12);
             this.label2.TabIndex = 3;
@@ -135,7 +141,7 @@ namespace FreeMove
             // 
             // button_Move
             // 
-            this.button_Move.Location = new System.Drawing.Point(475, 109);
+            this.button_Move.Location = new System.Drawing.Point(475, 88);
             this.button_Move.Name = "button_Move";
             this.button_Move.Size = new System.Drawing.Size(75, 21);
             this.button_Move.TabIndex = 6;
@@ -146,7 +152,7 @@ namespace FreeMove
             // chkBox_originalHidden
             // 
             this.chkBox_originalHidden.AutoSize = true;
-            this.chkBox_originalHidden.Location = new System.Drawing.Point(15, 88);
+            this.chkBox_originalHidden.Location = new System.Drawing.Point(15, 67);
             this.chkBox_originalHidden.Name = "chkBox_originalHidden";
             this.chkBox_originalHidden.Size = new System.Drawing.Size(198, 16);
             this.chkBox_originalHidden.TabIndex = 5;
@@ -155,7 +161,7 @@ namespace FreeMove
             // 
             // button_Close
             // 
-            this.button_Close.Location = new System.Drawing.Point(12, 109);
+            this.button_Close.Location = new System.Drawing.Point(12, 88);
             this.button_Close.Name = "button_Close";
             this.button_Close.Size = new System.Drawing.Size(75, 21);
             this.button_Close.TabIndex = 7;
@@ -315,7 +321,7 @@ namespace FreeMove
             this.chkBox_createDest.AutoSize = true;
             this.chkBox_createDest.Checked = true;
             this.chkBox_createDest.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkBox_createDest.Location = new System.Drawing.Point(219, 88);
+            this.chkBox_createDest.Location = new System.Drawing.Point(219, 67);
             this.chkBox_createDest.Name = "chkBox_createDest";
             this.chkBox_createDest.Size = new System.Drawing.Size(174, 16);
             this.chkBox_createDest.TabIndex = 9;
@@ -329,21 +335,47 @@ namespace FreeMove
             this.helpToolStripMenuItem.Text = "Help";
             this.helpToolStripMenuItem.Click += new System.EventHandler(this.HelpToolStripMenuItem_Click);
             // 
+            // splitContainer_Form1
+            // 
+            this.splitContainer_Form1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer_Form1.Location = new System.Drawing.Point(0, 25);
+            this.splitContainer_Form1.Name = "splitContainer_Form1";
+            this.splitContainer_Form1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer_Form1.Panel1
+            // 
+            this.splitContainer_Form1.Panel1.Controls.Add(this.label1);
+             this.splitContainer_Form1.Panel1.Controls.Add(this.chkBox_createDest);
+             this.splitContainer_Form1.Panel1.Controls.Add(this.textBox_From);
+             this.splitContainer_Form1.Panel1.Controls.Add(this.button_Close);
+             this.splitContainer_Form1.Panel1.Controls.Add(this.button_BrowseFrom);
+             this.splitContainer_Form1.Panel1.Controls.Add(this.chkBox_originalHidden);
+             this.splitContainer_Form1.Panel1.Controls.Add(this.button_BrowseTo);
+             this.splitContainer_Form1.Panel1.Controls.Add(this.button_Move);
+             this.splitContainer_Form1.Panel1.Controls.Add(this.textBox_To);
+             this.splitContainer_Form1.Panel1.Controls.Add(this.label2);
+            // 
+            // splitContainer_Form1.Panel2
+            // 
+            this.splitContainer_Form1.Panel2.Controls.Add(this.directoryBrowser1);
+            this.splitContainer_Form1.Size = new System.Drawing.Size(565, 375);
+            this.splitContainer_Form1.SplitterDistance = 120;
+            this.splitContainer_Form1.TabIndex = 10;
+            // 
+            // directoryBrowser1
+            // 
+            this.directoryBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.directoryBrowser1.Location = new System.Drawing.Point(0, 0);
+            this.directoryBrowser1.Name = "directoryBrowser1";
+            this.directoryBrowser1.Size = new System.Drawing.Size(565, 251);
+            this.directoryBrowser1.TabIndex = 0;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(565, 138);
-            this.Controls.Add(this.chkBox_createDest);
-            this.Controls.Add(this.button_Close);
-            this.Controls.Add(this.chkBox_originalHidden);
-            this.Controls.Add(this.button_Move);
-            this.Controls.Add(this.button_BrowseTo);
-            this.Controls.Add(this.textBox_To);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.button_BrowseFrom);
-            this.Controls.Add(this.textBox_From);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(565, 400);
+            this.Controls.Add(this.splitContainer_Form1);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -354,6 +386,11 @@ namespace FreeMove
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.splitContainer_Form1.Panel1.ResumeLayout(false);
+            this.splitContainer_Form1.Panel1.PerformLayout();
+            this.splitContainer_Form1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer_Form1)).EndInit();
+            this.splitContainer_Form1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -390,6 +427,9 @@ namespace FreeMove
         private System.Windows.Forms.ToolStripMenuItem zhToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem chineseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-    }
-}
+        private System.Windows.Forms.SplitContainer splitContainer_Form1;
+                private FreeMove.DirectoryBrowser directoryBrowser1;
+        
+            }
+        }
 
