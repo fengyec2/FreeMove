@@ -49,10 +49,10 @@ jobs:
           dotnet-version: |
             10.0.x
             6.0.x
-          include-prerelease: true
-
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
+          cache: true
+          cache-dependency-path: |
+            FreeMove/FreeMove.csproj
+            FreeMove.sln
 
       - name: Determine Build Configuration
         id: config
