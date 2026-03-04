@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <!-- 本地化字符串（简体中文） -->
+
+  <data name="AboutContent" xml:space="preserve">
+    <value>imDema/FreeMove {0} —— 移动目录而不破坏快捷方式或安装
+版权所有 (C) 2020  Luca De Martini
+
+本程序是自由软件：您可以在 GNU 通用公共许可证（GPL）第 3 版或（由您选择）任何更新版本的条款下重新分发和/或修改本程序。
+
+本程序的发布希望它能带来帮助，但不提供任何担保；甚至不包括适销性或适用于特定目的的默示担保。
+
+您应已随本程序一起收到 GNU 通用公共许可证的副本；如果没有，请参见 &lt;http://www.gnu.org/licenses/&gt;。
+
+https://github.com/imDema</value>
+  </data>
+
+  <data name="DisableSafeModeMessage" xml:space="preserve">
+    <value>强烈不建议移动 “Program Files” 或 “Program Files (x86)” 目录，否则可能导致系统行为异常。
+推荐只移动这些目录中的具体程序文件夹。
+
+确定要关闭安全模式吗？</value>
+  </data>
+
+  <data name="ErrorUnauthorizedLink" xml:space="preserve">
+    <value>创建符号链接时出错。
+文件夹已经移动到新位置，但无法创建链接。
+请尝试以管理员身份运行程序。
+
+要把文件移回原位置吗？</value>
+  </data>
+
+  <data name="ErrorUnauthorizedMoveDetails" xml:space="preserve">
+    <value>移动文件时发生错误，某些文件可能正在被占用，或者您没有足够的权限。
+
+请尝试以管理员身份运行本程序，并关闭正在使用该文件的其他程序。
+
+详细信息：</value>
+  </data>
+
+  <data name="ErrorUnauthorizedMoveMessage" xml:space="preserve">
+    <value>错误：{0}
+
+如何继续？
+“中止” 将撤销更改
+“忽略” 将停止程序</value>
+  </data>
+
+  <data name="GitHubErrorMessage" xml:space="preserve">
+    <value>无法从 GitHub 服务器获取版本信息</value>
+  </data>
+
+  <data name="IgnoreMessage" xml:space="preserve">
+    <value>确定要继续吗？
+
+如果选择忽略，文件将保持当前状态：部分文件已经在新位置，且在旧位置中缺失！</value>
+  </data>
+
+  <data name="IgnoreTextFile" xml:space="preserve">
+    <value>在 {0} 使用 FreeMove 移动文件时发生错误，并且您选择了“忽略”。
+此目录的其余内容可在 “{1}” 中找到（除非已经被再次移动）。
+下次在发生错误时，请使用 “中止” 将文件移回，或使用 “重试” 再试一次。
+
+如果这个文本文件对您有帮助，或者您希望它不要被创建，请告诉我。</value>
+  </data>
+
+  <data name="UserAgent" xml:space="preserve">
+    <value>ImDema-FreeMove-Updater</value>
+  </data>
+
+  <!-- 新增：通用 UI 文本 -->
+
+  <data name="DoneMessage" xml:space="preserve">
+    <value>完成！</value>
+  </data>
+
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>错误</value>
+  </data>
+
+  <data name="RemoveCopiedContentsFailed" xml:space="preserve">
+    <value>无法删除已复制的内容，请尝试手动删除。</value>
+  </data>
+
+  <data name="MoveBackFailedMessage" xml:space="preserve">
+    <value>无法将内容移回原位置，请尝试手动移动。</value>
+  </data>
+
+  <data name="MoveFailedDetailsFormat" xml:space="preserve">
+    <value>详细信息：
+{0}</value>
+  </data>
+
+  <data name="UndoChangesDetailsQuestion" xml:space="preserve">
+    <value>要撤销这些更改吗？
+
+详细信息：
+{0}</value>
+  </data>
+
+  <data name="UndoChangesSimpleQuestion" xml:space="preserve">
+    <value>要撤销这些更改吗？</value>
+  </data>
+
+  <data name="CancelledTitle" xml:space="preserve">
+    <value>已取消</value>
+  </data>
+
+  <data name="CancelConfirmationMessage" xml:space="preserve">
+    <value>确定要取消正在进行的操作吗？</value>
+  </data>
+
+  <data name="CancelConfirmationTitle" xml:space="preserve">
+    <value>取消确认</value>
+  </data>
+
+  <data name="TooltipFrom" xml:space="preserve">
+    <value>选择要移动的文件夹</value>
+  </data>
+
+  <data name="TooltipTo" xml:space="preserve">
+    <value>选择目标位置</value>
+  </data>
+
+  <data name="TooltipHidden" xml:space="preserve">
+    <value>选择是否隐藏在原位置创建的快捷方式（链接）</value>
+  </data>
+
+  <data name="ErrorDetailsTitle" xml:space="preserve">
+    <value>错误详情</value>
+  </data>
+
+  <data name="AboutTitle" xml:space="preserve">
+    <value>关于 FreeMove</value>
+  </data>
+
+  <data name="WarningTitle" xml:space="preserve">
+    <value>警告</value>
+  </data>
+
+  <data name="MovingFilesTitle" xml:space="preserve">
+    <value>正在移动文件...</value>
+  </data>
+
+  <data name="ProgressFinishingText" xml:space="preserve">
+    <value>正在完成...</value>
+  </data>
+
+  <data name="LanguageChangedRestartMessage" xml:space="preserve">
+    <value>语言已更改，程序将重新启动以应用新的语言设置。</value>
+  </data>
+
+  <data name="LanguageChangedTitle" xml:space="preserve">
+    <value>语言</value>
+  </data>
+
+  <data name="Form_Title" xml:space="preserve">
+    <value>Free Move</value>
+  </data>
+
+  <data name="Label_From" xml:space="preserve">
+    <value>源文件夹：</value>
+  </data>
+
+  <data name="Label_To" xml:space="preserve">
+    <value>目标位置：</value>
+  </data>
+
+  <data name="Button_Browse" xml:space="preserve">
+    <value>浏览...</value>
+  </data>
+
+  <data name="Button_Move" xml:space="preserve">
+    <value>开始移动</value>
+  </data>
+
+  <data name="Button_Close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+
+  <data name="Checkbox_OriginalHidden" xml:space="preserve">
+    <value>将原位置的文件夹设为隐藏</value>
+  </data>
+
+  <data name="Checkbox_CreateDest" xml:space="preserve">
+    <value>自动创建目标文件夹</value>
+  </data>
+
+  <data name="Menu_Settings" xml:space="preserve">
+    <value>设置</value>
+  </data>
+
+  <data name="Menu_Info" xml:space="preserve">
+    <value>信息</value>
+  </data>
+
+  <data name="Menu_Language" xml:space="preserve">
+    <value>语言</value>
+  </data>
+
+  <data name="Menu_CheckForUpdate" xml:space="preserve">
+    <value>检查更新</value>
+  </data>
+
+  <data name="Menu_CheckNow" xml:space="preserve">
+    <value>立即检查</value>
+  </data>
+
+  <data name="Menu_CheckOnStart" xml:space="preserve">
+    <value>启动时检查</value>
+  </data>
+
+  <data name="Menu_PermissionCheck" xml:space="preserve">
+    <value>权限检查</value>
+  </data>
+
+  <data name="Menu_SafeMode" xml:space="preserve">
+    <value>安全模式</value>
+  </data>
+
+  <data name="Menu_None" xml:space="preserve">
+    <value>不检查</value>
+  </data>
+
+  <data name="Menu_Fast" xml:space="preserve">
+    <value>快速</value>
+  </data>
+
+  <data name="Menu_Full" xml:space="preserve">
+    <value>完全</value>
+  </data>
+
+  <data name="Menu_ReportIssue" xml:space="preserve">
+    <value>反馈问题</value>
+  </data>
+
+  <data name="Menu_GitHub" xml:space="preserve">
+    <value>GitHub</value>
+  </data>
+
+  <data name="Menu_About" xml:space="preserve">
+    <value>关于</value>
+  </data>
+
+  <data name="Menu_Lang_English" xml:space="preserve">
+    <value>英文</value>
+  </data>
+
+  <data name="Menu_Lang_Chinese" xml:space="preserve">
+    <value>简体中文</value>
+  </data>
+
+  <data name="AdminRequiredMessage" xml:space="preserve">
+    <value>本程序需要以管理员身份运行才能移动文件夹并创建链接。
+
+请右键单击可执行文件，选择“以管理员身份运行”。</value>
+  </data>
+
+  <data name="AdminRequiredTitle" xml:space="preserve">
+    <value>需要管理员权限</value>
+  </data>
+
+  <data name="HelpButtonText" xml:space="preserve">
+    <value>帮助</value>
+  </data>
+
+  <data name="HelpContent" xml:space="preserve">
+    <value>FreeMove 使用说明
+
+源文件夹：  选择你要移动的文件夹（例如 Program Files 下的某个程序目录）。
+目标位置：  选择要把该文件夹移动到的目标路径（例如另一块磁盘）。
+浏览...：   打开文件夹选择对话框，用来选择源或目标文件夹。
+
+开始移动：  开始将所选文件夹移动到目标位置，并在原路径创建一个目录链接（junction）。
+关闭：      关闭程序窗口。
+
+将原位置的文件夹设为隐藏：
+            移动完成后，把原位置创建的链接设为“隐藏”，在资源管理器中不明显显示。
+
+自动创建目标文件夹：
+            如果勾选，在需要时自动创建目标文件夹。
+
+设置 → 检查更新：
+    - 立即检查：           立刻连接 GitHub 检查是否有新版本。
+    - 启动时检查：         每次启动 FreeMove 时自动检查是否有新版本。
+
+设置 → 权限检查：
+    - 不检查： 不预先检查任何文件权限（速度最快，但可能在后面操作时才失败）。
+    - 快速：   只预检查 .exe 和 .dll 文件的权限（默认）。
+    - 完全：   预检查所有文件的权限（最慢，但最安全）。
+
+设置 → 安全模式：
+    阻止移动关键系统目录（例如 Program Files）。强烈建议保持开启。
+
+信息 → 反馈问题：
+    打开 GitHub 的 Issue 页面，用于反馈 Bug 或提出建议。
+
+信息 → GitHub：
+    打开本项目的 GitHub 主页。
+
+信息 → 关于：
+    显示 FreeMove 的版本和授权信息。
+
+语言：
+    - 英文 / 简体中文：切换界面语言（程序将重启以应用新的语言）。</value>
+  </data>
+
+</root>
+

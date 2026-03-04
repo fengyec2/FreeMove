@@ -19,6 +19,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
+using System.Threading;
+using System.Security.Principal;
 
 namespace FreeMove
 {
@@ -30,8 +33,52 @@ namespace FreeMove
         [STAThread]
         static void Main()
         {
+            // 如非管理员权限，提示并退出
+            try
+            {
+                using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
+                {
+                    WindowsPrincipal principal = new WindowsPrincipal(identity);
+                    if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
+                    {
+                        string msg = Properties.Resources.ResourceManager.GetString("AdminRequiredMessage");
+                        string title = Properties.Resources.ResourceManager.GetString("AdminRequiredTitle");
+                        MessageBox.Show(msg, title, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+            }
+            catch
+            {
+                // 如果检查失败，出于安全考虑也直接退出
+                string msg = Properties.Resources.ResourceManager.GetString("AdminRequiredMessage");
+                string title = Properties.Resources.ResourceManager.GetString("AdminRequiredTitle");
+                MessageBox.Show(msg, title, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 设置全局语言：优先使用用户在设置中选择的语言，否则跟随系统
+            try
+            {
+                string lang = Settings.Language;
+                CultureInfo culture;
+                if (!string.IsNullOrEmpty(lang))
+                {
+                    culture = new CultureInfo(lang);
+                }
+                else
+                {
+                    culture = CultureInfo.InstalledUICulture;
+                }
+                Thread.CurrentThread.CurrentCulture = culture;
+                Thread.CurrentThread.CurrentUICulture = culture;
+            }
+            catch
+            {
+                // 如果设置中的语言代码无效，忽略并使用系统默认
+            }
+
             Application.EnableVisualStyles();
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
         }

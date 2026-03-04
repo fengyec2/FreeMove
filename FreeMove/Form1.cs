@@ -43,7 +43,11 @@ namespace FreeMove
 
         private async void Form1_Load(object sender, EventArgs e)
         {
+            ApplyLanguage();
             SetToolTips();
+
+            
+
 
             //Check whether the program is set to update on its start
             if (Settings.AutoUpdate)
@@ -77,6 +81,57 @@ namespace FreeMove
 
         #endregion
 
+        /// <summary>
+        /// 根据当前 UI 语言刷新界面上的文本（按钮/菜单/标签等）
+        /// </summary>
+        private void ApplyLanguage()
+        {
+            // 窗口标题
+            Text = Properties.Resources.ResourceManager.GetString("Form_Title");
+
+            // 标签和按钮
+            label1.Text = Properties.Resources.ResourceManager.GetString("Label_From");
+            label2.Text = Properties.Resources.ResourceManager.GetString("Label_To");
+            button_BrowseFrom.Text = Properties.Resources.ResourceManager.GetString("Button_Browse");
+            button_BrowseTo.Text = Properties.Resources.ResourceManager.GetString("Button_Browse");
+            button_Move.Text = Properties.Resources.ResourceManager.GetString("Button_Move");
+            button_Close.Text = Properties.Resources.ResourceManager.GetString("Button_Close");
+            chkBox_originalHidden.Text = Properties.Resources.ResourceManager.GetString("Checkbox_OriginalHidden");
+            chkBox_createDest.Text = Properties.Resources.ResourceManager.GetString("Checkbox_CreateDest");
+
+            // 菜单
+            settingsToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_Settings");
+            infoToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_Info");
+            lunguToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_Language");
+
+            checkForUpdateToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_CheckForUpdate");
+            checkNowToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_CheckNow");
+            checkOnProgramStartToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_CheckOnStart");
+
+            PermissionCheckToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_PermissionCheck");
+            safeModeToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_SafeMode");
+
+            noneToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_None");
+            fastToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_Fast");
+            fullToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_Full");
+
+            reportAnIssueToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_ReportIssue");
+            gitHubToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_GitHub");
+            aboutToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_About");
+            helpToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("HelpButtonText");
+
+            zhToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_Lang_English");
+            chineseToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_Lang_Chinese");
+
+            // 语言菜单打勾状态
+            string lang = Settings.Language;
+            // lang 为空时：跟随系统，这里根据当前 Culture 判定
+            string current = System.Globalization.CultureInfo.CurrentUICulture.Name;
+            bool isChinese = (!string.IsNullOrEmpty(lang) ? lang : current).StartsWith("zh", StringComparison.OrdinalIgnoreCase);
+            zhToolStripMenuItem.Checked = !isChinese;
+            chineseToolStripMenuItem.Checked = isChinese;
+        }
+
         private bool PreliminaryCheck(string source, string destination)
         {
             //Check for errors before copying
@@ -84,14 +139,14 @@ namespace FreeMove
             {
                 IOHelper.CheckDirectories(source, destination, safeMode);
             }
-            catch(AggregateException ae)
+            catch (AggregateException ae)
             {
                 var msg = "";
                 foreach (var ex in ae.InnerExceptions)
                 {
                     msg += ex.Message + "\n";
                 }
-                MessageBox.Show(msg, "Error");
+                MessageBox.Show(msg, Properties.Resources.ResourceManager.GetString("ErrorTitle"));
                 return false;
             }
             return true;
@@ -117,11 +172,12 @@ namespace FreeMove
                         olddir.Attributes = attrib | FileAttributes.Hidden;
                     }
 
-                    MessageBox.Show(this, "Done!");
+                    MessageBox.Show(this, Properties.Resources.ResourceManager.GetString("DoneMessage"));
                 }
                 catch (IO.MoveOperation.CopyFailedException ex)
                 {
-                    switch (MessageBox.Show(this, string.Format($"Do you want to undo the changes?\n\nDetails:\n{ex.InnerException.Message}"), ex.Message, MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1))
+                    string question = string.Format(Properties.Resources.ResourceManager.GetString("UndoChangesDetailsQuestion"), ex.InnerException.Message);
+                    switch (MessageBox.Show(this, question, ex.Message, MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1))
                     {
                         case DialogResult.Yes:
                             try
@@ -130,7 +186,7 @@ namespace FreeMove
                             }
                             catch (Exception ie)
                             {
-                                MessageBox.Show(this, ie.Message, "Could not remove copied contents. Try removing manually");
+                                MessageBox.Show(this, ie.Message, Properties.Resources.ResourceManager.GetString("RemoveCopiedContentsFailed"));
                             }
                             break;
                         case DialogResult.No:
@@ -140,7 +196,8 @@ namespace FreeMove
                 }
                 catch (IO.MoveOperation.DeleteFailedException ex)
                 {
-                    switch (MessageBox.Show(this, string.Format($"Do you want to undo the changes?\n\nDetails:\n{ex.InnerException.Message}"), ex.Message, MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1))
+                    string question = string.Format(Properties.Resources.ResourceManager.GetString("UndoChangesDetailsQuestion"), ex.InnerException.Message);
+                    switch (MessageBox.Show(this, question, ex.Message, MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1))
                     {
                         case DialogResult.Yes:
                             try
@@ -149,7 +206,7 @@ namespace FreeMove
                             }
                             catch (Exception ie)
                             {
-                                MessageBox.Show(this, ie.Message, "Could not move back contents. Try moving manually");
+                                MessageBox.Show(this, ie.Message, Properties.Resources.ResourceManager.GetString("MoveBackFailedMessage"));
                             }
                             break;
                         case DialogResult.No:
@@ -159,11 +216,14 @@ namespace FreeMove
                 }
                 catch (IO.MoveOperation.MoveFailedException ex)
                 {
-                    MessageBox.Show(this, string.Format($"Details:\n{ex.InnerException.Message}"), ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    string details = string.Format(Properties.Resources.ResourceManager.GetString("MoveFailedDetailsFormat"), ex.InnerException.Message);
+                    MessageBox.Show(this, details, ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (OperationCanceledException)
                 {
-                    switch (MessageBox.Show(this, string.Format($"Do you want to undo the changes?"), "Cancelled", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
+                    string question = Properties.Resources.ResourceManager.GetString("UndoChangesSimpleQuestion");
+                    string title = Properties.Resources.ResourceManager.GetString("CancelledTitle");
+                    switch (MessageBox.Show(this, question, title, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
                     {
                         case DialogResult.Yes:
                             try
@@ -185,7 +245,7 @@ namespace FreeMove
         private async Task BeginMove(string source, string destination)
         {
             //Move files
-            using (ProgressDialog progressDialog = new ProgressDialog("Moving files..."))
+            using (ProgressDialog progressDialog = new ProgressDialog(Properties.Resources.ResourceManager.GetString("MovingFilesTitle")))
             {
                 IO.MoveOperation moveOp = IOHelper.MoveDir(source, destination);
 
@@ -194,7 +254,9 @@ namespace FreeMove
 
                 progressDialog.CancelRequested += (sender, e) =>
                 {
-                    if (DialogResult.Yes == MessageBox.Show(this, "Are you sure you want to cancel?", "Cancel confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2))
+                    string message = Properties.Resources.ResourceManager.GetString("CancelConfirmationMessage");
+                    string title = Properties.Resources.ResourceManager.GetString("CancelConfirmationTitle");
+                    if (DialogResult.Yes == MessageBox.Show(this, message, title, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2))
                     {
                         moveOp.Cancel();
                         progressDialog.BeginInvoke(new Action(() =>  progressDialog.Cancellable = false));
@@ -230,9 +292,9 @@ namespace FreeMove
                 InitialDelay = 600,
                 ReshowDelay = 500
             };
-            Tip.SetToolTip(this.textBox_From, "Select the folder you want to move");
-            Tip.SetToolTip(this.textBox_To, "Select where you want to move the folder");
-            Tip.SetToolTip(this.chkBox_originalHidden, "Select whether you want to hide the shortcut which is created in the old location or not");
+            Tip.SetToolTip(this.textBox_From, Properties.Resources.ResourceManager.GetString("TooltipFrom"));
+            Tip.SetToolTip(this.textBox_To, Properties.Resources.ResourceManager.GetString("TooltipTo"));
+            Tip.SetToolTip(this.chkBox_originalHidden, Properties.Resources.ResourceManager.GetString("TooltipHidden"));
         }
 
         private void Reset()
@@ -244,7 +306,8 @@ namespace FreeMove
 
         public static void Unauthorized(Exception ex)
         {
-            MessageBox.Show(Properties.Resources.ErrorUnauthorizedMoveDetails + ex.Message, "Error details");
+            string title = Properties.Resources.ResourceManager.GetString("ErrorDetailsTitle");
+            MessageBox.Show(Properties.Resources.ErrorUnauthorizedMoveDetails + ex.Message, title);
         }
 
         #region Event Handlers
@@ -327,12 +390,14 @@ namespace FreeMove
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string msg = String.Format(Properties.Resources.AboutContent, System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion);
-            MessageBox.Show(msg, "About FreeMove");
+            string title = Properties.Resources.ResourceManager.GetString("AboutTitle");
+            MessageBox.Show(msg, title);
         }
 
         private void SafeModeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show(Properties.Resources.DisableSafeModeMessage, "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            string title = Properties.Resources.ResourceManager.GetString("WarningTitle");
+            if (MessageBox.Show(Properties.Resources.DisableSafeModeMessage, title, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
             {
                 safeMode = false;
                 safeModeToolStripMenuItem.Checked = false;
@@ -362,6 +427,33 @@ namespace FreeMove
             noneToolStripMenuItem.Checked = false;
             fastToolStripMenuItem.Checked = false;
             fullToolStripMenuItem.Checked = true;
+        }
+
+        private void zhToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // 切换为英文界面
+            Settings.Language = "en";
+            string msg = Properties.Resources.ResourceManager.GetString("LanguageChangedRestartMessage");
+            string title = Properties.Resources.ResourceManager.GetString("LanguageChangedTitle");
+            MessageBox.Show(msg, title);
+            Application.Restart();
+        }
+
+        private void chineseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // 切换为简体中文界面
+            Settings.Language = "zh-Hans";
+            string msg = Properties.Resources.ResourceManager.GetString("LanguageChangedRestartMessage");
+            string title = Properties.Resources.ResourceManager.GetString("LanguageChangedTitle");
+            MessageBox.Show(msg, title);
+            Application.Restart();
+        }
+
+        private void HelpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string help = Properties.Resources.ResourceManager.GetString("HelpContent");
+            string title = Properties.Resources.ResourceManager.GetString("HelpButtonText");
+            MessageBox.Show(this, help, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

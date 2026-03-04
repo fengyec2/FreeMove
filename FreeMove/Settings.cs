@@ -39,6 +39,9 @@ namespace FreeMove
 
         public PermissionCheckLevel PermissionCheck = PermissionCheckLevel.Fast;
 
+        // UI language code, e.g. "en", "zh-Hans". null/empty = follow system language
+        public string LanguageCode = null;
+
         public static bool AutoUpdate
         {
             set
@@ -69,6 +72,21 @@ namespace FreeMove
             }
         }
 
+        public static string Language
+        {
+            get
+            {
+                var LSett = Load();
+                return LSett.LanguageCode;
+            }
+            set
+            {
+                var LSett = Load();
+                LSett.LanguageCode = value;
+                Save(LSett);
+            }
+        }
+
         private static void Save(Settings set)
         {
             XmlSerializer ser = new XmlSerializer(typeof(Settings));
@@ -86,10 +104,27 @@ namespace FreeMove
 
             if (File.Exists(GetSavePath()))
             {
-                using (FileStream fs = File.OpenRead(GetSavePath()))
+                try
                 {
-                    XmlSerializer ser = new XmlSerializer(typeof(Settings));
-                    LoadedSettings = ser.Deserialize(fs) as Settings;
+                    using (FileStream fs = File.OpenRead(GetSavePath()))
+                    {
+                        XmlSerializer ser = new XmlSerializer(typeof(Settings));
+                        LoadedSettings = ser.Deserialize(fs) as Settings;
+                    }
+                }
+                catch (InvalidOperationException)
+                {
+                    // 配置文件格式与当前 Settings 不兼容（例如旧版本保存为 bool 的值现在改成了枚举）
+                    // 删除损坏/旧格式配置文件，回退到默认设置
+                    try
+                    {
+                        File.Delete(GetSavePath());
+                    }
+                    catch
+                    {
+                        // 忽略删除失败，使用默认设置继续运行
+                    }
+                    LoadedSettings = null;
                 }
             }
 

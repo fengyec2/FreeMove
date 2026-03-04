@@ -69,7 +69,8 @@ namespace FreeMove
             label_Progress?.BeginInvoke(new Action(() =>
             {
                 float percentage = ((float)e.Progress / e.Max);
-                label_Progress.Text = e.Progress == e.Max ? "Finishing..." : $"{e.Progress}/{e.Max}";
+                string finishing = Properties.Resources.ResourceManager.GetString("ProgressFinishingText");
+                label_Progress.Text = e.Progress == e.Max ? finishing : $"{e.Progress}/{e.Max}";
                 if (e.Progress == e.Max)
                     Cancellable = false;
                 // label_Progress.Text = $"{percentage*100f, 3:0.0}%";

@@ -183,4 +183,191 @@ If this text file was useful or if you would have preferred it wasn't created le
   <data name="UserAgent" xml:space="preserve">
     <value>ImDema-FreeMove-Updater</value>
   </data>
+  <data name="DoneMessage" xml:space="preserve">
+    <value>Done!</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="RemoveCopiedContentsFailed" xml:space="preserve">
+    <value>Could not remove copied contents. Try removing manually</value>
+  </data>
+  <data name="MoveBackFailedMessage" xml:space="preserve">
+    <value>Could not move back contents. Try moving manually</value>
+  </data>
+  <data name="MoveFailedDetailsFormat" xml:space="preserve">
+    <value>Details:
+{0}</value>
+  </data>
+  <data name="UndoChangesDetailsQuestion" xml:space="preserve">
+    <value>Do you want to undo the changes?
+
+Details:
+{0}</value>
+  </data>
+  <data name="UndoChangesSimpleQuestion" xml:space="preserve">
+    <value>Do you want to undo the changes?</value>
+  </data>
+  <data name="CancelledTitle" xml:space="preserve">
+    <value>Cancelled</value>
+  </data>
+  <data name="CancelConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to cancel?</value>
+  </data>
+  <data name="CancelConfirmationTitle" xml:space="preserve">
+    <value>Cancel confirmation</value>
+  </data>
+  <data name="TooltipFrom" xml:space="preserve">
+    <value>Select the folder you want to move</value>
+  </data>
+  <data name="TooltipTo" xml:space="preserve">
+    <value>Select where you want to move the folder</value>
+  </data>
+  <data name="TooltipHidden" xml:space="preserve">
+    <value>Select whether you want to hide the shortcut which is created in the old location or not</value>
+  </data>
+  <data name="ErrorDetailsTitle" xml:space="preserve">
+    <value>Error details</value>
+  </data>
+  <data name="AboutTitle" xml:space="preserve">
+    <value>About FreeMove</value>
+  </data>
+  <data name="WarningTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="MovingFilesTitle" xml:space="preserve">
+    <value>Moving files...</value>
+  </data>
+  <data name="ProgressFinishingText" xml:space="preserve">
+    <value>Finishing...</value>
+  </data>
+  <data name="LanguageChangedRestartMessage" xml:space="preserve">
+    <value>Language has been changed. The application will restart to apply the new language.</value>
+  </data>
+  <data name="LanguageChangedTitle" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Form_Title" xml:space="preserve">
+    <value>Free Move</value>
+  </data>
+  <data name="Label_From" xml:space="preserve">
+    <value>Move From:</value>
+  </data>
+  <data name="Label_To" xml:space="preserve">
+    <value>To:</value>
+  </data>
+  <data name="Button_Browse" xml:space="preserve">
+    <value>Browse...</value>
+  </data>
+  <data name="Button_Move" xml:space="preserve">
+    <value>Move</value>
+  </data>
+  <data name="Button_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Checkbox_OriginalHidden" xml:space="preserve">
+    <value>Set original folder to hidden</value>
+  </data>
+  <data name="Checkbox_CreateDest" xml:space="preserve">
+    <value>Create destination folder</value>
+  </data>
+  <data name="Menu_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Menu_Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="Menu_Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Menu_CheckForUpdate" xml:space="preserve">
+    <value>Check for update</value>
+  </data>
+  <data name="Menu_CheckNow" xml:space="preserve">
+    <value>Check now</value>
+  </data>
+  <data name="Menu_CheckOnStart" xml:space="preserve">
+    <value>Check on program start</value>
+  </data>
+  <data name="Menu_PermissionCheck" xml:space="preserve">
+    <value>Permission check</value>
+  </data>
+  <data name="Menu_SafeMode" xml:space="preserve">
+    <value>Safe mode</value>
+  </data>
+  <data name="Menu_None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Menu_Fast" xml:space="preserve">
+    <value>Fast</value>
+  </data>
+  <data name="Menu_Full" xml:space="preserve">
+    <value>Full</value>
+  </data>
+  <data name="Menu_ReportIssue" xml:space="preserve">
+    <value>Report an Issue</value>
+  </data>
+  <data name="Menu_GitHub" xml:space="preserve">
+    <value>GitHub</value>
+  </data>
+  <data name="Menu_About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Menu_Lang_English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Menu_Lang_Chinese" xml:space="preserve">
+    <value>Chinese</value>
+  </data>
+  <data name="AdminRequiredMessage" xml:space="preserve">
+    <value>This application must be run as administrator in order to move folders and create junctions.
+
+Please right-click the executable and choose "Run as administrator".</value>
+  </data>
+  <data name="AdminRequiredTitle" xml:space="preserve">
+    <value>Administrator required</value>
+  </data>
+  <data name="HelpButtonText" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="HelpContent" xml:space="preserve">
+    <value>FreeMove - Help
+
+Move From:  Select the folder you want to move (for example, a program folder under Program Files).
+To:         Select the target location (for example, another drive) where you want to move the folder.
+Browse...   Open a folder picker dialog to choose the source or target folder.
+
+Move:       Start moving the selected folder to the target location and create a junction at the original path.
+Close:      Close the application window.
+
+Set original folder to hidden:
+            After moving, set the junction at the original location to Hidden so it is not visible in Explorer.
+
+Create destination folder:
+            If checked, FreeMove will create the target folder automatically when needed.
+
+Settings → Check for update:
+    - Check now:              Manually check GitHub for a newer version.
+    - Check on program start: If enabled, FreeMove will automatically check for updates when it starts.
+
+Settings → Permission check:
+    - None:  Don&apos;t check any file before moving (fastest, but may fail later if permissions are missing).
+    - Fast:  Check .exe and .dll files before moving (default).
+    - Full:  Check all files before moving (slowest, but most thorough).
+
+Settings → Safe mode:
+    Prevents moving critical system folders (such as Program Files). It is strongly recommended to keep this enabled.
+
+Info → Report an Issue:
+    Open the GitHub page to report a bug or request a feature.
+
+Info → GitHub:
+    Open the project page on GitHub.
+
+Info → About:
+    Show information about FreeMove and its license.
+
+Language:
+    - English / Chinese: Switch the user interface language (the application will restart to apply the change).</value>
+  </data>
 </root>
