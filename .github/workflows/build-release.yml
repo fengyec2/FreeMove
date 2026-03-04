@@ -67,7 +67,7 @@ jobs:
         run: dotnet publish ${{ env.Project_Name }}/${{ env.Project_Name }}.csproj -c ${{ env.BUILD_CONFIG }} -r ${{ matrix.runtime }} --self-contained false /p:PublishSingleFile=false
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.Project_Name }}-${{ matrix.runtime }}-${{ env.ARTIFACT_NAME }}
           path: ${{ env.Project_Name }}/bin/${{ env.BUILD_CONFIG }}/${{ env.Target }}/${{ matrix.runtime }}/publish/${{ env.Project_Name }}.exe
