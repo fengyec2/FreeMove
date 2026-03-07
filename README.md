@@ -2,7 +2,7 @@
 
 [简体中文](README.zh-CN.md) · [English](README.md)
 
-[![license](https://img.shields.io/github/license/ImDema/FreeMove.svg)](https://github.com/imDema/FreeMove/blob/master/LICENSE.txt)
+[![license](https://img.shields.io/github/license/fengyec2/FreeMove.svg)](https://github.com/fengyec2/FreeMove/blob/master/LICENSE.txt)
 
 Move directories freely without breaking installations or shortcuts
 
@@ -13,17 +13,27 @@ You can use this tool to move programs that install on C:\ by default to another
 2. A [symbolic link](https://www.wikiwand.com/en/NTFS_junction_point) is created from the old location redirecting to the new one. Any program trying to access a file in the old location will automatically be redirected to its new location
 
 ## Download
-[![Github All Releases](https://img.shields.io/github/downloads/imDema/FreeMove/total.svg)](https://github.com/imDema/FreeMove/releases/latest)
+[![Github All Releases](https://img.shields.io/github/downloads/fengyec2/FreeMove/total.svg)](https://github.com/fengyec2/FreeMove/releases/latest)
 
 #### From GitHub
 
-[Download the latest release](https://github.com/imDema/FreeMove/releases/latest)
+[Download the latest release](https://github.com/fengyec2/FreeMove/releases/latest)
 
-#### From Scoop
+**Which version should I download?**
+
+| Version | Description | Requirement |
+| :--- | :--- | :--- |
+| **.NET 10 (Standard)** | Recommended for most users. Smallest size. | Requires [.NET 10 Runtime](https://dotnet.microsoft.com/download/dotnet/10.0) |
+| **.NET 10 (SelfContained)** | Best for portability. Works without installing .NET. | None |
+| **.NET 4.8** | For legacy Windows versions (e.g., Windows 7/8). | Requires .NET Framework 4.8 (Built-in on Win10/11) |
+
+*Note: Choose the architecture (`win-x64`, `win-x86`, or `win-arm64`) that matches your system.*
+
+<!-- #### From Scoop
 
 ```
 scoop install freemove
-```
+``` -->
 
 ### Usage
 
@@ -51,8 +61,4 @@ Delete the junction in the old location (this won't delete the content) and move
 
 ## Contributing
 
-The project is currently being maintained for fixes, but no new features are currently in development or planned.
-
-I wrote the tool alone and I am currently the only developer, at the moment I'm pursuing my PhD and I'm too busy with other projects to work on new features.
-
-I'll keep watching the project and managing possible contributions, so, if you are interested in contributing, leave an issue or comment on an open issue and let me know!
+The project is originally developed by [imDema](https://github.com/imDema). I am currently maintaining the project and am open to contributions. If you are interested in contributing, leave an issue or comment on an open issue and let me know!

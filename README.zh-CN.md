@@ -2,7 +2,7 @@
 
 [English](README.md) · [简体中文](README.zh-CN.md)
 
-[![license](https://img.shields.io/github/license/ImDema/FreeMove.svg)](https://github.com/imDema/FreeMove/blob/master/LICENSE.txt)
+[![license](https://img.shields.io/github/license/fengyec2/FreeMove.svg)](https://github.com/fengyec2/FreeMove/blob/master/LICENSE.txt)
 
 自由移动目录而不破坏安装或快捷方式
 
@@ -13,17 +13,27 @@
 2. 从旧位置创建一个指向新位置的[符号链接](https://www.wikiwand.com/en/NTFS_junction_point)。任何尝试访问旧位置中文件的程序都会自动重定向到新的位置
 
 ## 下载
-[![Github All Releases](https://img.shields.io/github/downloads/imDema/FreeMove/total.svg)](https://github.com/imDema/FreeMove/releases/latest)
+[![Github All Releases](https://img.shields.io/github/downloads/fengyec2/FreeMove/total.svg)](https://github.com/fengyec2/FreeMove/releases/latest)
 
 #### 从 GitHub
 
-[下载最新版本](https://github.com/imDema/FreeMove/releases/latest)
+[下载最新版本](https://github.com/fengyec2/FreeMove/releases/latest)
 
-#### 从 Scoop
+**我该下载哪个版本？**
+
+| 版本 | 说明 | 运行要求 |
+| :--- | :--- | :--- |
+| **.NET 10 (标准版)** | 推荐大多数用户使用，体积最小。 | 需要安装 [.NET 10 运行时](https://dotnet.microsoft.com/zh-cn/download/dotnet/10.0) |
+| **.NET 10 (自包含版)** | 适合便携使用，无需安装 .NET 环境即可运行。 | 无 |
+| **.NET 4.8** | 适用于旧版 Windows（如 Windows 7/8）。 | 需要 .NET Framework 4.8（Win10/11 已内置） |
+
+*注：请根据你的系统架构（`win-x64`、`win-x86` 或 `win-arm64`）选择对应的下载包。*
+
+<!-- #### 从 Scoop
 
 ```
 scoop install freemove
-```
+``` -->
 
 ### 使用方法
 
@@ -51,8 +61,4 @@ scoop install freemove
 
 ## 贡献
 
-该项目目前仅维护修复，暂时没有新的功能在开发或计划中。
-
-我独自编写了该工具，目前我是唯一的开发者，目前我在攻读博士学位，因其他项目繁忙无法开发新功能。
-
-我会继续关注该项目并管理可能的贡献，如果你有兴趣贡献，请在 issue 中留言或在已有 issue 下评论。
+该项目最初由 [imDema](https://github.com/imDema) 开发。我目前维护该项目并欢迎贡献。如果你有兴趣贡献，请在 issue 中留言或在已有 issue 下评论。
