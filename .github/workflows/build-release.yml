@@ -32,6 +32,10 @@ jobs:
       matrix:
         framework: [net48, net10.0-windows]
         runtime: [win-x64, win-x86, win-arm64]
+        is_self_contained: [false, true]
+        exclude:
+          - framework: net48
+            is_self_contained: true
     runs-on: windows-latest
     
     env:
@@ -67,21 +71,29 @@ jobs:
           fi
 
       - name: Build and Publish
-        run: dotnet publish ${{ env.Project_Name }}/${{ env.Project_Name }}.csproj -c ${{ env.BUILD_CONFIG }} -f ${{ matrix.framework }} -r ${{ matrix.runtime }} --self-contained false /p:PublishSingleFile=false
+        shell: pwsh
+        run: |
+          $publishArgs = @("publish", "${{ env.Project_Name }}/${{ env.Project_Name }}.csproj", "-c", "${{ env.BUILD_CONFIG }}", "-f", "${{ matrix.framework }}", "-r", "${{ matrix.runtime }}", "/p:PublishSingleFile=false")
+          if ("${{ matrix.framework }}" -ne "net48") {
+            $publishArgs += "--self-contained", "${{ matrix.is_self_contained }}"
+          }
+          dotnet @publishArgs
 
       - name: Prepare and Zip Artifacts
         shell: pwsh
         run: |
           $publishPath = "${{ env.Project_Name }}/bin/${{ env.BUILD_CONFIG }}/${{ matrix.framework }}/${{ matrix.runtime }}/publish"
-          $zipName = "${{ env.Project_Name }}-${{ matrix.framework }}-${{ matrix.runtime }}-${{ env.ARTIFACT_NAME }}.zip"
+          $scSuffix = if ("${{ matrix.is_self_contained }}" -eq "true") { "SelfContained" } else { "FrameworkDependent" }
+          $zipName = "${{ env.Project_Name }}-${{ matrix.framework }}-${{ matrix.runtime }}-$scSuffix-${{ env.ARTIFACT_NAME }}.zip"
           Compress-Archive -Path "$publishPath/*" -DestinationPath "$zipName"
-          echo "ZIP_PATH=$zipName" >> $env:GITHUB_ENV
+          "ZIP_PATH=$zipName" | Add-Content -Path $env:GITHUB_ENV
+          "SC_SUFFIX=$scSuffix" | Add-Content -Path $env:GITHUB_ENV
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v7
         with:
-          name: ${{ env.Project_Name }}-${{ matrix.framework }}-${{ matrix.runtime }}-${{ env.ARTIFACT_NAME }}
-          path: ${{ env.Project_Name }}-${{ matrix.framework }}-${{ matrix.runtime }}-${{ env.ARTIFACT_NAME }}.zip
+          name: ${{ env.Project_Name }}-${{ matrix.framework }}-${{ matrix.runtime }}-${{ env.SC_SUFFIX }}-${{ env.ARTIFACT_NAME }}
+          path: ${{ env.ZIP_PATH }}
           retention-days: 30
 
   release:
