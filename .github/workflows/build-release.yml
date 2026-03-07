@@ -83,16 +83,16 @@ jobs:
         shell: pwsh
         run: |
           $publishPath = "${{ env.Project_Name }}/bin/${{ env.BUILD_CONFIG }}/${{ matrix.framework }}/${{ matrix.runtime }}/publish"
-          $scSuffix = if ("${{ matrix.is_self_contained }}" -eq "true") { "SelfContained" } else { "FrameworkDependent" }
-          $zipName = "${{ env.Project_Name }}-${{ matrix.framework }}-${{ matrix.runtime }}-$scSuffix-${{ env.ARTIFACT_NAME }}.zip"
+          $scSuffix = if ("${{ matrix.is_self_contained }}" -eq "true") { "-SelfContained" } else { "" }
+          $zipName = "${{ env.Project_Name }}-${{ matrix.framework }}-${{ matrix.runtime }}$scSuffix-${{ env.ARTIFACT_NAME }}.zip"
           Compress-Archive -Path "$publishPath/*" -DestinationPath "$zipName"
           "ZIP_PATH=$zipName" | Add-Content -Path $env:GITHUB_ENV
-          "SC_SUFFIX=$scSuffix" | Add-Content -Path $env:GITHUB_ENV
+          "ARTIFACT_DISPLAY_NAME=${{ env.Project_Name }}-${{ matrix.framework }}-${{ matrix.runtime }}$scSuffix-${{ env.ARTIFACT_NAME }}" | Add-Content -Path $env:GITHUB_ENV
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v7
         with:
-          name: ${{ env.Project_Name }}-${{ matrix.framework }}-${{ matrix.runtime }}-${{ env.SC_SUFFIX }}-${{ env.ARTIFACT_NAME }}
+          name: ${{ env.ARTIFACT_DISPLAY_NAME }}
           path: ${{ env.ZIP_PATH }}
           retention-days: 30
 
