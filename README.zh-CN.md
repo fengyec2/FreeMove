@@ -8,14 +8,14 @@
 
 你可以使用此工具将默认安装在 `C:\` 的程序移动到另一个驱动器，以节省主盘空间
 
-### 工作原理
+## 工作原理
 1. 文件被移动到新位置
 2. 从旧位置创建一个指向新位置的[符号链接](https://www.wikiwand.com/en/NTFS_junction_point)。任何尝试访问旧位置中文件的程序都会自动重定向到新的位置
 
 ## 下载
 [![Github All Releases](https://img.shields.io/github/downloads/fengyec2/FreeMove/total.svg)](https://github.com/fengyec2/FreeMove/releases/latest)
 
-#### 从 GitHub
+### 从 GitHub
 
 [下载最新版本](https://github.com/fengyec2/FreeMove/releases/latest)
 
@@ -23,19 +23,19 @@
 
 | 版本 | 说明 | 运行要求 |
 | :--- | :--- | :--- |
-| **.NET 10 (标准版)** | 推荐大多数用户使用，体积最小。 | 需要安装 [.NET 10 运行时](https://dotnet.microsoft.com/zh-cn/download/dotnet/10.0) |
-| **.NET 10 (自包含版)** | 适合便携使用，无需安装 .NET 环境即可运行。 | 无 |
-| **.NET 4.8** | 适用于旧版 Windows（如 Windows 7/8）。 | 需要 .NET Framework 4.8（Win10/11 已内置） |
+| **.NET 10 (标准版)** | 适合已安装 .NET 10 的用户，体积最小 | 需要安装 [.NET 10 运行时](https://dotnet.microsoft.com/zh-cn/download/dotnet/10.0) |
+| **.NET 10 (自包含版)** | 适合便携使用，无需安装 .NET 环境即可运行 | 无 |
+| **.NET 4.8** | 适用于不希望安装 .NET 10 或使用 Windows 7/8 系统的用户 | 需要 .NET Framework 4.8（Win10/11 已内置） |
 
 *注：请根据你的系统架构（`win-x64`、`win-x86` 或 `win-arm64`）选择对应的下载包。*
 
-<!-- #### 从 Scoop
+<!-- ### 从 Scoop
 
 ```
 scoop install freemove
 ``` -->
 
-### 使用方法
+## 使用方法
 
 运行可执行文件并使用图形界面
 
