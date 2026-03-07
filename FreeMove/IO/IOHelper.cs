@@ -1,4 +1,4 @@
-﻿// FreeMove -- Move directories without breaking shortcuts or installations 
+// FreeMove -- Move directories without breaking shortcuts or installations 
 //    Copyright(C) 2020  Luca De Martini
 
 //    This program is free software: you can redistribute it and/or modify
@@ -44,15 +44,7 @@ namespace FreeMove
             IntPtr hTemplateFile);
 
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        static extern bool DeviceIoControl(
-            IntPtr hDevice,
-            uint dwIoControlCode,
-            IntPtr lpInBuffer,
-            uint nInBufferSize,
-            IntPtr lpOutBuffer,
-            uint nOutBufferSize,
-            out uint lpBytesReturned,
-            IntPtr lpOverlapped);
+        static extern uint GetFinalPathNameByHandle(IntPtr hFile, [Out] StringBuilder lpszFilePath, uint cchFilePath, uint dwFlags);
 
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -61,25 +53,10 @@ namespace FreeMove
         const uint GENERIC_READ = 0x80000000;
         const uint FILE_SHARE_READ = 0x00000001;
         const uint OPEN_EXISTING = 3;
-        const uint FILE_FLAG_OPEN_REPARSE_POINT = 0x00200000;
         const uint FILE_FLAG_BACKUP_SEMANTICS = 0x02000000;
-        const uint FSCTL_GET_REPARSE_POINT = 0x000900A8;
-        const uint IO_REPARSE_TAG_SYMLINK = 0xA000000C;
-        const uint IO_REPARSE_TAG_MOUNT_POINT = 0xA0000003;
 
-        [StructLayout(LayoutKind.Sequential)]
-        struct REPARSE_DATA_BUFFER
-        {
-            public uint ReparseTag;
-            public ushort ReparseDataLength;
-            public ushort Reserved;
-            public ushort SubstituteNameOffset;
-            public ushort SubstituteNameLength;
-            public ushort PrintNameOffset;
-            public ushort PrintNameLength;
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x3FF0)]
-            public byte[] PathBuffer;
-        }
+        const uint VOLUME_NAME_DOS = 0x0;
+        const uint FILE_NAME_NORMALIZED = 0x0;
 
         enum SymbolicLink
         {
@@ -113,44 +90,30 @@ namespace FreeMove
         /// </summary>
         public static string GetSymbolicLinkTarget(string path)
         {
-            IntPtr handle = CreateFile(path, GENERIC_READ, FILE_SHARE_READ, IntPtr.Zero, OPEN_EXISTING, FILE_FLAG_OPEN_REPARSE_POINT | FILE_FLAG_BACKUP_SEMANTICS, IntPtr.Zero);
+            // Use FILE_FLAG_BACKUP_SEMANTICS to open directory
+            IntPtr handle = CreateFile(path, GENERIC_READ, FILE_SHARE_READ, IntPtr.Zero, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, IntPtr.Zero);
             if (handle == IntPtr.Zero || handle == new IntPtr(-1)) return null;
 
             try
             {
-                int bufferSize = Marshal.SizeOf(typeof(REPARSE_DATA_BUFFER));
-                IntPtr bufferPtr = Marshal.AllocHGlobal(bufferSize);
-                try
-                {
-                    uint bytesReturned;
-                    bool success = DeviceIoControl(handle, FSCTL_GET_REPARSE_POINT, IntPtr.Zero, 0, bufferPtr, (uint)bufferSize, out bytesReturned, IntPtr.Zero);
-                    if (!success) return null;
+                StringBuilder sb = new StringBuilder(1024);
+                uint res = GetFinalPathNameByHandle(handle, sb, (uint)sb.Capacity, VOLUME_NAME_DOS | FILE_NAME_NORMALIZED);
+                if (res == 0) return null;
 
-                    REPARSE_DATA_BUFFER reparseData = (REPARSE_DATA_BUFFER)Marshal.PtrToStructure(bufferPtr, typeof(REPARSE_DATA_BUFFER));
+                string target = sb.ToString();
 
-                    if (reparseData.ReparseTag == IO_REPARSE_TAG_SYMLINK)
-                    {
-                        string target = Encoding.Unicode.GetString(reparseData.PathBuffer, reparseData.SubstituteNameOffset, reparseData.SubstituteNameLength);
-                        if (target.StartsWith(@"\??\")) target = target.Substring(4);
-                        return target;
-                    }
-                    else if (reparseData.ReparseTag == IO_REPARSE_TAG_MOUNT_POINT)
-                    {
-                        string target = Encoding.Unicode.GetString(reparseData.PathBuffer, reparseData.SubstituteNameOffset, reparseData.SubstituteNameLength);
-                        if (target.StartsWith(@"\??\")) target = target.Substring(4);
-                        return target;
-                    }
-                }
-                finally
-                {
-                    Marshal.FreeHGlobal(bufferPtr);
-                }
+                // Normalize path: strip NT prefixes
+                if (target.StartsWith(@"\\?\UNC\", StringComparison.OrdinalIgnoreCase))
+                    target = @"\\" + target.Substring(8);
+                else if (target.StartsWith(@"\\?\"))
+                    target = target.Substring(4);
+
+                return target;
             }
             finally
             {
                 CloseHandle(handle);
             }
-            return null;
         }
         #endregion
 
