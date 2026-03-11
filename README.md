@@ -23,9 +23,9 @@ You can use this tool to move programs that install on C:\ by default to another
 
 | Version | Description | Requirement |
 | :--- | :--- | :--- |
-| **.NET 10 (Standard)** | Suitable for users with .NET 10 installed. Smallest size. | Requires [.NET 10 Runtime](https://dotnet.microsoft.com/download/dotnet/10.0) |
-| **.NET 10 (SelfContained)** | Best for portability. Works without installing .NET. | None |
-| **.NET 4.8** | Suitable for users who do not want to install .NET 10 or are using Windows 7/8 | Requires .NET Framework 4.8 (Built-in on Win10/11) |
+| **.NET 8 (Standard)** | Suitable for users with .NET 8 installed. Smallest size. | Requires [.NET 8 Runtime](https://dotnet.microsoft.com/download/dotnet/8.0) |
+| **.NET 8 (SelfContained)** | Best for portability. Works without installing .NET. | None |
+| **.NET 4.8** | Suitable for users who do not want to install .NET 8 or are using Windows 7/8 | Requires .NET Framework 4.8 (Built-in on Win10/11) |
 
 *Note: Choose the architecture (`win-x64`, `win-x86`, or `win-arm64`) that matches your system.*
 

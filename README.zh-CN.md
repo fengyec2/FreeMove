@@ -23,9 +23,9 @@
 
 | 版本 | 说明 | 运行要求 |
 | :--- | :--- | :--- |
-| **.NET 10 (标准版)** | 适合已安装 .NET 10 的用户，体积最小 | 需要安装 [.NET 10 运行时](https://dotnet.microsoft.com/zh-cn/download/dotnet/10.0) |
-| **.NET 10 (自包含版)** | 适合便携使用，无需安装 .NET 环境即可运行 | 无 |
-| **.NET 4.8** | 适用于不希望安装 .NET 10 或使用 Windows 7/8 系统的用户 | 需要 .NET Framework 4.8（Win10/11 已内置） |
+| **.NET 8 (标准版)** | 适合已安装 .NET 8 的用户，体积最小 | 需要安装 [.NET 8 运行时](https://dotnet.microsoft.com/zh-cn/download/dotnet/8.0) |
+| **.NET 8 (自包含版)** | 适合便携使用，无需安装 .NET 环境即可运行 | 无 |
+| **.NET 4.8** | 适用于不希望安装 .NET 8 或使用 Windows 7/8 系统的用户 | 需要 .NET Framework 4.8（Win10/11 已内置） |
 
 *注：请根据你的系统架构（`win-x64`、`win-x86` 或 `win-arm64`）选择对应的下载包。*
 
