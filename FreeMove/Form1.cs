@@ -269,6 +269,9 @@ namespace FreeMove
                         olddir.Attributes = attrib | FileAttributes.Hidden;
                     }
 
+                    // 刷新目录浏览器以显示最新状态（如符号链接）
+                    directoryBrowser1.RefreshBrowser();
+
                     MessageBox.Show(this, Properties.Resources.ResourceManager.GetString("DoneMessage"));
                 }
                 catch (IO.MoveOperation.CopyFailedException ex)

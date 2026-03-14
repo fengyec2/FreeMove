@@ -420,5 +420,53 @@ https://github.com/imDema</value>
   <data name="Everything_NotInstalled" xml:space="preserve">
     <value>未找到 Everything 或 DLL 丢失，搜索功能将不可用。</value>
   </data>
+  <data name="Menu_Refresh" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="Menu_New" xml:space="preserve">
+    <value>新建</value>
+  </data>
+  <data name="Menu_Folder" xml:space="preserve">
+    <value>文件夹</value>
+  </data>
+  <data name="Menu_File" xml:space="preserve">
+    <value>文件</value>
+  </data>
+  <data name="Menu_Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="Menu_Rename" xml:space="preserve">
+    <value>重命名</value>
+  </data>
+  <data name="ConfirmDelete_Title" xml:space="preserve">
+    <value>确认删除</value>
+  </data>
+  <data name="ConfirmDelete_Message" xml:space="preserve">
+    <value>确定要删除 '{0}' 吗？</value>
+  </data>
+  <data name="NewFolder_Title" xml:space="preserve">
+    <value>新建文件夹</value>
+  </data>
+  <data name="NewFolder_Prompt" xml:space="preserve">
+    <value>请输入新文件夹名称：</value>
+  </data>
+  <data name="NewFile_Title" xml:space="preserve">
+    <value>新建文件</value>
+  </data>
+  <data name="NewFile_Prompt" xml:space="preserve">
+    <value>请输入新文件名称：</value>
+  </data>
+  <data name="Error_FolderExists" xml:space="preserve">
+    <value>文件夹已存在。</value>
+  </data>
+  <data name="Error_FileExists" xml:space="preserve">
+    <value>文件已存在。</value>
+  </data>
+  <data name="Type_File" xml:space="preserve">
+    <value>文件</value>
+  </data>
+  <data name="Rename_Prompt" xml:space="preserve">
+    <value>请输入 '{0}' 的新名称：</value>
+  </data>
 </root>
 

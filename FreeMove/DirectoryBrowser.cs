@@ -75,6 +75,22 @@ namespace FreeMove
             setAsTargetListViewToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_SetTarget") ?? "Set as Target";
             locateInTreeViewToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_LocateInTreeView") ?? "Locate in TreeView";
             restoreSymlinkToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_RestoreSymlink") ?? "Restore Symbolic Link";
+
+            // TreeView Menu
+            newToolStripMenuItemTV.Text = Properties.Resources.ResourceManager.GetString("Menu_New") ?? "New";
+            newFolderToolStripMenuItemTV.Text = Properties.Resources.ResourceManager.GetString("Menu_Folder") ?? "Folder";
+            newFileToolStripMenuItemTV.Text = Properties.Resources.ResourceManager.GetString("Menu_File") ?? "File";
+            deleteToolStripMenuItemTV.Text = Properties.Resources.ResourceManager.GetString("Menu_Delete") ?? "Delete";
+            renameToolStripMenuItemTV.Text = Properties.Resources.ResourceManager.GetString("Menu_Rename") ?? "Rename";
+            refreshToolStripMenuItemTV.Text = Properties.Resources.ResourceManager.GetString("Menu_Refresh") ?? "Refresh";
+
+            // ListView Menu
+            newToolStripMenuItemLV.Text = Properties.Resources.ResourceManager.GetString("Menu_New") ?? "New";
+            newFolderToolStripMenuItemLV.Text = Properties.Resources.ResourceManager.GetString("Menu_Folder") ?? "Folder";
+            newFileToolStripMenuItemLV.Text = Properties.Resources.ResourceManager.GetString("Menu_File") ?? "File";
+            deleteToolStripMenuItemLV.Text = Properties.Resources.ResourceManager.GetString("Menu_Delete") ?? "Delete";
+            renameToolStripMenuItemLV.Text = Properties.Resources.ResourceManager.GetString("Menu_Rename") ?? "Rename";
+            refreshToolStripMenuItemLV.Text = Properties.Resources.ResourceManager.GetString("Menu_Refresh") ?? "Refresh";
         }
 
         public void RefreshBrowser()
@@ -245,6 +261,21 @@ namespace FreeMove
                     }
                     catch (UnauthorizedAccessException) { /* 跳过无权限子目录 */ }
                 }
+
+                // 列出文件
+                try
+                {
+                    foreach (string file in Directory.GetFiles(path))
+                    {
+                        FileInfo fi = new FileInfo(file);
+                        ListViewItem item = new ListViewItem(fi.Name);
+                        item.SubItems.Add(Properties.Resources.ResourceManager.GetString("Type_File") ?? "File");
+                        item.SubItems.Add("");
+                        item.Tag = fi.FullName;
+                        listView_Files.Items.Add(item);
+                    }
+                }
+                catch (UnauthorizedAccessException) { /* 跳过无权限文件 */ }
             }
             catch (UnauthorizedAccessException) { /* 跳过无权限根目录 */ }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
@@ -405,6 +436,246 @@ namespace FreeMove
             treeView_Dirs.SelectedNode = currentNode;
             currentNode.EnsureVisible();
             treeView_Dirs.Focus();
+        }
+
+        // Helper for Input Dialog
+        private string ShowInputDialog(string text, string caption, string defaultValue = "")
+        {
+            Form prompt = new Form()
+            {
+                Width = 400,
+                Height = 150,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                Text = caption,
+                StartPosition = FormStartPosition.CenterParent,
+                MaximizeBox = false,
+                MinimizeBox = false
+            };
+            Label textLabel = new Label() { Left = 20, Top = 20, Text = text, AutoSize = true };
+            TextBox textBox = new TextBox() { Left = 20, Top = 50, Width = 340, Text = defaultValue };
+            Button confirmation = new Button() { Text = "OK", Left = 260, Width = 100, Top = 80, DialogResult = DialogResult.OK };
+            
+            prompt.Controls.Add(textBox);
+            prompt.Controls.Add(confirmation);
+            prompt.Controls.Add(textLabel);
+            prompt.AcceptButton = confirmation;
+
+            return prompt.ShowDialog() == DialogResult.OK ? textBox.Text : "";
+        }
+
+        // TreeView Context Menu Handlers
+        private void newFolderToolStripMenuItemTV_Click(object sender, EventArgs e)
+        {
+            CreateNewItem(true);
+        }
+
+        private void newFileToolStripMenuItemTV_Click(object sender, EventArgs e)
+        {
+            CreateNewItem(false);
+        }
+
+        private void deleteToolStripMenuItemTV_Click(object sender, EventArgs e)
+        {
+            if (treeView_Dirs.SelectedNode != null && treeView_Dirs.SelectedNode.Parent != null) // Cannot delete Drive roots
+            {
+                DeleteItem((string)treeView_Dirs.SelectedNode.Tag, true, treeView_Dirs.SelectedNode);
+            }
+        }
+
+        private void renameToolStripMenuItemTV_Click(object sender, EventArgs e)
+        {
+             if (treeView_Dirs.SelectedNode != null && treeView_Dirs.SelectedNode.Parent != null)
+            {
+                RenameItem((string)treeView_Dirs.SelectedNode.Tag, true, treeView_Dirs.SelectedNode);
+            }
+        }
+
+        private void refreshToolStripMenuItemTV_Click(object sender, EventArgs e)
+        {
+            RefreshBrowser();
+        }
+
+        // ListView Context Menu Handlers
+        private void newFolderToolStripMenuItemLV_Click(object sender, EventArgs e)
+        {
+            CreateNewItem(true);
+        }
+
+        private void newFileToolStripMenuItemLV_Click(object sender, EventArgs e)
+        {
+            CreateNewItem(false);
+        }
+
+        private void deleteToolStripMenuItemLV_Click(object sender, EventArgs e)
+        {
+            if (listView_Files.SelectedItems.Count > 0)
+            {
+                string path = (string)listView_Files.SelectedItems[0].Tag;
+                bool isFolder = Directory.Exists(path);
+                DeleteItem(path, isFolder);
+            }
+        }
+
+        private void renameToolStripMenuItemLV_Click(object sender, EventArgs e)
+        {
+            if (listView_Files.SelectedItems.Count > 0)
+            {
+                string path = (string)listView_Files.SelectedItems[0].Tag;
+                bool isFolder = Directory.Exists(path);
+                RenameItem(path, isFolder);
+            }
+        }
+
+        private void refreshToolStripMenuItemLV_Click(object sender, EventArgs e)
+        {
+            RefreshBrowser();
+        }
+
+        // Shared Logic
+        private void CreateNewItem(bool isFolder)
+        {
+            if (treeView_Dirs.SelectedNode == null) return;
+
+            string currentPath = (string)treeView_Dirs.SelectedNode.Tag;
+            string typeName = isFolder ? (Properties.Resources.ResourceManager.GetString("Menu_Folder") ?? "Folder") : (Properties.Resources.ResourceManager.GetString("Menu_File") ?? "File");
+            string title = isFolder ? (Properties.Resources.ResourceManager.GetString("NewFolder_Title") ?? "New Folder") : (Properties.Resources.ResourceManager.GetString("NewFile_Title") ?? "New File");
+            string prompt = isFolder ? (Properties.Resources.ResourceManager.GetString("NewFolder_Prompt") ?? "Enter name for new Folder:") : (Properties.Resources.ResourceManager.GetString("NewFile_Prompt") ?? "Enter name for new File:");
+            
+            string name = ShowInputDialog(prompt, title);
+            
+            if (string.IsNullOrWhiteSpace(name)) return;
+
+            string fullPath = Path.Combine(currentPath, name);
+            try
+            {
+                if (isFolder)
+                {
+                    if (Directory.Exists(fullPath)) throw new Exception(Properties.Resources.ResourceManager.GetString("Error_FolderExists") ?? "Folder already exists.");
+                    Directory.CreateDirectory(fullPath);
+                    
+                    // Update TreeView if expanded
+                    if (treeView_Dirs.SelectedNode.IsExpanded)
+                    {
+                        TreeNode newNode = new TreeNode(name);
+                        newNode.Tag = fullPath;
+                        newNode.Nodes.Add(""); // Placeholder
+                        treeView_Dirs.SelectedNode.Nodes.Add(newNode);
+                    }
+                }
+                else
+                {
+                    if (File.Exists(fullPath)) throw new Exception(Properties.Resources.ResourceManager.GetString("Error_FileExists") ?? "File already exists.");
+                    File.Create(fullPath).Close();
+                }
+                RefreshListView(currentPath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, Properties.Resources.ResourceManager.GetString("ErrorTitle") ?? "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void DeleteItem(string path, bool isFolder, TreeNode nodeToRemove = null)
+        {
+            string name = Path.GetFileName(path);
+            string prompt = string.Format(Properties.Resources.ResourceManager.GetString("ConfirmDelete_Message") ?? "Are you sure you want to delete '{0}'?", name);
+            string title = Properties.Resources.ResourceManager.GetString("ConfirmDelete_Title") ?? "Confirm Delete";
+            
+            if (MessageBox.Show(prompt, title, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                try
+                {
+                    if (isFolder)
+                    {
+                        Directory.Delete(path, true);
+                        if (nodeToRemove != null) 
+                        {
+                            nodeToRemove.Remove();
+                        }
+                        else
+                        {
+                            // If deleted from ListView, try to remove from TreeView if visible
+                            // We can search for it in current node's children
+                            if (treeView_Dirs.SelectedNode != null)
+                            {
+                                foreach(TreeNode child in treeView_Dirs.SelectedNode.Nodes)
+                                {
+                                    if ((string)child.Tag == path)
+                                    {
+                                        child.Remove();
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        File.Delete(path);
+                    }
+                    
+                    if (treeView_Dirs.SelectedNode != null)
+                        RefreshListView((string)treeView_Dirs.SelectedNode.Tag);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, Properties.Resources.ResourceManager.GetString("ErrorTitle") ?? "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void RenameItem(string oldPath, bool isFolder, TreeNode nodeToUpdate = null)
+        {
+            string oldName = Path.GetFileName(oldPath);
+            string renameTitle = Properties.Resources.ResourceManager.GetString("Menu_Rename") ?? "Rename";
+            string prompt = string.Format(Properties.Resources.ResourceManager.GetString("Rename_Prompt") ?? "Enter new name for '{0}':", oldName);
+            
+            string newName = ShowInputDialog(prompt, renameTitle, oldName);
+            
+            if (string.IsNullOrWhiteSpace(newName) || newName == oldName) return;
+
+            string parentDir = Path.GetDirectoryName(oldPath);
+            string newPath = Path.Combine(parentDir, newName);
+
+            try
+            {
+                if (isFolder)
+                {
+                    Directory.Move(oldPath, newPath);
+                    if (nodeToUpdate != null)
+                    {
+                        nodeToUpdate.Text = newName;
+                        nodeToUpdate.Tag = newPath;
+                    }
+                    else
+                    {
+                        // Update TreeView node if visible
+                        if (treeView_Dirs.SelectedNode != null)
+                        {
+                            foreach(TreeNode child in treeView_Dirs.SelectedNode.Nodes)
+                            {
+                                if ((string)child.Tag == oldPath)
+                                {
+                                    child.Text = newName;
+                                    child.Tag = newPath;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    File.Move(oldPath, newPath);
+                }
+
+                if (treeView_Dirs.SelectedNode != null)
+                    RefreshListView((string)treeView_Dirs.SelectedNode.Tag);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, Properties.Resources.ResourceManager.GetString("ErrorTitle") ?? "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

@@ -427,4 +427,52 @@ Choose 'No' to COPY all files back (keeps the target folder).</value>
   <data name="Everything_NotInstalled" xml:space="preserve">
     <value>Everything is not installed or the DLL is missing. Search results will not be available.</value>
   </data>
+  <data name="Menu_Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="Menu_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Menu_Folder" xml:space="preserve">
+    <value>Folder</value>
+  </data>
+  <data name="Menu_File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="Menu_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Menu_Rename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="ConfirmDelete_Title" xml:space="preserve">
+    <value>Confirm Delete</value>
+  </data>
+  <data name="ConfirmDelete_Message" xml:space="preserve">
+    <value>Are you sure you want to delete '{0}'?</value>
+  </data>
+  <data name="NewFolder_Title" xml:space="preserve">
+    <value>New Folder</value>
+  </data>
+  <data name="NewFolder_Prompt" xml:space="preserve">
+    <value>Enter name for new Folder:</value>
+  </data>
+  <data name="NewFile_Title" xml:space="preserve">
+    <value>New File</value>
+  </data>
+  <data name="NewFile_Prompt" xml:space="preserve">
+    <value>Enter name for new File:</value>
+  </data>
+  <data name="Error_FolderExists" xml:space="preserve">
+    <value>Folder already exists.</value>
+  </data>
+  <data name="Error_FileExists" xml:space="preserve">
+    <value>File already exists.</value>
+  </data>
+  <data name="Type_File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="Rename_Prompt" xml:space="preserve">
+    <value>Enter new name for '{0}':</value>
+  </data>
 </root>
