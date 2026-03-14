@@ -390,5 +390,14 @@ https://github.com/imDema</value>
   <data name="Type_Folder" xml:space="preserve">
     <value>文件夹</value>
   </data>
+  <data name="Search_Placeholder" xml:space="preserve">
+    <value>使用 Everything 搜索...</value>
+  </data>
+  <data name="Everything_NotRunning" xml:space="preserve">
+    <value>Everything 未运行，搜索功能将不可用。</value>
+  </data>
+  <data name="Everything_NotInstalled" xml:space="preserve">
+    <value>未找到 Everything 或 DLL 丢失，搜索功能将不可用。</value>
+  </data>
 </root>
 

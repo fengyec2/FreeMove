@@ -397,4 +397,13 @@ Language:
   <data name="Type_Folder" xml:space="preserve">
     <value>Folder</value>
   </data>
+  <data name="Search_Placeholder" xml:space="preserve">
+    <value>Search with Everything...</value>
+  </data>
+  <data name="Everything_NotRunning" xml:space="preserve">
+    <value>Everything is not running. Search results will not be available.</value>
+  </data>
+  <data name="Everything_NotInstalled" xml:space="preserve">
+    <value>Everything is not installed or the DLL is missing. Search results will not be available.</value>
+  </data>
 </root>

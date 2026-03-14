@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace FreeMove
 {
@@ -33,11 +34,26 @@ namespace FreeMove
             LoadDrives();
         }
 
+        private const int EM_SETCUEBANNER = 0x1501;
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, string lParam);
+
+        private void SetPlaceholder(TextBox textBox, string placeholder)
+        {
+#if NETCOREAPP
+            textBox.PlaceholderText = placeholder;
+#else
+            SendMessage(textBox.Handle, EM_SETCUEBANNER, (IntPtr)1, placeholder);
+#endif
+        }
+
         public void ApplyLanguage()
         {
             button_SetSource.Text = Properties.Resources.ResourceManager.GetString("Button_SetSource") ?? "← Set Source";
             button_SetTarget.Text = Properties.Resources.ResourceManager.GetString("Button_SetTarget") ?? "→ Set Target";
             
+            SetPlaceholder(textBox_Search, Properties.Resources.ResourceManager.GetString("Search_Placeholder") ?? "Search with Everything...");
+
             if (listView_Files.Columns.Count >= 3)
             {
                 listView_Files.Columns[0].Text = Properties.Resources.ResourceManager.GetString("Column_Name") ?? "Name";
@@ -91,7 +107,90 @@ namespace FreeMove
 
         private void treeView_Dirs_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            // 清除搜索框，触发视图切换回普通模式
+            if (!string.IsNullOrEmpty(textBox_Search.Text))
+            {
+                textBox_Search.Text = string.Empty;
+            }
             RefreshListView((string)e.Node.Tag);
+        }
+
+        private void textBox_Search_TextChanged(object sender, EventArgs e)
+        {
+            string query = textBox_Search.Text.Trim();
+            if (string.IsNullOrEmpty(query))
+            {
+                if (treeView_Dirs.SelectedNode != null)
+                {
+                    RefreshListView((string)treeView_Dirs.SelectedNode.Tag);
+                }
+                else
+                {
+                    listView_Files.Items.Clear();
+                }
+                return;
+            }
+
+            PerformSearch(query);
+        }
+
+        private void PerformSearch(string query)
+        {
+            if (!Everything.IsAvailable())
+             {
+                 string error = Everything.GetLastErrorMessage();
+                 string message;
+                 
+                 if (error == "Everything is not running")
+                 {
+                     message = Properties.Resources.ResourceManager.GetString("Everything_NotRunning") ?? "Everything is not running.";
+                 }
+                 else if (error == "DLL not found")
+                 {
+                     message = Properties.Resources.ResourceManager.GetString("Everything_NotInstalled") ?? "Everything is not installed or the DLL is missing.";
+                 }
+                 else
+                 {
+                     message = error; // 显示其他具体错误
+                 }
+                 
+                 listView_Files.Items.Clear();
+                 ListViewItem item = new ListViewItem(message);
+                item.ForeColor = Color.Red;
+                listView_Files.Items.Add(item);
+                return;
+            }
+
+            listView_Files.Items.Clear();
+            // 限制搜索结果为文件夹
+            foreach (string path in Everything.Search("folder:" + query))
+            {
+                try
+                {
+                    if (Directory.Exists(path))
+                    {
+                        DirectoryInfo di = new DirectoryInfo(path);
+                        ListViewItem item = new ListViewItem(di.Name);
+                        
+                        bool isReparse = IOHelper.IsReparsePoint(di.FullName);
+                        if (isReparse)
+                        {
+                            item.SubItems.Add(Properties.Resources.ResourceManager.GetString("Type_Symlink") ?? "Symbolic Link");
+                            item.SubItems.Add(IOHelper.GetSymbolicLinkTarget(di.FullName) ?? "");
+                            item.ForeColor = Color.Green;
+                        }
+                        else
+                        {
+                            item.SubItems.Add(Properties.Resources.ResourceManager.GetString("Type_Folder") ?? "Folder");
+                            item.SubItems.Add(di.FullName); // 在搜索结果中，第三列显示完整路径
+                        }
+                        
+                        item.Tag = di.FullName;
+                        listView_Files.Items.Add(item);
+                    }
+                }
+                catch { /* 忽略搜索结果中的错误项 */ }
+            }
         }
 
         private void RefreshListView(string path)

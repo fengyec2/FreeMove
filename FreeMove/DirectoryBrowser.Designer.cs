@@ -30,6 +30,8 @@ namespace FreeMove
             this.panel_Buttons = new System.Windows.Forms.Panel();
             this.button_SetSource = new System.Windows.Forms.Button();
             this.button_SetTarget = new System.Windows.Forms.Button();
+            this.panel_Search = new System.Windows.Forms.Panel();
+            this.textBox_Search = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_Main)).BeginInit();
             this.splitContainer_Main.Panel1.SuspendLayout();
             this.splitContainer_Main.Panel2.SuspendLayout();
@@ -52,6 +54,7 @@ namespace FreeMove
             // splitContainer_Main.Panel2
             // 
             this.splitContainer_Main.Panel2.Controls.Add(this.listView_Files);
+            this.splitContainer_Main.Panel2.Controls.Add(this.panel_Search);
             this.splitContainer_Main.Panel2.Controls.Add(this.panel_Buttons);
             this.splitContainer_Main.Size = new System.Drawing.Size(565, 260);
             this.splitContainer_Main.SplitterDistance = 180;
@@ -90,16 +93,35 @@ namespace FreeMove
             this.setAsTargetToolStripMenuItem.Text = "Set as Target";
             this.setAsTargetToolStripMenuItem.Click += new System.EventHandler(this.setAsTargetToolStripMenuItem_Click);
             // 
+            // panel_Search
+            // 
+            this.panel_Search.Controls.Add(this.textBox_Search);
+            this.panel_Search.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel_Search.Location = new System.Drawing.Point(0, 0);
+            this.panel_Search.Name = "panel_Search";
+            this.panel_Search.Size = new System.Drawing.Size(381, 30);
+            this.panel_Search.TabIndex = 2;
+            // 
+            // textBox_Search
+            // 
+            this.textBox_Search.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_Search.Location = new System.Drawing.Point(3, 4);
+            this.textBox_Search.Name = "textBox_Search";
+            this.textBox_Search.Size = new System.Drawing.Size(375, 21);
+            this.textBox_Search.TabIndex = 0;
+            this.textBox_Search.TextChanged += new System.EventHandler(this.textBox_Search_TextChanged);
+            // 
             // listView_Files
             // 
             this.listView_Files.ContextMenuStrip = this.contextMenu_ListView;
             this.listView_Files.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView_Files.FullRowSelect = true;
             this.listView_Files.HideSelection = false;
-            this.listView_Files.Location = new System.Drawing.Point(0, 0);
+            this.listView_Files.Location = new System.Drawing.Point(0, 30);
             this.listView_Files.MultiSelect = false;
             this.listView_Files.Name = "listView_Files";
-            this.listView_Files.Size = new System.Drawing.Size(381, 230);
+            this.listView_Files.Size = new System.Drawing.Size(381, 200);
             this.listView_Files.TabIndex = 0;
             this.listView_Files.UseCompatibleStateImageBehavior = false;
             this.listView_Files.View = System.Windows.Forms.View.Details;
@@ -182,6 +204,8 @@ namespace FreeMove
         private System.Windows.Forms.Panel panel_Buttons;
         private System.Windows.Forms.Button button_SetSource;
         private System.Windows.Forms.Button button_SetTarget;
+        private System.Windows.Forms.Panel panel_Search;
+        private System.Windows.Forms.TextBox textBox_Search;
         private System.Windows.Forms.ContextMenuStrip contextMenu_TreeView;
         private System.Windows.Forms.ToolStripMenuItem setAsSourceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem setAsTargetToolStripMenuItem;
