@@ -2,10 +2,7 @@
 
 [简体中文](README.zh-CN.md) · [English](README.md)
 
-<img src="https://img.shields.io/github/license/fengyec2/FreeMove" alt="License"/>
-<img src="https://img.shields.io/github/v/release/fengyec2/FreeMove" alt="Version"/>
-<img src="https://img.shields.io/github/actions/workflow/status/fengyec2/FreeMove/build-release.yml" alt="Build"/>
-<img src="https://img.shields.io/github/downloads/fengyec2/FreeMove/total" alt="Downloads"/>
+<img src="https://img.shields.io/github/license/fengyec2/FreeMove" alt="License"/> <img src="https://img.shields.io/github/v/release/fengyec2/FreeMove" alt="Version"/> <img src="https://img.shields.io/github/actions/workflow/status/fengyec2/FreeMove/build-release.yml" alt="Build"/> <img src="https://img.shields.io/github/downloads/fengyec2/FreeMove/total" alt="Downloads"/>
 
 Move directories freely without breaking installations or shortcuts
 
@@ -14,6 +11,12 @@ You can use this tool to move programs that install on `C:\` by default to anoth
 ## How It works
 1. The files are moved to the new location
 2. A [symbolic link](https://www.wikiwand.com/en/NTFS_junction_point) is created from the old location redirecting to the new one. Any program trying to access a file in the old location will automatically be redirected to its new location
+
+## Core Features
+- [x] Move directories or files
+- [x] Create symbolic links
+- [x] Quickly restore symbolic links
+- [x] Everything integration
 
 ## Download
 
@@ -46,7 +49,10 @@ Run the executable and use the GUI
 > This program requires administrator privileges for its core functionality
 
 ## Recommendations
-You should not move important system directories as they can break core functionalities like Windows Update and Windows Store Apps.
+
+>[!WARNING]
+>
+> You should not move important system directories as they can break core functionalities like Windows Update and Windows Store Apps.
 
 `C:\Users` - `C:\Documents and Settings` - `C:\Program Files` - `C:\Program Files (x86)` should not be moved. If you wish to do It anyway do it at your own risk. To move a directory back refer to the last part of the readme.
 

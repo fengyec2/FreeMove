@@ -3,10 +3,7 @@
 [English](README.md) · [简体中文](README.zh-CN.md)
 
 
-<img src="https://img.shields.io/github/license/fengyec2/FreeMove" alt="License"/>
-<img src="https://img.shields.io/github/v/release/fengyec2/FreeMove" alt="Version"/>
-<img src="https://img.shields.io/github/actions/workflow/status/fengyec2/FreeMove/build-release.yml" alt="Build"/>
-<img src="https://img.shields.io/github/downloads/fengyec2/FreeMove/total" alt="Downloads"/>
+<img src="https://img.shields.io/github/license/fengyec2/FreeMove" alt="License"/> <img src="https://img.shields.io/github/v/release/fengyec2/FreeMove" alt="Version"/> <img src="https://img.shields.io/github/actions/workflow/status/fengyec2/FreeMove/build-release.yml" alt="Build"/> <img src="https://img.shields.io/github/downloads/fengyec2/FreeMove/total" alt="Downloads"/>
 
 自由移动目录而不破坏安装或快捷方式
 
@@ -15,6 +12,13 @@
 ## 工作原理
 1. 文件被移动到新位置
 2. 从旧位置创建一个指向新位置的[符号链接](https://www.wikiwand.com/en/NTFS_junction_point)。任何尝试访问旧位置中文件的程序都会自动重定向到新的位置
+
+## 核心功能
+
+- [x] 移动目录或文件
+- [x] 创建符号链接
+- [x] 快速恢复符号链接
+- [x] Everything 集成
 
 ## 下载
 
@@ -47,7 +51,10 @@ scoop install freemove
 > 此程序的核心功能需要管理员权限
 
 ## 建议
-你不应该移动重要的系统目录，因为它们可能会破坏诸如 Windows Update 和 Windows Store 应用之类的核心功能。
+
+>[!WARNING]
+>
+> 你不应该移动重要的系统目录，因为它们可能会破坏诸如 Windows Update 和 Windows Store 应用之类的核心功能。
 
 `C:\Users` - `C:\Documents and Settings` - `C:\Program Files` - `C:\Program Files (x86)` 不应被移动。如果你仍然想移动，请自行承担风险。要将目录移回，请参阅 readme 的最后部分。
 
