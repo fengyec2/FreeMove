@@ -15,21 +15,14 @@
 //    along with this program.If not, see<http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using System.Net.Http;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace FreeMove
 {
@@ -103,7 +96,7 @@ namespace FreeMove
 
             TextReader Reader = new StreamReader(ResponseStream);
             const string pattern = "\"tag_name\":\"([0-9.]{5,9})\"";
-            NewVersion = Regex.Match(Reader.ReadToEnd(), pattern,RegexOptions.Multiline).Groups[1].Value;
+            NewVersion = Regex.Match(Reader.ReadToEnd(), pattern, RegexOptions.Multiline).Groups[1].Value;
 
             if (NewVersion == "") throw new Exception(Properties.Resources.GitHubErrorMessage);
             return CurrentVersion != NewVersion;

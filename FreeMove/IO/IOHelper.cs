@@ -17,11 +17,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace FreeMove
@@ -161,7 +159,7 @@ namespace FreeMove
             //Check for existence of directories
             if (!Directory.Exists(source))
                 exceptions.Add(new Exception("Source folder does not exist"));
-            
+
             if (Directory.Exists(destination))
                 exceptions.Add(new Exception("Destination folder already contains a folder with the same name"));
 
@@ -171,7 +169,7 @@ namespace FreeMove
                 if (!form.chkBox_createDest.Checked && !Directory.Exists(Directory.GetParent(destination).FullName))
                     exceptions.Add(new Exception("Destination folder does not exist"));
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 exceptions.Add(e);
             }
@@ -183,7 +181,7 @@ namespace FreeMove
             //Check admin privileges
             string TestFile = Path.Combine(Path.GetDirectoryName(source), "deleteme");
             int ti;
-            for (ti = 0; File.Exists(TestFile + ti.ToString()) ; ti++); // Change name if a file with the same name already exists
+            for (ti = 0; File.Exists(TestFile + ti.ToString()); ti++) ; // Change name if a file with the same name already exists
             TestFile += ti.ToString();
 
             try
@@ -229,7 +227,8 @@ namespace FreeMove
                 DriveInfo dstDrive = new(Path.GetPathRoot(destination));
                 if (dstDrive.AvailableFreeSpace < size)
                     exceptions.Add(new Exception($"There is not enough free space on the {dstDrive.Name} disk. {size / 1000000}MB required, {dstDrive.AvailableFreeSpace / 1000000} available."));
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 exceptions.Add(e);
             }
@@ -263,7 +262,8 @@ namespace FreeMove
                 {
                     Parallel.ForEach(Directory.GetFiles(source, "*.exe", SearchOption.AllDirectories), CheckFile);
                     Parallel.ForEach(Directory.GetFiles(source, "*.dll", SearchOption.AllDirectories), CheckFile);
-                } else
+                }
+                else
                 {
                     Parallel.ForEach(Directory.GetFiles(source, "*", SearchOption.AllDirectories), CheckFile);
                 }

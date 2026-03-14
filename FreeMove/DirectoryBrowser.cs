@@ -1,14 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace FreeMove
 {
@@ -59,7 +53,7 @@ namespace FreeMove
         {
             button_SetSource.Text = Properties.Resources.ResourceManager.GetString("Button_SetSource") ?? "← Set Source";
             button_SetTarget.Text = Properties.Resources.ResourceManager.GetString("Button_SetTarget") ?? "→ Set Target";
-            
+
             SetPlaceholder(textBox_Search, Properties.Resources.ResourceManager.GetString("Search_Placeholder") ?? "Search with Everything...");
 
             if (listView_Files.Columns.Count >= 3)
@@ -175,25 +169,25 @@ namespace FreeMove
         private void PerformSearch(string query)
         {
             if (!Everything.IsAvailable())
-             {
-                 string error = Everything.GetLastErrorMessage();
-                 string message;
-                 
-                 if (error == "Everything is not running")
-                 {
-                     message = Properties.Resources.ResourceManager.GetString("Everything_NotRunning") ?? "Everything is not running.";
-                 }
-                 else if (error == "DLL not found")
-                 {
-                     message = Properties.Resources.ResourceManager.GetString("Everything_NotInstalled") ?? "Everything is not installed or the DLL is missing.";
-                 }
-                 else
-                 {
-                     message = error; // 显示其他具体错误
-                 }
-                 
-                 listView_Files.Items.Clear();
-                 ListViewItem item = new ListViewItem(message);
+            {
+                string error = Everything.GetLastErrorMessage();
+                string message;
+
+                if (error == "Everything is not running")
+                {
+                    message = Properties.Resources.ResourceManager.GetString("Everything_NotRunning") ?? "Everything is not running.";
+                }
+                else if (error == "DLL not found")
+                {
+                    message = Properties.Resources.ResourceManager.GetString("Everything_NotInstalled") ?? "Everything is not installed or the DLL is missing.";
+                }
+                else
+                {
+                    message = error; // 显示其他具体错误
+                }
+
+                listView_Files.Items.Clear();
+                ListViewItem item = new ListViewItem(message);
                 item.ForeColor = Color.Red;
                 listView_Files.Items.Add(item);
                 return;
@@ -209,7 +203,7 @@ namespace FreeMove
                     {
                         DirectoryInfo di = new DirectoryInfo(path);
                         ListViewItem item = new ListViewItem(di.Name);
-                        
+
                         bool isReparse = IOHelper.IsReparsePoint(di.FullName);
                         if (isReparse)
                         {
@@ -222,7 +216,7 @@ namespace FreeMove
                             item.SubItems.Add(Properties.Resources.ResourceManager.GetString("Type_Folder") ?? "Folder");
                             item.SubItems.Add(di.FullName); // 在搜索结果中，第三列显示完整路径
                         }
-                        
+
                         item.Tag = di.FullName;
                         listView_Files.Items.Add(item);
                     }
@@ -242,7 +236,7 @@ namespace FreeMove
                     {
                         DirectoryInfo di = new DirectoryInfo(dir);
                         ListViewItem item = new ListViewItem(di.Name);
-                        
+
                         bool isReparse = IOHelper.IsReparsePoint(di.FullName);
                         if (isReparse)
                         {
@@ -255,7 +249,7 @@ namespace FreeMove
                             item.SubItems.Add(Properties.Resources.ResourceManager.GetString("Type_Folder") ?? "Folder");
                             item.SubItems.Add("");
                         }
-                        
+
                         item.Tag = di.FullName;
                         listView_Files.Items.Add(item);
                     }
@@ -356,7 +350,7 @@ namespace FreeMove
                         {
                             string prompt = string.Format(Properties.Resources.ResourceManager.GetString("Restore_Prompt"), path, target);
                             string title = Properties.Resources.ResourceManager.GetString("Restore_Title");
-                            
+
                             DialogResult result = MessageBox.Show(prompt, title, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                             if (result == DialogResult.Yes || result == DialogResult.No)
                             {
@@ -370,15 +364,15 @@ namespace FreeMove
                         }
                         else
                         {
-                            MessageBox.Show(Properties.Resources.ResourceManager.GetString("Restore_InvalidTarget"), 
-                                Properties.Resources.ResourceManager.GetString("ErrorTitle"), 
+                            MessageBox.Show(Properties.Resources.ResourceManager.GetString("Restore_InvalidTarget"),
+                                Properties.Resources.ResourceManager.GetString("ErrorTitle"),
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     else
                     {
-                        MessageBox.Show(Properties.Resources.ResourceManager.GetString("Restore_NotSymlink"), 
-                            Properties.Resources.ResourceManager.GetString("ErrorTitle"), 
+                        MessageBox.Show(Properties.Resources.ResourceManager.GetString("Restore_NotSymlink"),
+                            Properties.Resources.ResourceManager.GetString("ErrorTitle"),
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
@@ -388,7 +382,7 @@ namespace FreeMove
         private void LocatePathInTreeView(string targetPath)
         {
             targetPath = targetPath.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
-            
+
             // 找到对应的驱动器根节点
             TreeNode currentNode = null;
             foreach (TreeNode node in treeView_Dirs.Nodes)
@@ -454,7 +448,7 @@ namespace FreeMove
             Label textLabel = new Label() { Left = 20, Top = 20, Text = text, AutoSize = true };
             TextBox textBox = new TextBox() { Left = 20, Top = 50, Width = 340, Text = defaultValue };
             Button confirmation = new Button() { Text = "OK", Left = 260, Width = 100, Top = 80, DialogResult = DialogResult.OK };
-            
+
             prompt.Controls.Add(textBox);
             prompt.Controls.Add(confirmation);
             prompt.Controls.Add(textLabel);
@@ -484,7 +478,7 @@ namespace FreeMove
 
         private void renameToolStripMenuItemTV_Click(object sender, EventArgs e)
         {
-             if (treeView_Dirs.SelectedNode != null && treeView_Dirs.SelectedNode.Parent != null)
+            if (treeView_Dirs.SelectedNode != null && treeView_Dirs.SelectedNode.Parent != null)
             {
                 RenameItem((string)treeView_Dirs.SelectedNode.Tag, true, treeView_Dirs.SelectedNode);
             }
@@ -540,9 +534,9 @@ namespace FreeMove
             string typeName = isFolder ? (Properties.Resources.ResourceManager.GetString("Menu_Folder") ?? "Folder") : (Properties.Resources.ResourceManager.GetString("Menu_File") ?? "File");
             string title = isFolder ? (Properties.Resources.ResourceManager.GetString("NewFolder_Title") ?? "New Folder") : (Properties.Resources.ResourceManager.GetString("NewFile_Title") ?? "New File");
             string prompt = isFolder ? (Properties.Resources.ResourceManager.GetString("NewFolder_Prompt") ?? "Enter name for new Folder:") : (Properties.Resources.ResourceManager.GetString("NewFile_Prompt") ?? "Enter name for new File:");
-            
+
             string name = ShowInputDialog(prompt, title);
-            
+
             if (string.IsNullOrWhiteSpace(name)) return;
 
             string fullPath = Path.Combine(currentPath, name);
@@ -552,7 +546,7 @@ namespace FreeMove
                 {
                     if (Directory.Exists(fullPath)) throw new Exception(Properties.Resources.ResourceManager.GetString("Error_FolderExists") ?? "Folder already exists.");
                     Directory.CreateDirectory(fullPath);
-                    
+
                     // Update TreeView if expanded
                     if (treeView_Dirs.SelectedNode.IsExpanded)
                     {
@@ -580,7 +574,7 @@ namespace FreeMove
             string name = Path.GetFileName(path);
             string prompt = string.Format(Properties.Resources.ResourceManager.GetString("ConfirmDelete_Message") ?? "Are you sure you want to delete '{0}'?", name);
             string title = Properties.Resources.ResourceManager.GetString("ConfirmDelete_Title") ?? "Confirm Delete";
-            
+
             if (MessageBox.Show(prompt, title, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 try
@@ -588,7 +582,7 @@ namespace FreeMove
                     if (isFolder)
                     {
                         Directory.Delete(path, true);
-                        if (nodeToRemove != null) 
+                        if (nodeToRemove != null)
                         {
                             nodeToRemove.Remove();
                         }
@@ -598,7 +592,7 @@ namespace FreeMove
                             // We can search for it in current node's children
                             if (treeView_Dirs.SelectedNode != null)
                             {
-                                foreach(TreeNode child in treeView_Dirs.SelectedNode.Nodes)
+                                foreach (TreeNode child in treeView_Dirs.SelectedNode.Nodes)
                                 {
                                     if ((string)child.Tag == path)
                                     {
@@ -613,7 +607,7 @@ namespace FreeMove
                     {
                         File.Delete(path);
                     }
-                    
+
                     if (treeView_Dirs.SelectedNode != null)
                         RefreshListView((string)treeView_Dirs.SelectedNode.Tag);
                 }
@@ -629,9 +623,9 @@ namespace FreeMove
             string oldName = Path.GetFileName(oldPath);
             string renameTitle = Properties.Resources.ResourceManager.GetString("Menu_Rename") ?? "Rename";
             string prompt = string.Format(Properties.Resources.ResourceManager.GetString("Rename_Prompt") ?? "Enter new name for '{0}':", oldName);
-            
+
             string newName = ShowInputDialog(prompt, renameTitle, oldName);
-            
+
             if (string.IsNullOrWhiteSpace(newName) || newName == oldName) return;
 
             string parentDir = Path.GetDirectoryName(oldPath);
@@ -652,7 +646,7 @@ namespace FreeMove
                         // Update TreeView node if visible
                         if (treeView_Dirs.SelectedNode != null)
                         {
-                            foreach(TreeNode child in treeView_Dirs.SelectedNode.Nodes)
+                            foreach (TreeNode child in treeView_Dirs.SelectedNode.Nodes)
                             {
                                 if ((string)child.Tag == oldPath)
                                 {

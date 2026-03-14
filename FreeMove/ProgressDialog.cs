@@ -15,16 +15,8 @@
 //    along with this program.If not, see<http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
-using System.Threading;
 
 namespace FreeMove
 {
@@ -32,7 +24,8 @@ namespace FreeMove
     {
         private bool cancellable = true;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public bool Cancellable {
+        public bool Cancellable
+        {
             get => cancellable;
             set
             {
@@ -52,7 +45,7 @@ namespace FreeMove
         public ProgressDialog(string message)
         {
             InitializeComponent();
-            
+
             Message = message;
             progressBar1.Maximum = BAR_RESOLUTION;
             progressBar1.Value = 0;
@@ -67,17 +60,17 @@ namespace FreeMove
 
         public void UpdateProgress(IO.IOOperation.ProgressChangedEventArgs e)
         {
-            if(IsHandleCreated)
-            label_Progress?.BeginInvoke(new Action(() =>
-            {
-                float percentage = ((float)e.Progress / e.Max);
-                string finishing = Properties.Resources.ResourceManager.GetString("ProgressFinishingText");
-                label_Progress.Text = e.Progress == e.Max ? finishing : $"{e.Progress}/{e.Max}";
-                if (e.Progress == e.Max)
-                    Cancellable = false;
-                // label_Progress.Text = $"{percentage*100f, 3:0.0}%";
-                progressBar1.Value = (int)(percentage * BAR_RESOLUTION + 0.5f);
-            }));
+            if (IsHandleCreated)
+                label_Progress?.BeginInvoke(new Action(() =>
+                {
+                    float percentage = ((float)e.Progress / e.Max);
+                    string finishing = Properties.Resources.ResourceManager.GetString("ProgressFinishingText");
+                    label_Progress.Text = e.Progress == e.Max ? finishing : $"{e.Progress}/{e.Max}";
+                    if (e.Progress == e.Max)
+                        Cancellable = false;
+                    // label_Progress.Text = $"{percentage*100f, 3:0.0}%";
+                    progressBar1.Value = (int)(percentage * BAR_RESOLUTION + 0.5f);
+                }));
         }
     }
 }

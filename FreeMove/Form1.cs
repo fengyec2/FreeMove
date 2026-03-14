@@ -15,18 +15,10 @@
 //    along with this program.If not, see<http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
-using System.Runtime.InteropServices;
 
 namespace FreeMove
 {
@@ -39,7 +31,7 @@ namespace FreeMove
         {
             //Initialize UI elements
             InitializeComponent();
-            
+
             // 初始化目录浏览器事件
             directoryBrowser1.SourceSelected += (s, path) => textBox_From.Text = path;
             directoryBrowser1.TargetSelected += (s, path) => textBox_To.Text = path;
@@ -51,7 +43,7 @@ namespace FreeMove
             ApplyLanguage();
             SetToolTips();
 
-            
+
 
 
             //Check whether the program is set to update on its start
@@ -64,7 +56,7 @@ namespace FreeMove
                 //If there is an update show the update dialog
                 if (updater != null) updater.ShowDialog();
             }
-            switch(Settings.PermCheck)
+            switch (Settings.PermCheck)
             {
                 case Settings.PermissionCheckLevel.None:
                     noneToolStripMenuItem.Checked = true;
@@ -148,15 +140,15 @@ namespace FreeMove
                 // 先验证目标文件夹是否存在
                 if (!Directory.Exists(targetPath))
                 {
-                    MessageBox.Show(Properties.Resources.ResourceManager.GetString("Restore_InvalidTarget"), 
-                        Properties.Resources.ResourceManager.GetString("ErrorTitle"), 
+                    MessageBox.Show(Properties.Resources.ResourceManager.GetString("Restore_InvalidTarget"),
+                        Properties.Resources.ResourceManager.GetString("ErrorTitle"),
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 // 准备一个临时路径来存放符号链接（以便恢复）
                 string tempSymlinkPath = symlinkPath + ".bak_" + DateTime.Now.Ticks;
-                
+
                 try
                 {
                     // 1. 将符号链接重命名（本质是移动）
@@ -164,8 +156,8 @@ namespace FreeMove
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Could not prepare restoration: " + ex.Message, 
-                        Properties.Resources.ResourceManager.GetString("ErrorTitle"), 
+                    MessageBox.Show("Could not prepare restoration: " + ex.Message,
+                        Properties.Resources.ResourceManager.GetString("ErrorTitle"),
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
@@ -186,7 +178,7 @@ namespace FreeMove
                             IO.CopyOperation copyOp = new IO.CopyOperation(targetPath, symlinkPath);
                             copyOp.ProgressChanged += (sender, e) => progressDialog.UpdateProgress(e);
                             copyOp.End += (sender, e) => progressDialog.Invoke((Action)progressDialog.Close);
-                            
+
                             Task task = copyOp.Run();
                             progressDialog.ShowDialog(this);
                             await task;
@@ -204,8 +196,8 @@ namespace FreeMove
                     }
                     catch { /* 忽略恢复失败 */ }
 
-                    MessageBox.Show("Restoration failed: " + ex.Message, 
-                        Properties.Resources.ResourceManager.GetString("ErrorTitle"), 
+                    MessageBox.Show("Restoration failed: " + ex.Message,
+                        Properties.Resources.ResourceManager.GetString("ErrorTitle"),
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
@@ -222,12 +214,12 @@ namespace FreeMove
                 }
             }
             finally
-             {
-                 Enabled = true;
-                 // 刷新列表
-                 directoryBrowser1.RefreshBrowser(); 
-             }
-         }
+            {
+                Enabled = true;
+                // 刷新列表
+                directoryBrowser1.RefreshBrowser();
+            }
+        }
 
         private bool PreliminaryCheck(string source, string destination)
         {
@@ -359,7 +351,7 @@ namespace FreeMove
                     if (DialogResult.Yes == MessageBox.Show(this, message, title, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2))
                     {
                         moveOp.Cancel();
-                        progressDialog.BeginInvoke(new Action(() =>  progressDialog.Cancellable = false));
+                        progressDialog.BeginInvoke(new Action(() => progressDialog.Cancellable = false));
                     }
                 };
 
@@ -401,7 +393,7 @@ namespace FreeMove
         {
             textBox_From.Text = "";
             textBox_To.Text = "";
-            textBox_From.Focus();   
+            textBox_From.Focus();
         }
 
         public static void Unauthorized(Exception ex)
