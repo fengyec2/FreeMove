@@ -390,6 +390,9 @@ https://github.com/imDema</value>
   <data name="Type_Folder" xml:space="preserve">
     <value>文件夹</value>
   </data>
+  <data name="Menu_LocateInTreeView" xml:space="preserve">
+    <value>定位到树状图</value>
+  </data>
   <data name="Search_Placeholder" xml:space="preserve">
     <value>使用 Everything 搜索...</value>
   </data>

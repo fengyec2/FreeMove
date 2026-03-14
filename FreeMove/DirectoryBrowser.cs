@@ -65,6 +65,7 @@ namespace FreeMove
             setAsTargetToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_SetTarget") ?? "Set as Target";
             setAsSourceListViewToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_SetSource") ?? "Set as Source";
             setAsTargetListViewToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_SetTarget") ?? "Set as Target";
+            locateInTreeViewToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_LocateInTreeView") ?? "Locate in TreeView";
         }
 
         private void LoadDrives()
@@ -275,6 +276,71 @@ namespace FreeMove
         {
             if (listView_Files.SelectedItems.Count > 0)
                 TargetSelected?.Invoke(this, (string)listView_Files.SelectedItems[0].Tag);
+        }
+
+        private void locateInTreeViewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listView_Files.SelectedItems.Count > 0)
+            {
+                string path = (string)listView_Files.SelectedItems[0].Tag;
+                if (!string.IsNullOrEmpty(path))
+                {
+                    LocatePathInTreeView(path);
+                }
+            }
+        }
+
+        private void LocatePathInTreeView(string targetPath)
+        {
+            targetPath = targetPath.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+            
+            // 找到对应的驱动器根节点
+            TreeNode currentNode = null;
+            foreach (TreeNode node in treeView_Dirs.Nodes)
+            {
+                string nodePath = ((string)node.Tag).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+                if (targetPath.StartsWith(nodePath, StringComparison.OrdinalIgnoreCase))
+                {
+                    currentNode = node;
+                    break;
+                }
+            }
+
+            if (currentNode == null) return;
+
+            // 逐层展开并查找
+            string currentPath = ((string)currentNode.Tag).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+            string remainingPath = targetPath.Substring(currentPath.Length).TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+            string[] parts = remainingPath.Split(new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string part in parts)
+            {
+                currentNode.Expand();
+                TreeNode foundChild = null;
+                foreach (TreeNode child in currentNode.Nodes)
+                {
+                    if (string.Equals(child.Text, part, StringComparison.OrdinalIgnoreCase))
+                    {
+                        foundChild = child;
+                        break;
+                    }
+                }
+
+                if (foundChild != null)
+                {
+                    currentNode = foundChild;
+                }
+                else
+                {
+                    // 没找到对应的子目录
+                    break;
+                }
+            }
+
+            // 选中并确保可见
+            treeView_Dirs.SelectedNode = currentNode;
+            currentNode.EnsureVisible();
+            treeView_Dirs.Focus();
         }
     }
 }

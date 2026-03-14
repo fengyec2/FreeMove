@@ -397,6 +397,9 @@ Language:
   <data name="Type_Folder" xml:space="preserve">
     <value>Folder</value>
   </data>
+  <data name="Menu_LocateInTreeView" xml:space="preserve">
+    <value>Locate in TreeView</value>
+  </data>
   <data name="Search_Placeholder" xml:space="preserve">
     <value>Search with Everything...</value>
   </data>

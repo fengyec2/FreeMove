@@ -27,6 +27,7 @@ namespace FreeMove
             this.contextMenu_ListView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.setAsSourceListViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setAsTargetListViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.locateInTreeViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel_Buttons = new System.Windows.Forms.Panel();
             this.button_SetSource = new System.Windows.Forms.Button();
             this.button_SetTarget = new System.Windows.Forms.Button();
@@ -130,23 +131,31 @@ namespace FreeMove
             // 
             this.contextMenu_ListView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.setAsSourceListViewToolStripMenuItem,
-            this.setAsTargetListViewToolStripMenuItem});
+            this.setAsTargetListViewToolStripMenuItem,
+            this.locateInTreeViewToolStripMenuItem});
             this.contextMenu_ListView.Name = "contextMenu_ListView";
-            this.contextMenu_ListView.Size = new System.Drawing.Size(147, 48);
+            this.contextMenu_ListView.Size = new System.Drawing.Size(181, 70);
             // 
             // setAsSourceListViewToolStripMenuItem
             // 
             this.setAsSourceListViewToolStripMenuItem.Name = "setAsSourceListViewToolStripMenuItem";
-            this.setAsSourceListViewToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.setAsSourceListViewToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.setAsSourceListViewToolStripMenuItem.Text = "Set as Source";
             this.setAsSourceListViewToolStripMenuItem.Click += new System.EventHandler(this.setAsSourceListViewToolStripMenuItem_Click);
             // 
             // setAsTargetListViewToolStripMenuItem
             // 
             this.setAsTargetListViewToolStripMenuItem.Name = "setAsTargetListViewToolStripMenuItem";
-            this.setAsTargetListViewToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.setAsTargetListViewToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.setAsTargetListViewToolStripMenuItem.Text = "Set as Target";
             this.setAsTargetListViewToolStripMenuItem.Click += new System.EventHandler(this.setAsTargetListViewToolStripMenuItem_Click);
+            // 
+            // locateInTreeViewToolStripMenuItem
+            // 
+            this.locateInTreeViewToolStripMenuItem.Name = "locateInTreeViewToolStripMenuItem";
+            this.locateInTreeViewToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.locateInTreeViewToolStripMenuItem.Text = "Locate in TreeView";
+            this.locateInTreeViewToolStripMenuItem.Click += new System.EventHandler(this.locateInTreeViewToolStripMenuItem_Click);
             // 
             // panel_Buttons
             // 
@@ -212,5 +221,6 @@ namespace FreeMove
         private System.Windows.Forms.ContextMenuStrip contextMenu_ListView;
         private System.Windows.Forms.ToolStripMenuItem setAsSourceListViewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem setAsTargetListViewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem locateInTreeViewToolStripMenuItem;
     }
 }
