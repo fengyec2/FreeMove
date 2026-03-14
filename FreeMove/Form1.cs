@@ -43,6 +43,7 @@ namespace FreeMove
             // 初始化目录浏览器事件
             directoryBrowser1.SourceSelected += (s, path) => textBox_From.Text = path;
             directoryBrowser1.TargetSelected += (s, path) => textBox_To.Text = path;
+            directoryBrowser1.RestoreRequested += async (s, args) => await RestoreLink(args.Symlink, args.Target, args.Move);
         }
 
         private async void Form1_Load(object sender, EventArgs e)
@@ -138,6 +139,95 @@ namespace FreeMove
             // 刷新目录浏览器语言
             directoryBrowser1.ApplyLanguage();
         }
+
+        private async Task RestoreLink(string symlinkPath, string targetPath, bool move)
+        {
+            Enabled = false;
+            try
+            {
+                // 先验证目标文件夹是否存在
+                if (!Directory.Exists(targetPath))
+                {
+                    MessageBox.Show(Properties.Resources.ResourceManager.GetString("Restore_InvalidTarget"), 
+                        Properties.Resources.ResourceManager.GetString("ErrorTitle"), 
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // 准备一个临时路径来存放符号链接（以便恢复）
+                string tempSymlinkPath = symlinkPath + ".bak_" + DateTime.Now.Ticks;
+                
+                try
+                {
+                    // 1. 将符号链接重命名（本质是移动）
+                    Directory.Move(symlinkPath, tempSymlinkPath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Could not prepare restoration: " + ex.Message, 
+                        Properties.Resources.ResourceManager.GetString("ErrorTitle"), 
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                bool success = false;
+                try
+                {
+                    if (move)
+                    {
+                        // 移动模式：直接使用现有的 BeginMove
+                        await BeginMove(targetPath, symlinkPath);
+                    }
+                    else
+                    {
+                        // 复制模式
+                        using (ProgressDialog progressDialog = new ProgressDialog(Properties.Resources.ResourceManager.GetString("MovingFilesTitle")))
+                        {
+                            IO.CopyOperation copyOp = new IO.CopyOperation(targetPath, symlinkPath);
+                            copyOp.ProgressChanged += (sender, e) => progressDialog.UpdateProgress(e);
+                            copyOp.End += (sender, e) => progressDialog.Invoke((Action)progressDialog.Close);
+                            
+                            Task task = copyOp.Run();
+                            progressDialog.ShowDialog(this);
+                            await task;
+                        }
+                    }
+                    success = true;
+                }
+                catch (Exception ex)
+                {
+                    // 如果失败，尝试恢复符号链接
+                    try
+                    {
+                        if (Directory.Exists(symlinkPath)) Directory.Delete(symlinkPath, true);
+                        Directory.Move(tempSymlinkPath, symlinkPath);
+                    }
+                    catch { /* 忽略恢复失败 */ }
+
+                    MessageBox.Show("Restoration failed: " + ex.Message, 
+                        Properties.Resources.ResourceManager.GetString("ErrorTitle"), 
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                if (success)
+                {
+                    // 成功后删除备份的符号链接
+                    try
+                    {
+                        if (Directory.Exists(tempSymlinkPath)) Directory.Delete(tempSymlinkPath);
+                    }
+                    catch { /* 忽略删除备份失败 */ }
+
+                    MessageBox.Show(this, Properties.Resources.ResourceManager.GetString("DoneMessage"));
+                }
+            }
+            finally
+             {
+                 Enabled = true;
+                 // 刷新列表
+                 directoryBrowser1.RefreshBrowser(); 
+             }
+         }
 
         private bool PreliminaryCheck(string source, string destination)
         {

@@ -400,6 +400,24 @@ Language:
   <data name="Menu_LocateInTreeView" xml:space="preserve">
     <value>Locate in TreeView</value>
   </data>
+  <data name="Menu_RestoreSymlink" xml:space="preserve">
+    <value>Restore Symbolic Link</value>
+  </data>
+  <data name="Restore_Prompt" xml:space="preserve">
+    <value>Restore the folder '{0}' from its target '{1}'? 
+
+Choose 'Yes' to MOVE all files back (deletes the target folder).
+Choose 'No' to COPY all files back (keeps the target folder).</value>
+  </data>
+  <data name="Restore_Title" xml:space="preserve">
+    <value>Restore Symbolic Link</value>
+  </data>
+  <data name="Restore_InvalidTarget" xml:space="preserve">
+    <value>The target path of this symbolic link is invalid or does not exist.</value>
+  </data>
+  <data name="Restore_NotSymlink" xml:space="preserve">
+    <value>The selected item is not a symbolic link.</value>
+  </data>
   <data name="Search_Placeholder" xml:space="preserve">
     <value>Search with Everything...</value>
   </data>

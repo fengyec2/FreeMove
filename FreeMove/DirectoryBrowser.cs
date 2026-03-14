@@ -12,10 +12,18 @@ using System.Runtime.InteropServices;
 
 namespace FreeMove
 {
+    public class RestoreRequestEventArgs : EventArgs
+    {
+        public string Symlink { get; set; }
+        public string Target { get; set; }
+        public bool Move { get; set; }
+    }
+
     public partial class DirectoryBrowser : UserControl
     {
         public event EventHandler<string> SourceSelected;
         public event EventHandler<string> TargetSelected;
+        public event EventHandler<RestoreRequestEventArgs> RestoreRequested;
 
         public DirectoryBrowser()
         {
@@ -66,6 +74,19 @@ namespace FreeMove
             setAsSourceListViewToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_SetSource") ?? "Set as Source";
             setAsTargetListViewToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_SetTarget") ?? "Set as Target";
             locateInTreeViewToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_LocateInTreeView") ?? "Locate in TreeView";
+            restoreSymlinkToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_RestoreSymlink") ?? "Restore Symbolic Link";
+        }
+
+        public void RefreshBrowser()
+        {
+            if (treeView_Dirs.SelectedNode != null)
+            {
+                RefreshListView((string)treeView_Dirs.SelectedNode.Tag);
+            }
+            else
+            {
+                LoadDrives();
+            }
         }
 
         private void LoadDrives()
@@ -286,6 +307,49 @@ namespace FreeMove
                 if (!string.IsNullOrEmpty(path))
                 {
                     LocatePathInTreeView(path);
+                }
+            }
+        }
+
+        private void restoreSymlinkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listView_Files.SelectedItems.Count > 0)
+            {
+                string path = (string)listView_Files.SelectedItems[0].Tag;
+                if (!string.IsNullOrEmpty(path))
+                {
+                    if (IOHelper.IsReparsePoint(path))
+                    {
+                        string target = IOHelper.GetSymbolicLinkTarget(path);
+                        if (!string.IsNullOrEmpty(target) && Directory.Exists(target))
+                        {
+                            string prompt = string.Format(Properties.Resources.ResourceManager.GetString("Restore_Prompt"), path, target);
+                            string title = Properties.Resources.ResourceManager.GetString("Restore_Title");
+                            
+                            DialogResult result = MessageBox.Show(prompt, title, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                            if (result == DialogResult.Yes || result == DialogResult.No)
+                            {
+                                RestoreRequested?.Invoke(this, new RestoreRequestEventArgs
+                                {
+                                    Symlink = path,
+                                    Target = target,
+                                    Move = result == DialogResult.Yes
+                                });
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show(Properties.Resources.ResourceManager.GetString("Restore_InvalidTarget"), 
+                                Properties.Resources.ResourceManager.GetString("ErrorTitle"), 
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(Properties.Resources.ResourceManager.GetString("Restore_NotSymlink"), 
+                            Properties.Resources.ResourceManager.GetString("ErrorTitle"), 
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
