@@ -2,7 +2,11 @@
 
 [English](README.md) · [简体中文](README.zh-CN.md)
 
-[![license](https://img.shields.io/github/license/fengyec2/FreeMove.svg)](https://github.com/fengyec2/FreeMove/blob/master/LICENSE.txt)
+
+<img src="https://img.shields.io/github/license/fengyec2/FreeMove" alt="License"/>
+<img src="https://img.shields.io/github/v/release/fengyec2/FreeMove" alt="Version"/>
+<img src="https://img.shields.io/github/actions/workflow/status/fengyec2/FreeMove/build-release.yml" alt="Build"/>
+<img src="https://img.shields.io/github/downloads/fengyec2/FreeMove/total" alt="Downloads"/>
 
 自由移动目录而不破坏安装或快捷方式
 
@@ -13,7 +17,6 @@
 2. 从旧位置创建一个指向新位置的[符号链接](https://www.wikiwand.com/en/NTFS_junction_point)。任何尝试访问旧位置中文件的程序都会自动重定向到新的位置
 
 ## 下载
-[![Github All Releases](https://img.shields.io/github/downloads/fengyec2/FreeMove/total.svg)](https://github.com/fengyec2/FreeMove/releases/latest)
 
 ### 从 GitHub
 
@@ -51,12 +54,18 @@ scoop install freemove
 也就是说，移动前面提到的目录中所包含的子目录通常不会导致问题。所以你可以安全地移动 `C:\Program Files\HugeProgramIDontWantOnMySSD`。
 
 ## 屏幕截图
-![Screenshot](https://imgur.com/CBEoA5J.png)
+![Screenshot](https://i.imgur.com/vD1jCux.png)
 
 ## 卸载已移动的程序
 像平常一样卸载程序，不要删除联接点。卸载程序会正常工作，并留下一个空目录在你移动程序后的新位置，以及原位置的目录链接。你可以手动删除这些内容。
 
 ## 将程序移回原位
+
+### 使用 GUI
+
+选择一个符号链接，右键点击“恢复符号链接”
+
+### 手动移动
 删除旧位置的联接点（这不会删除其下的文件或目录），然后将目录移动回其原始位置。
 
 ## 贡献

@@ -2,18 +2,20 @@
 
 [简体中文](README.zh-CN.md) · [English](README.md)
 
-[![license](https://img.shields.io/github/license/fengyec2/FreeMove.svg)](https://github.com/fengyec2/FreeMove/blob/master/LICENSE.txt)
+<img src="https://img.shields.io/github/license/fengyec2/FreeMove" alt="License"/>
+<img src="https://img.shields.io/github/v/release/fengyec2/FreeMove" alt="Version"/>
+<img src="https://img.shields.io/github/actions/workflow/status/fengyec2/FreeMove/build-release.yml" alt="Build"/>
+<img src="https://img.shields.io/github/downloads/fengyec2/FreeMove/total" alt="Downloads"/>
 
 Move directories freely without breaking installations or shortcuts
 
-You can use this tool to move programs that install on C:\ by default to another drive to save space on your main drive
+You can use this tool to move programs that install on `C:\` by default to another drive to save space on your main drive
 
 ## How It works
 1. The files are moved to the new location
 2. A [symbolic link](https://www.wikiwand.com/en/NTFS_junction_point) is created from the old location redirecting to the new one. Any program trying to access a file in the old location will automatically be redirected to its new location
 
 ## Download
-[![Github All Releases](https://img.shields.io/github/downloads/fengyec2/FreeMove/total.svg)](https://github.com/fengyec2/FreeMove/releases/latest)
 
 ### From GitHub
 
@@ -51,12 +53,19 @@ You should not move important system directories as they can break core function
 That said, moving directories contained in the previously mentioned directories should not cause any problem. So you are free to move `C:\Program Files\HugeProgramIDontWantOnMySSD` without any problem.
 
 ## Screenshots
-![Screenshot](https://imgur.com/3J8gXpE.png)
+![Screenshot](https://i.imgur.com/xvkVdc6.png)
 
 ## Uninstalling moved programs
 Uninstall the program just as you would normally without deleting the junction. The uninstaller will work normally leaving an empty directory in the location you moved the program to, and the directory link in the original location, both of which you can then delete manually
 
 ## Moving back a program
+
+### Using the GUI
+
+Select a symbolic link and right click "Restore symbolic link"
+
+### Manual move
+
 Delete the junction in the old location (this won't delete the content) and move the directory back to its original position
 
 ## Contributing
