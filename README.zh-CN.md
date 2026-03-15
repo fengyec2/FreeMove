@@ -15,16 +15,20 @@
 
 ## 核心功能
 
+- [x] 应用内目录浏览/操作
 - [x] 移动目录或文件
+- [x] 自动创建目标目录
 - [x] 创建符号链接
 - [x] 快速恢复符号链接
-- [x] Everything 集成
+- [x] Everything 搜索集成
+- [ ] 上下文菜单集成（计划中）
+- [ ] 单个文件符号链接（计划中）
 
 ## 下载
 
 ### 从 GitHub
 
-[下载最新版本](https://github.com/fengyec2/FreeMove/releases/latest)
+[![GitHub Release](https://img.shields.io/github/v/release/fengyec2/FreeMove?style=for-the-badge&logo=github)](https://github.com/fengyec2/FreeMove/releases)
 
 **我该下载哪个版本？**
 
@@ -56,9 +60,16 @@ scoop install freemove
 >
 > 你不应该移动重要的系统目录，因为它们可能会破坏诸如 Windows Update 和 Windows Store 应用之类的核心功能。
 
-`C:\Users` - `C:\Documents and Settings` - `C:\Program Files` - `C:\Program Files (x86)` 不应被移动。如果你仍然想移动，请自行承担风险。要将目录移回，请参阅 readme 的最后部分。
+重要的系统目录，例如：
 
-也就是说，移动前面提到的目录中所包含的子目录通常不会导致问题。所以你可以安全地移动 `C:\Program Files\HugeProgramIDontWantOnMySSD`。
+- `C:\Users` 
+- `C:\Documents and Settings`
+- `C:\Program Files`
+- `C:\Program Files (x86)` 
+
+不应被移动。如果你仍然想移动，请自行承担风险。要将目录移回，请参阅 readme 的最后部分。
+
+也就是说，移动前面提到的目录中所包含的**子目录**通常不会导致问题。所以你可以安全地移动 `C:\Program Files\HugeProgramIDontWantOnMySSD`。
 
 ## 屏幕截图
 ![Screenshot](https://i.imgur.com/vD1jCux.png)

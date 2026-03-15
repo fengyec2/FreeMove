@@ -13,16 +13,20 @@ You can use this tool to move programs that install on `C:\` by default to anoth
 2. A [symbolic link](https://www.wikiwand.com/en/NTFS_junction_point) is created from the old location redirecting to the new one. Any program trying to access a file in the old location will automatically be redirected to its new location
 
 ## Core Features
+- [x] In-app directory browsing
 - [x] Move directories or files
+- [x] Automatically create target directories
 - [x] Create symbolic links
 - [x] Quickly restore symbolic links
-- [x] Everything integration
+- [x] Everything search integration
+- [ ] Context menu integration (Planned)
+- [ ] Individual file symbolic links (Planned)
 
 ## Download
 
 ### From GitHub
 
-[Download the latest release](https://github.com/fengyec2/FreeMove/releases/latest)
+[![GitHub Release](https://img.shields.io/github/v/release/fengyec2/FreeMove?style=for-the-badge&logo=github)](https://github.com/fengyec2/FreeMove/releases)
 
 **Which version should I download?**
 
@@ -54,9 +58,16 @@ Run the executable and use the GUI
 >
 > You should not move important system directories as they can break core functionalities like Windows Update and Windows Store Apps.
 
-`C:\Users` - `C:\Documents and Settings` - `C:\Program Files` - `C:\Program Files (x86)` should not be moved. If you wish to do It anyway do it at your own risk. To move a directory back refer to the last part of the readme.
+Important system directories such as:
 
-That said, moving directories contained in the previously mentioned directories should not cause any problem. So you are free to move `C:\Program Files\HugeProgramIDontWantOnMySSD` without any problem.
+- `C:\Users` 
+- `C:\Documents and Settings`
+- `C:\Program Files`
+- `C:\Program Files (x86)` 
+
+should not be moved. If you wish to do It anyway do it at your own risk. To move a directory back refer to the last part of the readme.
+
+That said, moving directories **contained in** the previously mentioned directories should not cause any problem. So you are free to move `C:\Program Files\HugeProgramIDontWantOnMySSD` without any problem.
 
 ## Screenshots
 ![Screenshot](https://i.imgur.com/xvkVdc6.png)
