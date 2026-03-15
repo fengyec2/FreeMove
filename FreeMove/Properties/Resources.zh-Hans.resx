@@ -63,7 +63,7 @@
 
   <data name="AboutContent" xml:space="preserve">
     <value>imDema/FreeMove {0} —— 移动目录而不破坏快捷方式或安装
-版权所有 (C) 2020  Luca De Martini
+版权所有 (C) 2020  Luca De Martini, fengyec2
 
 本程序是自由软件：您可以在 GNU 通用公共许可证（GPL）第 3 版或（由您选择）任何更新版本的条款下重新分发和/或修改本程序。
 
@@ -71,7 +71,9 @@
 
 您应已随本程序一起收到 GNU 通用公共许可证的副本；如果没有，请参见 &lt;http://www.gnu.org/licenses/&gt;。
 
-https://github.com/imDema</value>
+https://github.com/imDema
+
+https://github.com/fengyec2</value>
   </data>
 
   <data name="DisableSafeModeMessage" xml:space="preserve">

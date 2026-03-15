@@ -456,13 +456,13 @@ namespace FreeMove
         //Open GitHub page
         private void GitHubToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenURL("https://github.com/imDema/FreeMove");
+            OpenURL("https://github.com/fengyec2/FreeMove");
         }
 
         //Open the report an issue page on GitHub
         private void ReportAnIssueToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenURL("https://github.com/imDema/FreeMove/issues/new");
+            OpenURL("https://github.com/fengyec2/FreeMove/issues/new");
         }
 
         //Show an update dialog

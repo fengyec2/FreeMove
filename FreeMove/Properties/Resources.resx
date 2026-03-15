@@ -119,7 +119,7 @@
   </resheader>
   <data name="AboutContent" xml:space="preserve">
     <value>imDema/FreeMove {0} -- Move directories without breaking shortcuts or installations 
-Copyright(C) 2020  Luca De Martini
+Copyright(C) 2020  Luca De Martini, fengyec2
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -134,7 +134,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.If not, see&lt;http://www.gnu.org/licenses/&gt;.
 
-https://github.com/imDema</value>
+https://github.com/imDema
+
+https://github.com/fengyec2</value>
   </data>
   <data name="DisableSafeModeMessage" xml:space="preserve">
     <value>It's strongly recommended not to move the "Program Files" or the "Program Files (x86)" directories as it can lead to unexpexted behaviour.
