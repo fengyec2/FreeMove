@@ -95,7 +95,7 @@ namespace FreeMove
             Stream ResponseStream = await GetGitHubStreamAsync();
 
             TextReader Reader = new StreamReader(ResponseStream);
-            const string pattern = "\"tag_name\":\"([0-9.]{5,9})\"";
+            const string pattern = "\"tag_name\":\"v?([0-9.]+)\"";
             NewVersion = Regex.Match(Reader.ReadToEnd(), pattern, RegexOptions.Multiline).Groups[1].Value;
 
             if (NewVersion == "") throw new Exception(Properties.Resources.GitHubErrorMessage);
@@ -106,7 +106,7 @@ namespace FreeMove
         {
             using var Client = new HttpClient();
             Client.DefaultRequestHeaders.UserAgent.Add(new System.Net.Http.Headers.ProductInfoHeaderValue(Properties.Resources.UserAgent, CurrentVersion));
-            var Resp = await Client.GetStreamAsync("https://api.github.com/repos/ImDema/FreeMove/releases/latest");
+            var Resp = await Client.GetStreamAsync("https://api.github.com/repos/fengyec2/FreeMove/releases/latest");
             return Resp;
         }
 
