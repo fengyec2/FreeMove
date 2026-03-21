@@ -86,6 +86,7 @@ namespace FreeMove
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.label1.Location = new System.Drawing.Point(12, 10);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 12);
@@ -94,6 +95,7 @@ namespace FreeMove
             // 
             // textBox_From
             // 
+            this.textBox_From.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.textBox_From.Location = new System.Drawing.Point(82, 10);
             this.textBox_From.Name = "textBox_From";
             this.textBox_From.Size = new System.Drawing.Size(383, 21);
@@ -101,6 +103,7 @@ namespace FreeMove
             // 
             // button_BrowseFrom
             // 
+            this.button_BrowseFrom.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.button_BrowseFrom.Location = new System.Drawing.Point(475, 10);
             this.button_BrowseFrom.Name = "button_BrowseFrom";
             this.button_BrowseFrom.Size = new System.Drawing.Size(75, 21);
@@ -111,6 +114,7 @@ namespace FreeMove
             // 
             // button_BrowseTo
             // 
+            this.button_BrowseTo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.button_BrowseTo.Location = new System.Drawing.Point(475, 33);
             this.button_BrowseTo.Name = "button_BrowseTo";
             this.button_BrowseTo.Size = new System.Drawing.Size(75, 21);
@@ -121,6 +125,7 @@ namespace FreeMove
             // 
             // textBox_To
             // 
+            this.textBox_To.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.textBox_To.Location = new System.Drawing.Point(82, 34);
             this.textBox_To.Name = "textBox_To";
             this.textBox_To.Size = new System.Drawing.Size(383, 21);
@@ -129,6 +134,7 @@ namespace FreeMove
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.label2.Location = new System.Drawing.Point(12, 34);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(23, 12);
@@ -141,6 +147,7 @@ namespace FreeMove
             // 
             // button_Move
             // 
+            this.button_Move.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.button_Move.Location = new System.Drawing.Point(475, 88);
             this.button_Move.Name = "button_Move";
             this.button_Move.Size = new System.Drawing.Size(75, 21);
@@ -152,6 +159,7 @@ namespace FreeMove
             // chkBox_originalHidden
             // 
             this.chkBox_originalHidden.AutoSize = true;
+            this.chkBox_originalHidden.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.chkBox_originalHidden.Location = new System.Drawing.Point(15, 67);
             this.chkBox_originalHidden.Name = "chkBox_originalHidden";
             this.chkBox_originalHidden.Size = new System.Drawing.Size(198, 16);
@@ -161,6 +169,7 @@ namespace FreeMove
             // 
             // button_Close
             // 
+            this.button_Close.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.button_Close.Location = new System.Drawing.Point(12, 88);
             this.button_Close.Name = "button_Close";
             this.button_Close.Size = new System.Drawing.Size(75, 21);
@@ -319,6 +328,7 @@ namespace FreeMove
             // chkBox_createDest
             // 
             this.chkBox_createDest.AutoSize = true;
+            this.chkBox_createDest.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.chkBox_createDest.Checked = true;
             this.chkBox_createDest.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkBox_createDest.Location = new System.Drawing.Point(219, 67);
@@ -377,10 +387,11 @@ namespace FreeMove
             this.ClientSize = new System.Drawing.Size(565, 400);
             this.Controls.Add(this.splitContainer_Form1);
             this.Controls.Add(this.menuStrip1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.MaximizeBox = false;
+            this.MaximizeBox = true;
+            this.MinimumSize = new System.Drawing.Size(565, 300);
             this.Name = "Form1";
             this.Text = "Free Move";
             this.Load += new System.EventHandler(this.Form1_Load);

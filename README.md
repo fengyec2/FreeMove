@@ -13,7 +13,7 @@ You can use this tool to move programs that install on `C:\` by default to anoth
 2. A [symbolic link](https://www.wikiwand.com/en/NTFS_junction_point) is created from the old location redirecting to the new one. Any program trying to access a file in the old location will automatically be redirected to its new location
 
 ## Core Features
-- [x] In-app directory browsing
+- [x] In-app directory browsing/operations
 - [x] Move directories or files
 - [x] Automatically create target directories
 - [x] Create symbolic links
