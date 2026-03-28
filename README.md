@@ -73,18 +73,30 @@ That said, moving directories **contained in** the previously mentioned director
 ## Screenshots
 ![Screenshot](https://i.imgur.com/xvkVdc6.png)
 
-## Uninstalling moved programs
-Uninstall the program just as you would normally without deleting the junction. The uninstaller will work normally leaving an empty directory in the location you moved the program to, and the directory link in the original location, both of which you can then delete manually
+## FAQ
 
-## Moving back a program
+### Q: How to uninstall moved programs?
 
-### Using the GUI
+A: Uninstall the program just as you would normally without deleting the junction. The uninstaller will work normally leaving an empty directory in the location you moved the program to, and the directory link in the original location, both of which you can then delete manually.
 
-Select a symbolic link and right click "Restore symbolic link"
+### Q: How to move a program back?
 
-### Manual move
 
-Delete the junction in the old location (this won't delete the content) and move the directory back to its original position
+#### Using the GUI
+
+Select a symbolic link and right click "Restore symbolic link".
+
+#### Manual move
+
+Delete the junction in the old location (this won't delete the content) and move the directory back to its original position.
+
+### Q: Everything not found or DLL missing
+
+A: The Everything search integration requires [Everything](https://www.voidtools.com/downloads/) (Install or Portable) to be installed and `Everything64.dll` or `Everything32.dll` (depending on your system architecture) to be either in the same directory as the FreeMove executable or in the system environment variables.
+
+### Q: Everything not running
+
+A: The Everything search integration requires the Everything program to be running. Please make sure you have.
 
 ## Contributing
 
