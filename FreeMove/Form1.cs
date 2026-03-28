@@ -15,6 +15,7 @@
 //    along with this program.If not, see<http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -221,24 +222,80 @@ namespace FreeMove
             }
         }
 
+        /// <summary>
+        /// 执行移动前预检查，并在失败原因仅为只读属性时提供自动修复入口。
+        /// </summary>
         private bool PreliminaryCheck(string source, string destination)
         {
-            //Check for errors before copying
             try
             {
-                IOHelper.CheckDirectories(source, destination, safeMode);
+                IOHelper.CheckDirectories(source, destination, safeMode, chkBox_createDest.Checked);
+                return true;
             }
-            catch (AggregateException ae)
+            catch (AggregateException ae) when (IOHelper.TryGetReadOnlyPrecheckFailures(ae, out List<IOHelper.ReadOnlyPrecheckException> readOnlyFailures))
             {
-                var msg = "";
-                foreach (var ex in ae.InnerExceptions)
+                // If every failure comes from read-only attributes, offer an in-place repair instead of failing immediately.
+                DialogResult result = MessageBox.Show(
+                    this,
+                    string.Format(Properties.Resources.ResourceManager.GetString("ReadOnlyPrecheckConfirmMessage"), string.Join("\n", readOnlyFailures.ConvertAll(item => item.FilePath))),
+                    Properties.Resources.ResourceManager.GetString("ReadOnlyPrecheckConfirmTitle"),
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning,
+                    MessageBoxDefaultButton.Button1);
+
+                if (result != DialogResult.Yes)
                 {
-                    msg += ex.Message + "\n";
+                    return false;
                 }
-                MessageBox.Show(msg, Properties.Resources.ResourceManager.GetString("ErrorTitle"));
+
+                try
+                {
+                    IOHelper.ClearReadOnlyAttributes(source);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(
+                        this,
+                        string.Format(Properties.Resources.ResourceManager.GetString("ReadOnlyClearFailedMessage"), ex.Message),
+                        Properties.Resources.ResourceManager.GetString("ErrorTitle"),
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    return false;
+                }
+
+                try
+                {
+                    // Re-run with Full so the move only continues after all files pass the stricter access check.
+                    IOHelper.CheckDirectories(source, destination, safeMode, chkBox_createDest.Checked, Settings.PermissionCheckLevel.Full);
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    ShowPreliminaryCheckError(ex);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowPreliminaryCheckError(ex);
                 return false;
             }
-            return true;
+        }
+
+        private void ShowPreliminaryCheckError(Exception ex)
+        {
+            if (ex is AggregateException aggregateException)
+            {
+                var msg = "";
+                foreach (var innerException in aggregateException.InnerExceptions)
+                {
+                    msg += innerException.Message + "\n";
+                }
+                MessageBox.Show(msg, Properties.Resources.ResourceManager.GetString("ErrorTitle"));
+                return;
+            }
+
+            MessageBox.Show(ex.Message, Properties.Resources.ResourceManager.GetString("ErrorTitle"));
         }
 
         private async void Begin()
@@ -339,7 +396,7 @@ namespace FreeMove
             //Move files
             using (ProgressDialog progressDialog = new ProgressDialog(Properties.Resources.ResourceManager.GetString("MovingFilesTitle")))
             {
-                IO.MoveOperation moveOp = IOHelper.MoveDir(source, destination);
+                IO.MoveOperation moveOp = IOHelper.MoveDir(source, destination, chkBox_createDest.Checked);
 
                 moveOp.ProgressChanged += (sender, e) => progressDialog.UpdateProgress(e);
                 moveOp.End += (sender, e) => progressDialog.Invoke((Action)progressDialog.Close);

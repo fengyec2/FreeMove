@@ -26,16 +26,20 @@ namespace FreeMove.IO
         string pathFrom;
         string pathTo;
         bool sameDrive;
+        bool createDestination;
         CancellationTokenSource cts = new CancellationTokenSource();
         CopyOperation innerCopy;
-        Form1 form = new Form1();
 
-        public MoveOperation(string pathFrom, string pathTo)
+        /// <summary>
+        /// 创建移动操作，并按当前界面状态决定是否预先创建目标目录。
+        /// </summary>
+        public MoveOperation(string pathFrom, string pathTo, bool createDestination)
         {
             this.pathFrom = pathFrom;
             this.pathTo = pathTo;
+            this.createDestination = createDestination;
             sameDrive = string.Equals(Path.GetPathRoot(pathFrom), Path.GetPathRoot(pathTo), StringComparison.OrdinalIgnoreCase);
-            if (form.chkBox_createDest.Checked && !Directory.Exists(pathTo))
+            if (this.createDestination && !Directory.Exists(pathTo))
             {
                 try
                 {

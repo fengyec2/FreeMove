@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -26,6 +27,17 @@ namespace FreeMove
 {
     class IOHelper
     {
+        public class ReadOnlyPrecheckException : Exception
+        {
+            public string FilePath { get; }
+
+            public ReadOnlyPrecheckException(string filePath, Exception innerException)
+                : base($"The file \"{filePath}\" is read-only.", innerException)
+            {
+                FilePath = filePath;
+            }
+        }
+
         #region SymLink
         //External dll functions
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
@@ -115,13 +127,17 @@ namespace FreeMove
         }
         #endregion
 
-        public static IO.MoveOperation MoveDir(string source, string destination)
+        public static IO.MoveOperation MoveDir(string source, string destination, bool createDestination)
         {
-            return new IO.MoveOperation(source, destination);
+            return new IO.MoveOperation(source, destination, createDestination);
         }
-        public static void CheckDirectories(string source, string destination, bool safeMode)
+        /// <summary>
+        /// 根据当前界面状态和指定的权限检查级别执行移动前预检查。
+        /// </summary>
+        public static void CheckDirectories(string source, string destination, bool safeMode, bool createDestination, Settings.PermissionCheckLevel? permissionCheckLevelOverride = null)
         {
             List<Exception> exceptions = new List<Exception>();
+            Settings.PermissionCheckLevel permissionCheckLevel = permissionCheckLevelOverride ?? Settings.PermCheck;
             //Check for correct file path format
             try
             {
@@ -163,16 +179,8 @@ namespace FreeMove
             if (Directory.Exists(destination))
                 exceptions.Add(new Exception("Destination folder already contains a folder with the same name"));
 
-            try
-            {
-                Form1 form = new Form1();
-                if (!form.chkBox_createDest.Checked && !Directory.Exists(Directory.GetParent(destination).FullName))
-                    exceptions.Add(new Exception("Destination folder does not exist"));
-            }
-            catch (Exception e)
-            {
-                exceptions.Add(e);
-            }
+            if (!createDestination && !Directory.Exists(Directory.GetParent(destination).FullName))
+                exceptions.Add(new Exception("Destination folder does not exist"));
 
             // Next checks rely on the previous so if there was any exception return
             if (exceptions.Count > 0)
@@ -237,28 +245,18 @@ namespace FreeMove
                 throw new AggregateException(exceptions);
 
             //If set to do full check try to open for write all files
-            if (Settings.PermCheck != Settings.PermissionCheckLevel.None)
+            if (permissionCheckLevel != Settings.PermissionCheckLevel.None)
             {
-                var exceptionBag = new System.Collections.Concurrent.ConcurrentBag<Exception>();
+                var exceptionBag = new ConcurrentBag<Exception>();
                 Action<string> CheckFile = (file) =>
                 {
-                    FileInfo fi = new FileInfo(file);
-                    FileStream fs = null;
-                    try
+                    Exception failure = TryCreateAccessCheckException(file);
+                    if (failure != null)
                     {
-                        fs = fi.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None);
-                    }
-                    catch (Exception ex)
-                    {
-                        exceptionBag.Add(ex);
-                    }
-                    finally
-                    {
-                        if (fs != null)
-                            fs.Dispose();
+                        exceptionBag.Add(failure);
                     }
                 };
-                if (Settings.PermCheck == Settings.PermissionCheckLevel.Fast)
+                if (permissionCheckLevel == Settings.PermissionCheckLevel.Fast)
                 {
                     Parallel.ForEach(Directory.GetFiles(source, "*.exe", SearchOption.AllDirectories), CheckFile);
                     Parallel.ForEach(Directory.GetFiles(source, "*.dll", SearchOption.AllDirectories), CheckFile);
@@ -272,6 +270,116 @@ namespace FreeMove
             }
             if (exceptions.Count > 0)
                 throw new AggregateException(exceptions);
+        }
+
+        /// <summary>
+        /// 判断本次预检查失败是否全部由只读属性引起。
+        /// </summary>
+        public static bool TryGetReadOnlyPrecheckFailures(AggregateException aggregateException, out List<ReadOnlyPrecheckException> readOnlyFailures)
+        {
+            readOnlyFailures = new List<ReadOnlyPrecheckException>();
+            foreach (Exception exception in aggregateException.InnerExceptions)
+            {
+                if (exception is ReadOnlyPrecheckException readOnlyException)
+                {
+                    readOnlyFailures.Add(readOnlyException);
+                    continue;
+                }
+
+                readOnlyFailures.Clear();
+                return false;
+            }
+
+            return readOnlyFailures.Count > 0;
+        }
+
+        /// <summary>
+        /// 递归清除目录树上的只读属性，并跳过重解析点。
+        /// </summary>
+        public static void ClearReadOnlyAttributes(string rootPath)
+        {
+            ClearReadOnlyAttribute(rootPath);
+
+            foreach (string file in Directory.GetFiles(rootPath))
+            {
+                ClearReadOnlyAttribute(file);
+            }
+
+            foreach (string directory in Directory.GetDirectories(rootPath))
+            {
+                ClearReadOnlyAttribute(directory);
+                if (IsReparsePoint(directory))
+                {
+                    continue;
+                }
+
+                ClearReadOnlyAttributes(directory);
+            }
+        }
+
+        /// <summary>
+        /// 清除单个路径上的只读属性，保留其他属性不变。
+        /// </summary>
+        private static void ClearReadOnlyAttribute(string path)
+        {
+            FileAttributes attributes = File.GetAttributes(path);
+            if ((attributes & FileAttributes.ReadOnly) == 0)
+            {
+                return;
+            }
+
+            File.SetAttributes(path, attributes & ~FileAttributes.ReadOnly);
+        }
+
+        /// <summary>
+        /// 将访问失败区分为只读失败和其他失败，供界面决定是否允许自动修复。
+        /// </summary>
+        private static Exception TryCreateAccessCheckException(string file)
+        {
+            FileInfo fileInfo = new FileInfo(file);
+            FileStream fileStream = null;
+            try
+            {
+                fileStream = fileInfo.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                if (IsReadOnlyOnlyFailure(fileInfo))
+                {
+                    return new ReadOnlyPrecheckException(file, ex);
+                }
+
+                return ex;
+            }
+            finally
+            {
+                if (fileStream != null)
+                {
+                    fileStream.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 仅当独占只读打开成功、但读写打开失败时，才视为纯只读导致的失败。
+        /// </summary>
+        private static bool IsReadOnlyOnlyFailure(FileInfo fileInfo)
+        {
+            try
+            {
+                if ((fileInfo.Attributes & FileAttributes.ReadOnly) == 0)
+                {
+                    return false;
+                }
+
+                using FileStream fileStream = fileInfo.Open(FileMode.Open, FileAccess.Read, FileShare.None);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
