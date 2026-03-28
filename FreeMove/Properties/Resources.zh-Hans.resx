@@ -487,5 +487,122 @@ https://github.com/fengyec2</value>
   <data name="Rename_Prompt" xml:space="preserve">
     <value>请输入 '{0}' 的新名称：</value>
   </data>
+
+  <data name="Restore_PrepareFailed" xml:space="preserve">
+    <value>无法准备恢复：{0}</value>
+  </data>
+  <data name="Restore_Failed" xml:space="preserve">
+    <value>恢复失败：{0}</value>
+  </data>
+  <data name="ReadOnlyPrecheck_FileMessage" xml:space="preserve">
+    <value>文件 "{0}" 为只读。</value>
+  </data>
+  <data name="Error_InvalidPath" xml:space="preserve">
+    <value>路径无效</value>
+  </data>
+  <data name="Error_InvalidPathFormat" xml:space="preserve">
+    <value>路径格式无效</value>
+  </data>
+  <data name="Error_DirectoryCannotMove" xml:space="preserve">
+    <value>无法移动目录 "{0}"。</value>
+  </data>
+  <data name="Error_SafeModeProgramFiles" xml:space="preserve">
+    <value>不建议移动 {0} 目录。可在「设置」菜单中关闭安全模式以跳过此检查。</value>
+  </data>
+  <data name="Error_SourceNotExist" xml:space="preserve">
+    <value>源文件夹不存在。</value>
+  </data>
+  <data name="Error_DestNameExists" xml:space="preserve">
+    <value>目标位置已存在同名文件夹。</value>
+  </data>
+  <data name="Error_DestParentNotExist" xml:space="preserve">
+    <value>目标文件夹不存在。</value>
+  </data>
+  <data name="Error_NoPrivileges" xml:space="preserve">
+    <value>无足够权限移动该目录。
+请尝试以管理员身份运行。</value>
+  </data>
+  <data name="Error_CannotCreateSymlinkTest" xml:space="preserve">
+    <value>无法创建符号链接。
+请尝试以管理员身份运行。</value>
+  </data>
+  <data name="Error_InsufficientDiskSpace" xml:space="preserve">
+    <value>磁盘 {0} 可用空间不足。需要约 {1} MB，可用 {2} MB。</value>
+  </data>
+  <data name="MoveOp_CreateDestUnauthorized" xml:space="preserve">
+    <value>创建目标目录所需的权限不足。请尝试以管理员身份运行。</value>
+  </data>
+  <data name="MoveOp_CreateDestIOError" xml:space="preserve">
+    <value>无法创建目标目录。</value>
+  </data>
+  <data name="MoveOp_MoveSameDriveFailed" xml:space="preserve">
+    <value>在同一磁盘上移动时发生异常</value>
+  </data>
+  <data name="MoveOp_CopyFailed" xml:space="preserve">
+    <value>复制目录时发生异常</value>
+  </data>
+  <data name="MoveOp_DeleteOldFailed" xml:space="preserve">
+    <value>删除原位置残留文件时发生异常</value>
+  </data>
+  <data name="Menu_NoneTooltip" xml:space="preserve">
+    <value>移动前不检查任何文件</value>
+  </data>
+  <data name="Menu_FastTooltip" xml:space="preserve">
+    <value>移动前检查所有 .exe 和 .dll 文件</value>
+  </data>
+  <data name="Menu_FullTooltip" xml:space="preserve">
+    <value>移动前检查所有文件</value>
+  </data>
+
+  <data name="Button_OK" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Progress_ProgressFormat" xml:space="preserve">
+    <value>{0}/{1}</value>
+  </data>
+  <data name="Everything_Err_Memory" xml:space="preserve">
+    <value>内存错误</value>
+  </data>
+  <data name="Everything_Err_RegisterClass" xml:space="preserve">
+    <value>注册窗口类失败</value>
+  </data>
+  <data name="Everything_Err_CreateWindow" xml:space="preserve">
+    <value>创建窗口失败</value>
+  </data>
+  <data name="Everything_Err_CreateThread" xml:space="preserve">
+    <value>创建线程失败</value>
+  </data>
+  <data name="Everything_Err_InvalidIndex" xml:space="preserve">
+    <value>无效索引</value>
+  </data>
+  <data name="Everything_Err_InvalidCall" xml:space="preserve">
+    <value>无效调用</value>
+  </data>
+  <data name="Everything_Err_Unknown" xml:space="preserve">
+    <value>未知错误（{0}）</value>
+  </data>
+  <data name="Everything_Err_Exception" xml:space="preserve">
+    <value>错误：{0}</value>
+  </data>
+  <data name="Updater_Checking" xml:space="preserve">
+    <value>正在检查更新...</value>
+  </data>
+  <data name="Updater_NoUpdates" xml:space="preserve">
+    <value>当前已是最新版本。</value>
+  </data>
+  <data name="Updater_VersionAvailable" xml:space="preserve">
+    <value>发现新版本
+
+当前版本：{0}
+最新版本：{1}
+
+是否打开下载页面？</value>
+  </data>
+  <data name="Updater_FormTitle" xml:space="preserve">
+    <value>FreeMove — 更新</value>
+  </data>
 </root>
 

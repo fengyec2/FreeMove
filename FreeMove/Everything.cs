@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -57,6 +58,14 @@ namespace FreeMove
         private const uint EVERYTHING_ERROR_INVALIDINDEX = 6;
         private const uint EVERYTHING_ERROR_INVALIDCALL = 7;
 
+        public enum EverythingFailureKind
+        {
+            None,
+            DllNotFound,
+            NotRunning,
+            Other
+        }
+
         public static bool IsAvailable()
         {
             try
@@ -76,32 +85,72 @@ namespace FreeMove
             }
         }
 
-        public static string GetLastErrorMessage()
+        /// <summary>
+        /// 区分 Everything 不可用的原因（未加载 DLL、进程未运行等），用于本地化提示。
+        /// </summary>
+        public static EverythingFailureKind GetAvailabilityFailureKind()
+        {
+            try
+            {
+                bool loaded = Is64Bit ? Everything_IsDBLoaded_64() : Everything_IsDBLoaded_32();
+                if (loaded)
+                    return EverythingFailureKind.None;
+                uint err = Is64Bit ? Everything_GetLastError_64() : Everything_GetLastError_32();
+                if (err == EVERYTHING_ERROR_IPC)
+                    return EverythingFailureKind.NotRunning;
+                return EverythingFailureKind.Other;
+            }
+            catch (DllNotFoundException)
+            {
+                return EverythingFailureKind.DllNotFound;
+            }
+            catch
+            {
+                return EverythingFailureKind.Other;
+            }
+        }
+
+        /// <summary>
+        /// 将 Everything 返回的错误码转为当前 UI 语言的说明（供搜索失败等提示使用）。
+        /// </summary>
+        public static string GetLocalizedLastErrorMessage()
         {
             try
             {
                 uint error = Is64Bit ? Everything_GetLastError_64() : Everything_GetLastError_32();
-                switch (error)
-                {
-                    case EVERYTHING_OK: return "OK";
-                    case EVERYTHING_ERROR_MEMORY: return "Memory error";
-                    case EVERYTHING_ERROR_IPC: return "Everything is not running";
-                    case EVERYTHING_ERROR_REGISTERCLASSEX: return "Register window class error";
-                    case EVERYTHING_ERROR_CREATEWINDOW: return "Create window error";
-                    case EVERYTHING_ERROR_CREATETHREAD: return "Create thread error";
-                    case EVERYTHING_ERROR_INVALIDINDEX: return "Invalid index";
-                    case EVERYTHING_ERROR_INVALIDCALL: return "Invalid call";
-                    default: return "Unknown error: " + error;
-                }
+                return MapErrorCodeToLocalizedString(error);
             }
             catch (DllNotFoundException)
             {
-                return "DLL not found";
+                return Properties.Resources.ResourceManager.GetString("Everything_NotInstalled");
             }
             catch (Exception ex)
             {
-                return "Error: " + ex.Message;
+                return string.Format(CultureInfo.CurrentUICulture, Properties.Resources.ResourceManager.GetString("Everything_Err_Exception"), ex.Message);
             }
+        }
+
+        private static string MapErrorCodeToLocalizedString(uint error)
+        {
+            var rm = Properties.Resources.ResourceManager;
+            switch (error)
+            {
+                case EVERYTHING_OK: return "OK";
+                case EVERYTHING_ERROR_MEMORY: return rm.GetString("Everything_Err_Memory");
+                case EVERYTHING_ERROR_IPC: return rm.GetString("Everything_NotRunning");
+                case EVERYTHING_ERROR_REGISTERCLASSEX: return rm.GetString("Everything_Err_RegisterClass");
+                case EVERYTHING_ERROR_CREATEWINDOW: return rm.GetString("Everything_Err_CreateWindow");
+                case EVERYTHING_ERROR_CREATETHREAD: return rm.GetString("Everything_Err_CreateThread");
+                case EVERYTHING_ERROR_INVALIDINDEX: return rm.GetString("Everything_Err_InvalidIndex");
+                case EVERYTHING_ERROR_INVALIDCALL: return rm.GetString("Everything_Err_InvalidCall");
+                default:
+                    return string.Format(CultureInfo.CurrentUICulture, rm.GetString("Everything_Err_Unknown"), error);
+            }
+        }
+
+        public static string GetLastErrorMessage()
+        {
+            return GetLocalizedLastErrorMessage();
         }
 
         private const uint EVERYTHING_REQUEST_FILE_NAME = 0x00000001;

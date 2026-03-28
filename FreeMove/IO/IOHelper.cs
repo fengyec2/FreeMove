@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
+using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -32,7 +33,7 @@ namespace FreeMove
             public string FilePath { get; }
 
             public ReadOnlyPrecheckException(string filePath, Exception innerException)
-                : base($"The file \"{filePath}\" is read-only.", innerException)
+                : base(string.Format(CultureInfo.CurrentUICulture, Properties.Resources.ResourceManager.GetString("ReadOnlyPrecheck_FileMessage"), filePath), innerException)
             {
                 FilePath = filePath;
             }
@@ -146,12 +147,12 @@ namespace FreeMove
             }
             catch (Exception e)
             {
-                exceptions.Add(new Exception("Invalid path", e));
+                exceptions.Add(new Exception(Properties.Resources.ResourceManager.GetString("Error_InvalidPath"), e));
             }
             string pattern = @"^[A-Za-z]:\\{1,2}";
             if (!Regex.IsMatch(source, pattern) || !Regex.IsMatch(destination, pattern))
             {
-                exceptions.Add(new Exception("Invalid path format"));
+                exceptions.Add(new Exception(Properties.Resources.ResourceManager.GetString("Error_InvalidPathFormat")));
             }
 
             //Check if the chosen directory is blacklisted
@@ -160,7 +161,7 @@ namespace FreeMove
             {
                 if (source == item)
                 {
-                    exceptions.Add(new Exception($"The \"{source}\" directory cannot be moved."));
+                    exceptions.Add(new Exception(string.Format(CultureInfo.CurrentUICulture, Properties.Resources.ResourceManager.GetString("Error_DirectoryCannotMove"), source)));
                 }
             }
 
@@ -169,18 +170,18 @@ namespace FreeMove
                 source == Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) ||
                 source == Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86)))
             {
-                exceptions.Add(new Exception($"It's recommended not to move the {source} directory, you can disable safe mode in the Settings tab to override this check"));
+                exceptions.Add(new Exception(string.Format(CultureInfo.CurrentUICulture, Properties.Resources.ResourceManager.GetString("Error_SafeModeProgramFiles"), source)));
             }
 
             //Check for existence of directories
             if (!Directory.Exists(source))
-                exceptions.Add(new Exception("Source folder does not exist"));
+                exceptions.Add(new Exception(Properties.Resources.ResourceManager.GetString("Error_SourceNotExist")));
 
             if (Directory.Exists(destination))
-                exceptions.Add(new Exception("Destination folder already contains a folder with the same name"));
+                exceptions.Add(new Exception(Properties.Resources.ResourceManager.GetString("Error_DestNameExists")));
 
             if (!createDestination && !Directory.Exists(Directory.GetParent(destination).FullName))
-                exceptions.Add(new Exception("Destination folder does not exist"));
+                exceptions.Add(new Exception(Properties.Resources.ResourceManager.GetString("Error_DestParentNotExist")));
 
             // Next checks rely on the previous so if there was any exception return
             if (exceptions.Count > 0)
@@ -200,7 +201,7 @@ namespace FreeMove
             }
             catch (UnauthorizedAccessException e)
             {
-                exceptions.Add(new Exception("You do not have the required privileges to move the directory.\nTry running as administrator", e));
+                exceptions.Add(new Exception(Properties.Resources.ResourceManager.GetString("Error_NoPrivileges"), e));
             }
             finally
             {
@@ -212,7 +213,7 @@ namespace FreeMove
             try
             {
                 if (!CreateSymbolicLink(TestFile, Path.GetDirectoryName(destination), SymbolicLink.Directory))
-                    exceptions.Add(new Exception("Could not create a symbolic link.\nTry running as administrator"));
+                    exceptions.Add(new Exception(Properties.Resources.ResourceManager.GetString("Error_CannotCreateSymlinkTest")));
             }
             finally
             {
@@ -234,7 +235,7 @@ namespace FreeMove
             {
                 DriveInfo dstDrive = new(Path.GetPathRoot(destination));
                 if (dstDrive.AvailableFreeSpace < size)
-                    exceptions.Add(new Exception($"There is not enough free space on the {dstDrive.Name} disk. {size / 1000000}MB required, {dstDrive.AvailableFreeSpace / 1000000} available."));
+                    exceptions.Add(new Exception(string.Format(CultureInfo.CurrentUICulture, Properties.Resources.ResourceManager.GetString("Error_InsufficientDiskSpace"), dstDrive.Name, size / 1000000, dstDrive.AvailableFreeSpace / 1000000)));
             }
             catch (Exception e)
             {

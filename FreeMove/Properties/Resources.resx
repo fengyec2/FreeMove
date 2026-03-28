@@ -139,7 +139,7 @@ https://github.com/imDema
 https://github.com/fengyec2</value>
   </data>
   <data name="DisableSafeModeMessage" xml:space="preserve">
-    <value>It's strongly recommended not to move the "Program Files" or the "Program Files (x86)" directories as it can lead to unexpexted behaviour.
+    <value>It's strongly recommended not to move the "Program Files" or the "Program Files (x86)" directories as it can lead to unexpected behaviour.
 You are free to move any of the programs contained in those directories without any problem instead.
 
 Are you sure you want to disable safe mode?</value>
@@ -493,5 +493,120 @@ Choose 'No' to COPY all files back (keeps the target folder).</value>
   </data>
   <data name="Rename_Prompt" xml:space="preserve">
     <value>Enter new name for '{0}':</value>
+  </data>
+  <data name="Restore_PrepareFailed" xml:space="preserve">
+    <value>Could not prepare restoration: {0}</value>
+  </data>
+  <data name="Restore_Failed" xml:space="preserve">
+    <value>Restoration failed: {0}</value>
+  </data>
+  <data name="ReadOnlyPrecheck_FileMessage" xml:space="preserve">
+    <value>The file "{0}" is read-only.</value>
+  </data>
+  <data name="Error_InvalidPath" xml:space="preserve">
+    <value>Invalid path</value>
+  </data>
+  <data name="Error_InvalidPathFormat" xml:space="preserve">
+    <value>Invalid path format</value>
+  </data>
+  <data name="Error_DirectoryCannotMove" xml:space="preserve">
+    <value>The "{0}" directory cannot be moved.</value>
+  </data>
+  <data name="Error_SafeModeProgramFiles" xml:space="preserve">
+    <value>It's recommended not to move the {0} directory. You can disable safe mode in the Settings menu to override this check.</value>
+  </data>
+  <data name="Error_SourceNotExist" xml:space="preserve">
+    <value>Source folder does not exist.</value>
+  </data>
+  <data name="Error_DestNameExists" xml:space="preserve">
+    <value>Destination folder already contains a folder with the same name.</value>
+  </data>
+  <data name="Error_DestParentNotExist" xml:space="preserve">
+    <value>Destination folder does not exist.</value>
+  </data>
+  <data name="Error_NoPrivileges" xml:space="preserve">
+    <value>You do not have the required privileges to move the directory.
+Try running as administrator.</value>
+  </data>
+  <data name="Error_CannotCreateSymlinkTest" xml:space="preserve">
+    <value>Could not create a symbolic link.
+Try running as administrator.</value>
+  </data>
+  <data name="Error_InsufficientDiskSpace" xml:space="preserve">
+    <value>There is not enough free space on the {0} disk. {1} MB required, {2} MB available.</value>
+  </data>
+  <data name="MoveOp_CreateDestUnauthorized" xml:space="preserve">
+    <value>Lacking required permissions to create the destination directory. Try running as administrator.</value>
+  </data>
+  <data name="MoveOp_CreateDestIOError" xml:space="preserve">
+    <value>Unable to create the destination directory.</value>
+  </data>
+  <data name="MoveOp_MoveSameDriveFailed" xml:space="preserve">
+    <value>Exception encountered while moving on the same drive</value>
+  </data>
+  <data name="MoveOp_CopyFailed" xml:space="preserve">
+    <value>Exception encountered while copying directory</value>
+  </data>
+  <data name="MoveOp_DeleteOldFailed" xml:space="preserve">
+    <value>Exception encountered while removing duplicate files in the old location</value>
+  </data>
+  <data name="Menu_NoneTooltip" xml:space="preserve">
+    <value>Don't check any file before moving</value>
+  </data>
+  <data name="Menu_FastTooltip" xml:space="preserve">
+    <value>Check all .exe and .dll files before moving</value>
+  </data>
+  <data name="Menu_FullTooltip" xml:space="preserve">
+    <value>Check all files before moving</value>
+  </data>
+  <data name="Button_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Progress_ProgressFormat" xml:space="preserve">
+    <value>{0}/{1}</value>
+  </data>
+  <data name="Everything_Err_Memory" xml:space="preserve">
+    <value>Memory error</value>
+  </data>
+  <data name="Everything_Err_RegisterClass" xml:space="preserve">
+    <value>Register window class error</value>
+  </data>
+  <data name="Everything_Err_CreateWindow" xml:space="preserve">
+    <value>Create window error</value>
+  </data>
+  <data name="Everything_Err_CreateThread" xml:space="preserve">
+    <value>Create thread error</value>
+  </data>
+  <data name="Everything_Err_InvalidIndex" xml:space="preserve">
+    <value>Invalid index</value>
+  </data>
+  <data name="Everything_Err_InvalidCall" xml:space="preserve">
+    <value>Invalid call</value>
+  </data>
+  <data name="Everything_Err_Unknown" xml:space="preserve">
+    <value>Unknown error ({0})</value>
+  </data>
+  <data name="Everything_Err_Exception" xml:space="preserve">
+    <value>Error: {0}</value>
+  </data>
+  <data name="Updater_Checking" xml:space="preserve">
+    <value>Checking for a new version...</value>
+  </data>
+  <data name="Updater_NoUpdates" xml:space="preserve">
+    <value>There are no updates available.</value>
+  </data>
+  <data name="Updater_VersionAvailable" xml:space="preserve">
+    <value>New version available
+
+Current version: {0}
+Latest version:  {1}
+
+Open the download page?</value>
+  </data>
+  <data name="Updater_FormTitle" xml:space="preserve">
+    <value>FreeMove — Update</value>
   </data>
 </root>

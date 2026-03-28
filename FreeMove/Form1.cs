@@ -113,6 +113,10 @@ namespace FreeMove
             fastToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_Fast");
             fullToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_Full");
 
+            noneToolStripMenuItem.ToolTipText = Properties.Resources.ResourceManager.GetString("Menu_NoneTooltip");
+            fastToolStripMenuItem.ToolTipText = Properties.Resources.ResourceManager.GetString("Menu_FastTooltip");
+            fullToolStripMenuItem.ToolTipText = Properties.Resources.ResourceManager.GetString("Menu_FullTooltip");
+
             reportAnIssueToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_ReportIssue");
             gitHubToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_GitHub");
             aboutToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_About");
@@ -157,7 +161,7 @@ namespace FreeMove
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Could not prepare restoration: " + ex.Message,
+                    MessageBox.Show(string.Format(System.Globalization.CultureInfo.CurrentUICulture, Properties.Resources.ResourceManager.GetString("Restore_PrepareFailed"), ex.Message),
                         Properties.Resources.ResourceManager.GetString("ErrorTitle"),
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -197,7 +201,7 @@ namespace FreeMove
                     }
                     catch { /* 忽略恢复失败 */ }
 
-                    MessageBox.Show("Restoration failed: " + ex.Message,
+                    MessageBox.Show(string.Format(System.Globalization.CultureInfo.CurrentUICulture, Properties.Resources.ResourceManager.GetString("Restore_Failed"), ex.Message),
                         Properties.Resources.ResourceManager.GetString("ErrorTitle"),
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -382,7 +386,7 @@ namespace FreeMove
                             }
                             catch (Exception ie)
                             {
-                                MessageBox.Show(this, ie.Message, "Could not remove copied contents. Try removing manually");
+                                MessageBox.Show(this, ie.Message, Properties.Resources.ResourceManager.GetString("RemoveCopiedContentsFailed"));
                             }
                             break;
                     }

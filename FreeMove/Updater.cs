@@ -1,4 +1,4 @@
-﻿// FreeMove -- Move directories without breaking shortcuts or installations 
+// FreeMove -- Move directories without breaking shortcuts or installations 
 //    Copyright(C) 2020  Luca De Martini
 
 //    This program is free software: you can redistribute it and/or modify
@@ -16,6 +16,7 @@
 
 using System;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -38,6 +39,10 @@ namespace FreeMove
             Assembly assembly = Assembly.GetExecutingAssembly();
             this.CurrentVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location).FileVersion;
             InitializeComponent();
+            Text = Properties.Resources.ResourceManager.GetString("Updater_FormTitle");
+            label1.Text = Properties.Resources.ResourceManager.GetString("Updater_Checking");
+            button_Ok.Text = Properties.Resources.ResourceManager.GetString("Button_OK");
+            button_Cancel.Text = Properties.Resources.ResourceManager.GetString("Button_Cancel");
         }
 
         private void Updater_Shown(object sender, EventArgs e)
@@ -58,7 +63,7 @@ namespace FreeMove
                 }
                 else
                 {
-                    label1.Text = "There are no updates available";
+                    label1.Text = Properties.Resources.ResourceManager.GetString("Updater_NoUpdates");
                     progressBar1.Dispose();
                     button_Ok.Enabled = true;
                     button_Ok.Click += delegate { Dispose(); };
@@ -81,7 +86,7 @@ namespace FreeMove
         {
             progressBar1.Dispose();
             label1.Font = new Font("Lucida Console", label1.Font.Size);
-            label1.Text = String.Format($"New version available\n\nCurrent Version: {CurrentVersion}\nLatest Version:  {NewVersion}\n\nOpen the download page?");
+            label1.Text = string.Format(CultureInfo.CurrentUICulture, Properties.Resources.ResourceManager.GetString("Updater_VersionAvailable"), CurrentVersion, NewVersion);
             button_Cancel.Enabled = true;
             button_Cancel.Click += delegate { Dispose(); };
 

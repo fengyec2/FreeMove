@@ -1,4 +1,4 @@
-﻿// FreeMove -- Move directories without breaking shortcuts or installations 
+// FreeMove -- Move directories without breaking shortcuts or installations 
 //    Copyright(C) 2020  Luca De Martini
 
 //    This program is free software: you can redistribute it and/or modify
@@ -49,11 +49,11 @@ namespace FreeMove.IO
                 {
                     if (e is UnauthorizedAccessException)
                     {
-                        throw new UnauthorizedAccessException("Lacking required permissions to create the destination directory. Try running as administrator.");
+                        throw new UnauthorizedAccessException(Properties.Resources.ResourceManager.GetString("MoveOp_CreateDestUnauthorized"));
                     }
                     else
                     {
-                        throw new IOException("Unable to create the destination directory.");
+                        throw new IOException(Properties.Resources.ResourceManager.GetString("MoveOp_CreateDestIOError"));
                     }
                 }
             }
@@ -80,7 +80,7 @@ namespace FreeMove.IO
                     }
                     catch (Exception e) when (!(e is OperationCanceledException))
                     {
-                        throw new MoveFailedException("Exception encountered while moving on the same drive", e);
+                        throw new MoveFailedException(Properties.Resources.ResourceManager.GetString("MoveOp_MoveSameDriveFailed"), e);
                     }
                 }
                 else
@@ -91,7 +91,7 @@ namespace FreeMove.IO
                     }
                     catch (Exception e) when (!(e is OperationCanceledException)) // Wrap inner exceptions to signal which phase failed
                     {
-                        throw new CopyFailedException("Exception encountered while copying directory", e);
+                        throw new CopyFailedException(Properties.Resources.ResourceManager.GetString("MoveOp_CopyFailed"), e);
                     }
 
                     cts.Token.ThrowIfCancellationRequested();
@@ -101,7 +101,7 @@ namespace FreeMove.IO
                     }
                     catch (Exception e)
                     {
-                        throw new DeleteFailedException("Exception encountered while removing duplicate files in the old location", e);
+                        throw new DeleteFailedException(Properties.Resources.ResourceManager.GetString("MoveOp_DeleteOldFailed"), e);
                     }
                 }
             }

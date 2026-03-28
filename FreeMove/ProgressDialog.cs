@@ -16,6 +16,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace FreeMove
@@ -46,6 +47,8 @@ namespace FreeMove
         {
             InitializeComponent();
 
+            Text = Properties.Resources.ResourceManager.GetString("MovingFilesTitle");
+            button_Cancel.Text = Properties.Resources.ResourceManager.GetString("Button_Cancel");
             Message = message;
             progressBar1.Maximum = BAR_RESOLUTION;
             progressBar1.Value = 0;
@@ -65,7 +68,10 @@ namespace FreeMove
                 {
                     float percentage = ((float)e.Progress / e.Max);
                     string finishing = Properties.Resources.ResourceManager.GetString("ProgressFinishingText");
-                    label_Progress.Text = e.Progress == e.Max ? finishing : $"{e.Progress}/{e.Max}";
+                    string progressFmt = Properties.Resources.ResourceManager.GetString("Progress_ProgressFormat");
+                    label_Progress.Text = e.Progress == e.Max
+                        ? finishing
+                        : string.Format(CultureInfo.InvariantCulture, progressFmt, e.Progress, e.Max);
                     if (e.Progress == e.Max)
                         Cancellable = false;
                     // label_Progress.Text = $"{percentage*100f, 3:0.0}%";

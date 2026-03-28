@@ -27,12 +27,11 @@ namespace FreeMove
 
         private void InitializeBrowser()
         {
-            // 初始化列标题（后续会通过 ApplyLanguage 刷新）
-            listView_Files.Columns.Add("Name", 200);
-            listView_Files.Columns.Add("Type", 100);
-            listView_Files.Columns.Add("Target Path", 250);
+            var rm = Properties.Resources.ResourceManager;
+            listView_Files.Columns.Add(rm.GetString("Column_Name") ?? "Name", 200);
+            listView_Files.Columns.Add(rm.GetString("Column_Type") ?? "Type", 100);
+            listView_Files.Columns.Add(rm.GetString("Column_TargetPath") ?? "Target Path", 250);
 
-            // 加载驱动器
             LoadDrives();
         }
 
@@ -170,20 +169,18 @@ namespace FreeMove
         {
             if (!Everything.IsAvailable())
             {
-                string error = Everything.GetLastErrorMessage();
                 string message;
-
-                if (error == "Everything is not running")
+                switch (Everything.GetAvailabilityFailureKind())
                 {
-                    message = Properties.Resources.ResourceManager.GetString("Everything_NotRunning") ?? "Everything is not running.";
-                }
-                else if (error == "DLL not found")
-                {
-                    message = Properties.Resources.ResourceManager.GetString("Everything_NotInstalled") ?? "Everything is not installed or the DLL is missing.";
-                }
-                else
-                {
-                    message = error; // 显示其他具体错误
+                    case Everything.EverythingFailureKind.NotRunning:
+                        message = Properties.Resources.ResourceManager.GetString("Everything_NotRunning");
+                        break;
+                    case Everything.EverythingFailureKind.DllNotFound:
+                        message = Properties.Resources.ResourceManager.GetString("Everything_NotInstalled");
+                        break;
+                    default:
+                        message = Everything.GetLocalizedLastErrorMessage();
+                        break;
                 }
 
                 listView_Files.Items.Clear();
@@ -447,7 +444,7 @@ namespace FreeMove
             };
             Label textLabel = new Label() { Left = 20, Top = 20, Text = text, AutoSize = true };
             TextBox textBox = new TextBox() { Left = 20, Top = 50, Width = 340, Text = defaultValue };
-            Button confirmation = new Button() { Text = "OK", Left = 260, Width = 100, Top = 80, DialogResult = DialogResult.OK };
+            Button confirmation = new Button() { Text = Properties.Resources.ResourceManager.GetString("Button_OK"), Left = 260, Width = 100, Top = 80, DialogResult = DialogResult.OK };
 
             prompt.Controls.Add(textBox);
             prompt.Controls.Add(confirmation);
@@ -565,7 +562,7 @@ namespace FreeMove
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Properties.Resources.ResourceManager.GetString("ErrorTitle") ?? "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, Properties.Resources.ResourceManager.GetString("ErrorTitle"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -613,7 +610,7 @@ namespace FreeMove
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, Properties.Resources.ResourceManager.GetString("ErrorTitle") ?? "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, Properties.Resources.ResourceManager.GetString("ErrorTitle"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -668,7 +665,7 @@ namespace FreeMove
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Properties.Resources.ResourceManager.GetString("ErrorTitle") ?? "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, Properties.Resources.ResourceManager.GetString("ErrorTitle"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
