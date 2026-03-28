@@ -14,6 +14,7 @@ You can use this tool to move programs that install on `C:\` by default to anoth
 
 ## Core Features
 - [x] In-app directory browsing/operations
+- [x] Multi-language support
 - [x] Move directories or files
 - [x] Automatically create target directories
 - [x] Create symbolic links
