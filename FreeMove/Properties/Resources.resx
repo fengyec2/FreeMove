@@ -191,6 +191,23 @@ If this text file was useful or if you would have preferred it wasn't created le
   <data name="ErrorTitle" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="ReadOnlyPrecheckConfirmTitle" xml:space="preserve">
+    <value>Read-only files detected</value>
+  </data>
+  <data name="ReadOnlyPrecheckConfirmMessage" xml:space="preserve">
+    <value>Some files in the source folder are read-only, so the move cannot start yet.
+
+Files:
+{0}
+
+Allow FreeMove to clear the read-only attribute and continue?</value>
+  </data>
+  <data name="ReadOnlyClearFailedMessage" xml:space="preserve">
+    <value>Could not clear the read-only attribute.
+
+Details:
+{0}</value>
+  </data>
   <data name="RemoveCopiedContentsFailed" xml:space="preserve">
     <value>Could not remove copied contents. Try removing manually</value>
   </data>

@@ -139,6 +139,23 @@ https://github.com/fengyec2</value>
     <value>错误</value>
   </data>
 
+  <data name="ReadOnlyPrecheckConfirmTitle" xml:space="preserve">
+    <value>检测到只读文件</value>
+  </data>
+  <data name="ReadOnlyPrecheckConfirmMessage" xml:space="preserve">
+    <value>源文件夹中存在只读文件，因此当前无法开始移动。
+
+文件：
+{0}
+
+是否允许 FreeMove 清除只读属性后继续？</value>
+  </data>
+  <data name="ReadOnlyClearFailedMessage" xml:space="preserve">
+    <value>无法清除只读属性。
+
+详细信息：
+{0}</value>
+  </data>
   <data name="RemoveCopiedContentsFailed" xml:space="preserve">
     <value>无法删除已复制的内容，请尝试手动删除。</value>
   </data>
