@@ -200,7 +200,7 @@ If this text file was useful or if you would have preferred it wasn't created le
 Files:
 {0}
 
-Do you want FreeMove to clear the read-only attribute automatically?</value>
+Allow FreeMove to clear the read-only attribute and continue?</value>
   </data>
   <data name="ReadOnlyClearFailedMessage" xml:space="preserve">
     <value>Could not clear the read-only attribute.

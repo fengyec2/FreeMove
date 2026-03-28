@@ -148,7 +148,7 @@ https://github.com/fengyec2</value>
 文件：
 {0}
 
-是否让 FreeMove 自动清除只读属性？</value>
+是否允许 FreeMove 清除只读属性后继续？</value>
   </data>
   <data name="ReadOnlyClearFailedMessage" xml:space="preserve">
     <value>无法清除只读属性。
