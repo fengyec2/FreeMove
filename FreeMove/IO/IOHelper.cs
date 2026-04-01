@@ -160,8 +160,10 @@ namespace FreeMove
             string system32Path = Environment.GetFolderPath(Environment.SpecialFolder.System);
             string configPath = Path.Combine(windowsPath, "Config");
             string programDataPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            string drivePath = Path.GetPathRoot(windowsPath);
+            string tempPath = Path.GetTempPath().TrimEnd(Path.DirectorySeparatorChar);
 
-            string[] Blacklist = { windowsPath, system32Path, configPath, programDataPath };
+            string[] Blacklist = { windowsPath, system32Path, configPath, programDataPath, drivePath, tempPath };
             foreach (string item in Blacklist)
             {
                 if (source == item)
@@ -171,11 +173,22 @@ namespace FreeMove
             }
 
             //Check if folder is critical
-            if (safeMode && (
-                source == Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) ||
-                source == Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86)))
+            if (safeMode)
             {
-                exceptions.Add(new Exception(string.Format(CultureInfo.CurrentUICulture, Properties.Resources.ResourceManager.GetString("Error_SafeModeProgramFiles"), source)));
+                string programFilesPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+                string programFilesX86Path = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+                string userProfilePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string localAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+
+                if (source == programFilesPath || source == programFilesX86Path)
+                {
+                    exceptions.Add(new Exception(string.Format(CultureInfo.CurrentUICulture, Properties.Resources.ResourceManager.GetString("Error_SafeModeProgramFiles"), source)));
+                }
+                else if (source == userProfilePath || source == appDataPath || source == localAppDataPath)
+                {
+                    exceptions.Add(new Exception(string.Format(CultureInfo.CurrentUICulture, Properties.Resources.ResourceManager.GetString("Error_SafeModeProgramFiles"), source)));
+                }
             }
 
             //Check for existence of directories
