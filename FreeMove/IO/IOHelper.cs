@@ -163,10 +163,12 @@ namespace FreeMove
             string drivePath = Path.GetPathRoot(windowsPath);
             string tempPath = Path.GetTempPath().TrimEnd(Path.DirectorySeparatorChar);
 
+            string normalizedSource = Path.GetFullPath(source).TrimEnd(Path.DirectorySeparatorChar).ToUpperInvariant();
             string[] Blacklist = { windowsPath, system32Path, configPath, programDataPath, drivePath, tempPath };
             foreach (string item in Blacklist)
             {
-                if (source == item)
+                string normalizedItem = Path.GetFullPath(item).TrimEnd(Path.DirectorySeparatorChar).ToUpperInvariant();
+                if (normalizedSource == normalizedItem)
                 {
                     exceptions.Add(new Exception(string.Format(CultureInfo.CurrentUICulture, Properties.Resources.ResourceManager.GetString("Error_DirectoryCannotMove"), source)));
                 }
@@ -181,13 +183,16 @@ namespace FreeMove
                 string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 string localAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
-                if (source == programFilesPath || source == programFilesX86Path)
+                string normalizedSourceForSafeMode = Path.GetFullPath(source).TrimEnd(Path.DirectorySeparatorChar).ToUpperInvariant();
+                string[] safePaths = { programFilesPath, programFilesX86Path, userProfilePath, appDataPath, localAppDataPath };
+                foreach (string item in safePaths)
                 {
-                    exceptions.Add(new Exception(string.Format(CultureInfo.CurrentUICulture, Properties.Resources.ResourceManager.GetString("Error_SafeModeProgramFiles"), source)));
-                }
-                else if (source == userProfilePath || source == appDataPath || source == localAppDataPath)
-                {
-                    exceptions.Add(new Exception(string.Format(CultureInfo.CurrentUICulture, Properties.Resources.ResourceManager.GetString("Error_SafeModeProgramFiles"), source)));
+                    string normalizedSafePath = Path.GetFullPath(item).TrimEnd(Path.DirectorySeparatorChar).ToUpperInvariant();
+                    if (normalizedSourceForSafeMode == normalizedSafePath)
+                    {
+                        exceptions.Add(new Exception(string.Format(CultureInfo.CurrentUICulture, Properties.Resources.ResourceManager.GetString("Error_SafeModeProgramFiles"), source)));
+                        break;
+                    }
                 }
             }
 
