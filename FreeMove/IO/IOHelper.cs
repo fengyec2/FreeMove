@@ -156,7 +156,12 @@ namespace FreeMove
             }
 
             //Check if the chosen directory is blacklisted
-            string[] Blacklist = { @"C:\Windows", @"C:\Windows\System32", @"C:\Windows\Config", @"C:\ProgramData" };
+            string windowsPath = Environment.GetEnvironmentVariable("WINDIR") ?? Environment.GetFolderPath(Environment.SpecialFolder.Windows);
+            string system32Path = Environment.GetFolderPath(Environment.SpecialFolder.System);
+            string configPath = Path.Combine(windowsPath, "Config");
+            string programDataPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+
+            string[] Blacklist = { windowsPath, system32Path, configPath, programDataPath };
             foreach (string item in Blacklist)
             {
                 if (source == item)
