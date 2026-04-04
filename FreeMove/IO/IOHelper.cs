@@ -158,13 +158,18 @@ namespace FreeMove
             //Check if the chosen directory is blacklisted
             string windowsPath = Environment.GetEnvironmentVariable("WINDIR") ?? Environment.GetFolderPath(Environment.SpecialFolder.Windows);
             string system32Path = Environment.GetFolderPath(Environment.SpecialFolder.System);
+            string sysWOW64Path = Path.Combine(windowsPath, "SysWOW64");
             string configPath = Path.Combine(windowsPath, "Config");
             string programDataPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
             string drivePath = Path.GetPathRoot(windowsPath);
             string tempPath = Path.GetTempPath().TrimEnd(Path.DirectorySeparatorChar);
+            string usersPath = Path.Combine(drivePath, "Users");
+            string bootPath = Path.Combine(drivePath, "boot");
+            string systemVolumeInfoPath = Path.Combine(drivePath, "System Volume Information");
+            string recycleBinPath = Path.Combine(drivePath, "$Recycle.Bin");
 
             string normalizedSource = Path.GetFullPath(source).TrimEnd(Path.DirectorySeparatorChar).ToUpperInvariant();
-            string[] Blacklist = { windowsPath, system32Path, configPath, programDataPath, drivePath, tempPath };
+            string[] Blacklist = { windowsPath, system32Path, sysWOW64Path, configPath, programDataPath, drivePath, tempPath, usersPath, bootPath, systemVolumeInfoPath, recycleBinPath };
             foreach (string item in Blacklist)
             {
                 string normalizedItem = Path.GetFullPath(item).TrimEnd(Path.DirectorySeparatorChar).ToUpperInvariant();
@@ -179,12 +184,14 @@ namespace FreeMove
             {
                 string programFilesPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
                 string programFilesX86Path = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+                string commonProgramFilesPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFiles);
+                string commonProgramFilesX86Path = Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFilesX86);
                 string userProfilePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
                 string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 string localAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
                 string normalizedSourceForSafeMode = Path.GetFullPath(source).TrimEnd(Path.DirectorySeparatorChar).ToUpperInvariant();
-                string[] safePaths = { programFilesPath, programFilesX86Path, userProfilePath, appDataPath, localAppDataPath };
+                string[] safePaths = { programFilesPath, programFilesX86Path, commonProgramFilesPath, commonProgramFilesX86Path, userProfilePath, appDataPath, localAppDataPath };
                 foreach (string item in safePaths)
                 {
                     string normalizedSafePath = Path.GetFullPath(item).TrimEnd(Path.DirectorySeparatorChar).ToUpperInvariant();
