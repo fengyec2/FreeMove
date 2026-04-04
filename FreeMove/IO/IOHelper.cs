@@ -135,8 +135,14 @@ namespace FreeMove
         /// <summary>
         /// 根据当前界面状态和指定的权限检查级别执行移动前预检查。
         /// </summary>
-        public static void CheckDirectories(string source, string destination, bool safeMode, bool createDestination, Settings.PermissionCheckLevel? permissionCheckLevelOverride = null)
+        public static void CheckDirectories(string source, string destination, bool safeMode, bool createDestination, Settings.PermissionCheckLevel? permissionCheckLevelOverride = null, bool skipAllChecks = false)
         {
+            // 如果禁用所有安全检查，直接返回
+            if (skipAllChecks)
+            {
+                return;
+            }
+
             List<Exception> exceptions = new List<Exception>();
             Settings.PermissionCheckLevel permissionCheckLevel = permissionCheckLevelOverride ?? Settings.PermCheck;
             //Check for correct file path format

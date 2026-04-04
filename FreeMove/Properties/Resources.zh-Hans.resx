@@ -604,5 +604,15 @@ https://github.com/fengyec2</value>
   <data name="Updater_FormTitle" xml:space="preserve">
     <value>FreeMove — 更新</value>
   </data>
+  <data name="UnsafeMode_WarningTitle" xml:space="preserve">
+    <value>警告：所有安全检查已禁用</value>
+  </data>
+  <data name="UnsafeMode_WarningMessage" xml:space="preserve">
+    <value>您使用 --unsafe-skip-checks 参数启动了 FreeMove。所有安全检查已被禁用。
+
+这允许移动任何目录，包括关键系统文件夹。不当使用可能损害您的系统。
+
+请谨慎操作，并确保您了解自己在做什么！</value>
+  </data>
 </root>
 

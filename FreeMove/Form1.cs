@@ -26,12 +26,15 @@ namespace FreeMove
     public partial class Form1 : Form
     {
         bool safeMode = true;
+        bool skipSecurityChecks = false;
 
         #region Initialization
-        public Form1()
+        public Form1(bool skipSecurityChecks = false)
         {
             //Initialize UI elements
             InitializeComponent();
+
+            this.skipSecurityChecks = skipSecurityChecks;
 
             // 初始化目录浏览器事件
             directoryBrowser1.SourceSelected += (s, path) => textBox_From.Text = path;
@@ -44,8 +47,16 @@ namespace FreeMove
             ApplyLanguage();
             SetToolTips();
 
-
-
+            // 如果启用了跳过安全检查，显示警告对话框
+            if (skipSecurityChecks)
+            {
+                MessageBox.Show(
+                    this,
+                    Properties.Resources.ResourceManager.GetString("UnsafeMode_WarningMessage"),
+                    Properties.Resources.ResourceManager.GetString("UnsafeMode_WarningTitle"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
 
             //Check whether the program is set to update on its start
             if (Settings.AutoUpdate)
@@ -233,7 +244,7 @@ namespace FreeMove
         {
             try
             {
-                IOHelper.CheckDirectories(source, destination, safeMode, chkBox_createDest.Checked);
+                IOHelper.CheckDirectories(source, destination, safeMode, chkBox_createDest.Checked, skipAllChecks: skipSecurityChecks);
                 return true;
             }
             catch (AggregateException ae) when (IOHelper.TryGetReadOnlyPrecheckFailures(ae, out List<IOHelper.ReadOnlyPrecheckException> readOnlyFailures))
@@ -270,7 +281,7 @@ namespace FreeMove
                 try
                 {
                     // Re-run with Full so the move only continues after all files pass the stricter access check.
-                    IOHelper.CheckDirectories(source, destination, safeMode, chkBox_createDest.Checked, Settings.PermissionCheckLevel.Full);
+                    IOHelper.CheckDirectories(source, destination, safeMode, chkBox_createDest.Checked, Settings.PermissionCheckLevel.Full, skipAllChecks: skipSecurityChecks);
                     return true;
                 }
                 catch (Exception ex)

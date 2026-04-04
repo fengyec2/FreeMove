@@ -47,11 +47,18 @@ scoop install freemove
 
 ## Usage
 
-Run the executable and use the GUI
-
 >[!NOTE]
 >
 > This program requires administrator privileges for its core functionality
+
+Run the executable and use the GUI
+
+### Command Line Arguments
+
+| Argument | Description |
+| :--- | :--- |
+| `--unsafe-skip-checks` | Force disable all safety checks (not recommended) |
+
 
 ## Recommendations
 

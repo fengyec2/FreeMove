@@ -609,4 +609,14 @@ Open the download page?</value>
   <data name="Updater_FormTitle" xml:space="preserve">
     <value>FreeMove — Update</value>
   </data>
+  <data name="UnsafeMode_WarningTitle" xml:space="preserve">
+    <value>Warning: All Safety Checks Disabled</value>
+  </data>
+  <data name="UnsafeMode_WarningMessage" xml:space="preserve">
+    <value>You have launched FreeMove with the --unsafe-skip-checks parameter. All safety checks have been disabled.
+
+This allows moving any directory, including critical system folders. Improper use could potentially damage your system.
+
+Proceed with caution and make sure you know what you are doing!</value>
+  </data>
 </root>

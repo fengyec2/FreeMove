@@ -28,8 +28,10 @@ namespace FreeMove
         /// Punto di ingresso principale dell'applicazione.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
+            // 检查是否传递了跳过安全检查的参数
+            bool skipSecurityChecks = args != null && System.Array.Exists(args, element => element.Equals("--unsafe-skip-checks", StringComparison.OrdinalIgnoreCase));
             // 如非管理员权限，提示并退出
             try
             {
@@ -77,7 +79,7 @@ namespace FreeMove
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new Form1(skipSecurityChecks));
         }
     }
 }
