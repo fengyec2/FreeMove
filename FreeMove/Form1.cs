@@ -47,7 +47,7 @@ namespace FreeMove
             ApplyLanguage();
             SetToolTips();
 
-            // 如果启用了跳过安全检查，显示警告对话框
+            // 如果启用了跳过安全检查，显示警告对话框并禁用安全模式菜单
             if (skipSecurityChecks)
             {
                 MessageBox.Show(
@@ -56,6 +56,10 @@ namespace FreeMove
                     Properties.Resources.ResourceManager.GetString("UnsafeMode_WarningTitle"),
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
+                
+                // 禁用安全模式菜单项
+                safeModeToolStripMenuItem.Enabled = false;
+                safeModeToolStripMenuItem.Checked = false;
             }
 
             //Check whether the program is set to update on its start
