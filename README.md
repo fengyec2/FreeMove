@@ -20,7 +20,7 @@ You can use this tool to move programs that install on `C:\` by default to anoth
 - [x] Create symbolic links
 - [x] Quickly restore symbolic links
 - [x] Everything search integration
-- [ ] Context menu integration (Planned)
+- [x] Context menu integration
 - [ ] Individual file symbolic links (Planned)
 
 ## Download
