@@ -28,6 +28,8 @@ on:
 
 jobs:
   build:
+    permissions:
+      contents: read
     strategy:
       matrix:
         framework: [net48, net8.0-windows]
