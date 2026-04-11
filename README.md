@@ -58,7 +58,8 @@ Run the executable and use the GUI
 | Argument | Description |
 | :--- | :--- |
 | `--unsafe-skip-checks` | Force disable all safety checks (not recommended) |
-
+| `--source <source>` | Set the source directory to move from |
+| `--destination <destination>` | Set the destination directory to move to |
 
 ## Recommendations
 

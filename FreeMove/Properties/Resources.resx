@@ -619,4 +619,13 @@ This allows moving any directory, including critical system folders. Improper us
 
 Proceed with caution and make sure you know what you are doing!</value>
   </data>
+  <data name="Menu_ContextMenu" xml:space="preserve">
+    <value>Enable Context Menu</value>
+  </data>
+  <data name="ContextMenu_SetSource" xml:space="preserve">
+    <value>Set as Source</value>
+  </data>
+  <data name="ContextMenu_SetDest" xml:space="preserve">
+    <value>Set as Destination</value>
+  </data>
 </root>

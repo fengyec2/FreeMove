@@ -32,6 +32,26 @@ namespace FreeMove
         {
             // 检查是否传递了跳过安全检查的参数
             bool skipSecurityChecks = args != null && System.Array.Exists(args, element => element.Equals("--unsafe-skip-checks", StringComparison.OrdinalIgnoreCase));
+            
+            string sourcePath = null;
+            string destPath = null;
+            if (args != null)
+            {
+                for (int i = 0; i < args.Length; i++)
+                {
+                    if (args[i].Equals("--source", StringComparison.OrdinalIgnoreCase) && i + 1 < args.Length)
+                    {
+                        sourcePath = args[i + 1];
+                        i++;
+                    }
+                    else if (args[i].Equals("--destination", StringComparison.OrdinalIgnoreCase) && i + 1 < args.Length)
+                    {
+                        destPath = args[i + 1];
+                        i++;
+                    }
+                }
+            }
+
             // 如非管理员权限，提示并退出
             try
             {
@@ -79,7 +99,7 @@ namespace FreeMove
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1(skipSecurityChecks));
+            Application.Run(new Form1(skipSecurityChecks, sourcePath, destPath));
         }
     }
 }

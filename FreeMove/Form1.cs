@@ -20,6 +20,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace FreeMove
 {
@@ -29,7 +30,7 @@ namespace FreeMove
         bool skipSecurityChecks = false;
 
         #region Initialization
-        public Form1(bool skipSecurityChecks = false)
+        public Form1(bool skipSecurityChecks = false, string sourcePath = null, string destPath = null)
         {
             //Initialize UI elements
             InitializeComponent();
@@ -40,6 +41,11 @@ namespace FreeMove
             directoryBrowser1.SourceSelected += (s, path) => textBox_From.Text = path;
             directoryBrowser1.TargetSelected += (s, path) => textBox_To.Text = path;
             directoryBrowser1.RestoreRequested += async (s, args) => await RestoreLink(args.Symlink, args.Target, args.Move);
+
+            if (!string.IsNullOrEmpty(sourcePath))
+                textBox_From.Text = sourcePath;
+            if (!string.IsNullOrEmpty(destPath))
+                textBox_To.Text = destPath;
         }
 
         private async void Form1_Load(object sender, EventArgs e)
@@ -72,6 +78,17 @@ namespace FreeMove
                 //If there is an update show the update dialog
                 if (updater != null) updater.ShowDialog();
             }
+
+            if (Settings.EnableContextMenu)
+            {
+                contextMenuToolStripMenuItem.Checked = true;
+                RegisterContextMenu();
+            }
+            else
+            {
+                contextMenuToolStripMenuItem.Checked = false;
+            }
+
             switch (Settings.PermCheck)
             {
                 case Settings.PermissionCheckLevel.None:
@@ -131,6 +148,8 @@ namespace FreeMove
             noneToolStripMenuItem.ToolTipText = Properties.Resources.ResourceManager.GetString("Menu_NoneTooltip");
             fastToolStripMenuItem.ToolTipText = Properties.Resources.ResourceManager.GetString("Menu_FastTooltip");
             fullToolStripMenuItem.ToolTipText = Properties.Resources.ResourceManager.GetString("Menu_FullTooltip");
+
+            contextMenuToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_ContextMenu");
 
             reportAnIssueToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_ReportIssue");
             gitHubToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_GitHub");
@@ -622,6 +641,77 @@ namespace FreeMove
             string help = Properties.Resources.ResourceManager.GetString("HelpContent");
             string title = Properties.Resources.ResourceManager.GetString("HelpButtonText");
             MessageBox.Show(this, help, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void contextMenuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bool isEnabled = !Settings.EnableContextMenu;
+            Settings.EnableContextMenu = isEnabled;
+            contextMenuToolStripMenuItem.Checked = isEnabled;
+
+            if (isEnabled)
+            {
+                RegisterContextMenu();
+            }
+            else
+            {
+                UnregisterContextMenu();
+            }
+        }
+
+        private void RegisterContextMenu()
+        {
+            try
+            {
+                string exePath = Application.ExecutablePath;
+                string sourceLabel = Properties.Resources.ResourceManager.GetString("ContextMenu_SetSource") ?? "Set as Source";
+                string destLabel = Properties.Resources.ResourceManager.GetString("ContextMenu_SetDest") ?? "Set as Destination";
+
+                using (RegistryKey key = Registry.ClassesRoot.CreateSubKey(@"Directory\shell\FreeMove"))
+                {
+                    key.SetValue("MUIVerb", "FreeMove");
+                    key.SetValue("Icon", $"\"{exePath}\"");
+                    key.SetValue("SubCommands", "");
+
+                    using (RegistryKey sourceKey = key.CreateSubKey(@"shell\SetSource"))
+                    {
+                        sourceKey.SetValue("MUIVerb", sourceLabel);
+                        sourceKey.SetValue("Icon", $"\"{exePath}\"");
+                        using (RegistryKey commandKey = sourceKey.CreateSubKey("command"))
+                        {
+                            commandKey.SetValue("", $"\"{exePath}\" --source \"%1\"");
+                        }
+                    }
+
+                    using (RegistryKey destKey = key.CreateSubKey(@"shell\SetDestination"))
+                    {
+                        destKey.SetValue("MUIVerb", destLabel);
+                        destKey.SetValue("Icon", $"\"{exePath}\"");
+                        using (RegistryKey commandKey = destKey.CreateSubKey("command"))
+                        {
+                            commandKey.SetValue("", $"\"{exePath}\" --destination \"%1\"");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, Properties.Resources.ResourceManager.GetString("ErrorTitle"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Settings.EnableContextMenu = false;
+                contextMenuToolStripMenuItem.Checked = false;
+            }
+        }
+
+        private void UnregisterContextMenu()
+        {
+            try
+            {
+                Registry.ClassesRoot.DeleteSubKeyTree(@"Directory\shell\FreeMove", false);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, Properties.Resources.ResourceManager.GetString("ErrorTitle"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

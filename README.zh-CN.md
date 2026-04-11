@@ -60,6 +60,8 @@ scoop install freemove
 | 参数 | 说明 |
 | :--- | :--- |
 | `--unsafe-skip-checks` | 强制禁用所有安全检查（不推荐） |
+| `--source <source>` | 设置要移动的源目录 |
+| `--destination <destination>` | 设置要移动到的目标目录 |
 
 ## 建议
 

@@ -57,6 +57,7 @@ namespace FreeMove
             this.button_Close = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkNowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkOnProgramStartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -196,10 +197,18 @@ namespace FreeMove
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.checkForUpdateToolStripMenuItem,
             this.PermissionCheckToolStripMenuItem,
-            this.safeModeToolStripMenuItem});
+            this.safeModeToolStripMenuItem,
+            this.contextMenuToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(66, 21);
             this.settingsToolStripMenuItem.Text = "Settings";
+            // 
+            // contextMenuToolStripMenuItem
+            // 
+            this.contextMenuToolStripMenuItem.Name = "contextMenuToolStripMenuItem";
+            this.contextMenuToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.contextMenuToolStripMenuItem.Text = "Enable Context Menu";
+            this.contextMenuToolStripMenuItem.Click += new System.EventHandler(this.contextMenuToolStripMenuItem_Click);
             // 
             // checkForUpdateToolStripMenuItem
             // 
@@ -433,6 +442,7 @@ namespace FreeMove
         private System.Windows.Forms.ToolStripMenuItem noneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fastToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fullToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem contextMenuToolStripMenuItem;
         public System.Windows.Forms.CheckBox chkBox_createDest;
         private System.Windows.Forms.ToolStripMenuItem lunguToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem zhToolStripMenuItem;

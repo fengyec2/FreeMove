@@ -614,5 +614,14 @@ https://github.com/fengyec2</value>
 
 请谨慎操作，并确保您了解自己在做什么！</value>
   </data>
+  <data name="Menu_ContextMenu" xml:space="preserve">
+    <value>启用上下文菜单</value>
+  </data>
+  <data name="ContextMenu_SetSource" xml:space="preserve">
+    <value>设为源目录</value>
+  </data>
+  <data name="ContextMenu_SetDest" xml:space="preserve">
+    <value>设为目标目录</value>
+  </data>
 </root>
 

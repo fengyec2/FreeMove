@@ -1,4 +1,4 @@
-﻿// FreeMove -- Move directories without breaking shortcuts or installations 
+// FreeMove -- Move directories without breaking shortcuts or installations 
 //    Copyright(C) 2020  Luca De Martini
 
 //    This program is free software: you can redistribute it and/or modify
@@ -33,6 +33,8 @@ namespace FreeMove
         public bool AutomaticUpdate = true;
 
         public PermissionCheckLevel PermissionCheck = PermissionCheckLevel.Fast;
+
+        public bool ContextMenuEnabled = false;
 
         // UI language code, e.g. "en", "zh-Hans". null/empty = follow system language
         public string LanguageCode = null;
@@ -78,6 +80,21 @@ namespace FreeMove
             {
                 var LSett = Load();
                 LSett.LanguageCode = value;
+                Save(LSett);
+            }
+        }
+
+        public static bool EnableContextMenu
+        {
+            get
+            {
+                var LSett = Load();
+                return LSett.ContextMenuEnabled;
+            }
+            set
+            {
+                var LSett = Load();
+                LSett.ContextMenuEnabled = value;
                 Save(LSett);
             }
         }
