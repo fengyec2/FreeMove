@@ -74,9 +74,38 @@ Important system directories such as:
 - `C:\Program Files`
 - `C:\Program Files (x86)` 
 
-should not be moved. If you wish to do It anyway do it at your own risk. To move a directory back refer to the last part of the readme.
+and so on should not be moved. If you wish to do It anyway do it at your own risk. To move a directory back refer to the FAQ part of the readme.
 
 That said, moving directories **contained in** the previously mentioned directories should not cause any problem. So you are free to move `C:\Program Files\HugeProgramIDontWantOnMySSD` without any problem.
+
+<details>
+<summary>Safety Checks Range</summary>
+
+The following directories will be considered as **system directories and cannot be moved**:
+
+- `C:\Windows`
+- `C:\Windows\System32`
+- `C:\Windows\SysWOW64`
+- `C:\Windows\Config`
+- `C:\ProgramData`
+- `C:\`
+- `%TEMP%`
+- `C:\Users`
+- `C:\boot`
+- `C:\System Volume Information`
+- `C:\$Recycle.Bin`
+
+The following directories will be considered as **important directories and cannot be moved in safe mode**:
+
+- `C:\Program Files`
+- `C:\Program Files (x86)`
+- `C:\Program Files\Common Files`
+- `C:\Program Files (x86)\Common Files`
+- `%USERPROFILE%`
+- `%APPDATA%`
+- `%LOCALAPPDATA%`
+
+</details>
 
 ## Screenshots
 ![Screenshot](https://i.imgur.com/xvkVdc6.png)

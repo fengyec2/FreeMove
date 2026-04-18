@@ -76,9 +76,39 @@ scoop install freemove
 - `C:\Program Files`
 - `C:\Program Files (x86)` 
 
-不应被移动。如果你仍然想移动，请自行承担风险。要将目录移回，请参阅 readme 的最后部分。
+等不应被移动。如果你仍然想移动，请自行承担风险。要将目录移回，请参阅 readme 的 FAQ 部分。
 
 也就是说，移动前面提到的目录中所包含的**子目录**通常不会导致问题。所以你可以安全地移动 `C:\Program Files\HugeProgramIDontWantOnMySSD`。
+
+<details>
+<summary>安全模式检查范围</summary>
+
+以下目录会被视为**系统目录，无法进行移动**：
+
+- `C:\Windows`
+- `C:\Windows\System32`
+- `C:\Windows\SysWOW64`
+- `C:\Windows\Config`
+- `C:\ProgramData`
+- `C:\`
+- `%TEMP%`
+- `C:\Users`
+- `C:\boot`
+- `C:\System Volume Information`
+- `C:\$Recycle.Bin`
+
+以下目录会被视为**重要目录，无法在安全模式下进行移动**：
+
+- `C:\Program Files`
+- `C:\Program Files (x86)`
+- `C:\Program Files\Common Files`
+- `C:\Program Files (x86)\Common Files`
+- `%USERPROFILE%`
+- `%APPDATA%`
+- `%LOCALAPPDATA%`
+
+</details>
+
 
 ## 屏幕截图
 ![Screenshot](https://i.imgur.com/vD1jCux.png)
