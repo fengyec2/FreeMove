@@ -81,7 +81,7 @@ That said, moving directories **contained in** the previously mentioned director
 <details>
 <summary>Safety Checks Range</summary>
 
-The following directories will be considered as **system directories and cannot be moved**:
+#### System directories: cannot be moved
 
 - `C:\Windows`
 - `C:\Windows\System32`
@@ -95,7 +95,7 @@ The following directories will be considered as **system directories and cannot 
 - `C:\System Volume Information`
 - `C:\$Recycle.Bin`
 
-The following directories will be considered as **important directories and cannot be moved in safe mode**:
+#### Important directories: cannot be moved in safe mode
 
 - `C:\Program Files`
 - `C:\Program Files (x86)`
@@ -108,7 +108,8 @@ The following directories will be considered as **important directories and cann
 </details>
 
 ## Screenshots
-![Screenshot](https://i.imgur.com/xvkVdc6.png)
+
+<img src="https://i.imgur.com/xvkVdc6.png" width="400" alt="Screenshot" />
 
 ## FAQ
 

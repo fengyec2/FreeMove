@@ -83,7 +83,7 @@ scoop install freemove
 <details>
 <summary>安全模式检查范围</summary>
 
-以下目录会被视为**系统目录，无法进行移动**：
+#### 系统目录：无法进行移动：
 
 - `C:\Windows`
 - `C:\Windows\System32`
@@ -97,7 +97,7 @@ scoop install freemove
 - `C:\System Volume Information`
 - `C:\$Recycle.Bin`
 
-以下目录会被视为**重要目录，无法在安全模式下进行移动**：
+#### 重要目录：无法在安全模式下进行移动：
 
 - `C:\Program Files`
 - `C:\Program Files (x86)`
@@ -111,7 +111,7 @@ scoop install freemove
 
 
 ## 屏幕截图
-![Screenshot](https://i.imgur.com/vD1jCux.png)
+<img src="https://i.imgur.com/vD1jCux.png" width="400" alt="Screenshot" />
 
 ## 常见问题
 
