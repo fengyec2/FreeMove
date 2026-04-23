@@ -107,6 +107,18 @@ namespace FreeMove
                     fullToolStripMenuItem.Checked = true;
                     break;
             }
+
+            switch (Settings.CurrentWorkMode)
+            {
+                case Settings.WorkingMode.DirectoryOnly:
+                    directoryOnlyToolStripMenuItem.Checked = true;
+                    directoryAndFileToolStripMenuItem.Checked = false;
+                    break;
+                case Settings.WorkingMode.DirectoryAndFile:
+                    directoryOnlyToolStripMenuItem.Checked = false;
+                    directoryAndFileToolStripMenuItem.Checked = true;
+                    break;
+            }
         }
 
         #endregion
@@ -188,10 +200,14 @@ namespace FreeMove
                 // 准备一个临时路径来存放符号链接（以便恢复）
                 string tempSymlinkPath = symlinkPath + ".bak_" + DateTime.Now.Ticks;
 
+                bool isFile = File.Exists(targetPath);
                 try
                 {
                     // 1. 将符号链接重命名（本质是移动）
-                    Directory.Move(symlinkPath, tempSymlinkPath);
+                    if (isFile)
+                        File.Move(symlinkPath, tempSymlinkPath);
+                    else
+                        Directory.Move(symlinkPath, tempSymlinkPath);
                 }
                 catch (Exception ex)
                 {
@@ -230,8 +246,16 @@ namespace FreeMove
                     // 如果失败，尝试恢复符号链接
                     try
                     {
-                        if (Directory.Exists(symlinkPath)) Directory.Delete(symlinkPath, true);
-                        Directory.Move(tempSymlinkPath, symlinkPath);
+                        if (isFile)
+                        {
+                            if (File.Exists(symlinkPath)) File.Delete(symlinkPath);
+                            File.Move(tempSymlinkPath, symlinkPath);
+                        }
+                        else
+                        {
+                            if (Directory.Exists(symlinkPath)) Directory.Delete(symlinkPath, true);
+                            Directory.Move(tempSymlinkPath, symlinkPath);
+                        }
                     }
                     catch { /* 忽略恢复失败 */ }
 
@@ -245,7 +269,8 @@ namespace FreeMove
                     // 成功后删除备份的符号链接
                     try
                     {
-                        if (Directory.Exists(tempSymlinkPath)) Directory.Delete(tempSymlinkPath);
+                        if (isFile && File.Exists(tempSymlinkPath)) File.Delete(tempSymlinkPath);
+                        else if (!isFile && Directory.Exists(tempSymlinkPath)) Directory.Delete(tempSymlinkPath);
                     }
                     catch { /* 忽略删除备份失败 */ }
 
@@ -712,6 +737,22 @@ namespace FreeMove
             {
                 MessageBox.Show(ex.Message, Properties.Resources.ResourceManager.GetString("ErrorTitle"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void directoryOnlyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Settings.CurrentWorkMode = Settings.WorkingMode.DirectoryOnly;
+            directoryOnlyToolStripMenuItem.Checked = true;
+            directoryAndFileToolStripMenuItem.Checked = false;
+            directoryBrowser1.RefreshBrowser();
+        }
+
+        private void directoryAndFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Settings.CurrentWorkMode = Settings.WorkingMode.DirectoryAndFile;
+            directoryOnlyToolStripMenuItem.Checked = false;
+            directoryAndFileToolStripMenuItem.Checked = true;
+            directoryBrowser1.RefreshBrowser();
         }
     }
 }

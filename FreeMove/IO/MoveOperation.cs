@@ -76,7 +76,10 @@ namespace FreeMove.IO
                 {
                     try
                     {
-                        await Task.Run(() => Directory.Move(pathFrom, pathTo), cts.Token);
+                        if (File.Exists(pathFrom))
+                            await Task.Run(() => File.Move(pathFrom, pathTo), cts.Token);
+                        else
+                            await Task.Run(() => Directory.Move(pathFrom, pathTo), cts.Token);
                     }
                     catch (Exception e) when (!(e is OperationCanceledException))
                     {
@@ -97,7 +100,10 @@ namespace FreeMove.IO
                     cts.Token.ThrowIfCancellationRequested();
                     try
                     {
-                        Directory.Delete(pathFrom, true);
+                        if (File.Exists(pathFrom))
+                            File.Delete(pathFrom);
+                        else
+                            Directory.Delete(pathFrom, true);
                     }
                     catch (Exception e)
                     {

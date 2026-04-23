@@ -75,9 +75,12 @@ namespace FreeMove
             Directory = 1
         }
 
-        public static bool MakeLink(string directory, string symlink)
+        public static bool MakeLink(string targetPath, string symlink)
         {
-            return CreateSymbolicLink(symlink, directory, SymbolicLink.Directory);
+            if (File.Exists(targetPath))
+                return CreateSymbolicLink(symlink, targetPath, SymbolicLink.File);
+            else
+                return CreateSymbolicLink(symlink, targetPath, SymbolicLink.Directory);
         }
 
         /// <summary>
@@ -210,10 +213,10 @@ namespace FreeMove
             }
 
             //Check for existence of directories
-            if (!Directory.Exists(source))
+            if (!Directory.Exists(source) && !File.Exists(source))
                 exceptions.Add(new Exception(Properties.Resources.ResourceManager.GetString("Error_SourceNotExist")));
 
-            if (Directory.Exists(destination))
+            if (Directory.Exists(destination) || File.Exists(destination))
                 exceptions.Add(new Exception(Properties.Resources.ResourceManager.GetString("Error_DestNameExists")));
 
             if (!createDestination && !Directory.Exists(Directory.GetParent(destination).FullName))
@@ -262,10 +265,17 @@ namespace FreeMove
                 throw new AggregateException(exceptions);
 
             long size = 0;
-            DirectoryInfo dirInf = new DirectoryInfo(source);
-            foreach (FileInfo file in dirInf.GetFiles("*", SearchOption.AllDirectories))
+            if (File.Exists(source))
             {
-                size += file.Length;
+                size = new FileInfo(source).Length;
+            }
+            else
+            {
+                DirectoryInfo dirInf = new DirectoryInfo(source);
+                foreach (FileInfo file in dirInf.GetFiles("*", SearchOption.AllDirectories))
+                {
+                    size += file.Length;
+                }
             }
             try
             {
@@ -293,14 +303,22 @@ namespace FreeMove
                         exceptionBag.Add(failure);
                     }
                 };
-                if (permissionCheckLevel == Settings.PermissionCheckLevel.Fast)
+
+                if (File.Exists(source))
                 {
-                    Parallel.ForEach(Directory.GetFiles(source, "*.exe", SearchOption.AllDirectories), CheckFile);
-                    Parallel.ForEach(Directory.GetFiles(source, "*.dll", SearchOption.AllDirectories), CheckFile);
+                    CheckFile(source);
                 }
                 else
                 {
-                    Parallel.ForEach(Directory.GetFiles(source, "*", SearchOption.AllDirectories), CheckFile);
+                    if (permissionCheckLevel == Settings.PermissionCheckLevel.Fast)
+                    {
+                        Parallel.ForEach(Directory.GetFiles(source, "*.exe", SearchOption.AllDirectories), CheckFile);
+                        Parallel.ForEach(Directory.GetFiles(source, "*.dll", SearchOption.AllDirectories), CheckFile);
+                    }
+                    else
+                    {
+                        Parallel.ForEach(Directory.GetFiles(source, "*", SearchOption.AllDirectories), CheckFile);
+                    }
                 }
 
                 exceptions.AddRange(exceptionBag);

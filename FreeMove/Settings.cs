@@ -29,10 +29,19 @@ namespace FreeMove
             Fast,
             Full
         }
+
+        public enum WorkingMode
+        {
+            DirectoryOnly,
+            DirectoryAndFile
+        }
+
         //Values
         public bool AutomaticUpdate = true;
 
         public PermissionCheckLevel PermissionCheck = PermissionCheckLevel.Fast;
+
+        public WorkingMode WorkMode = WorkingMode.DirectoryOnly;
 
         public bool ContextMenuEnabled = false;
 
@@ -65,6 +74,21 @@ namespace FreeMove
             {
                 var LSett = Load();
                 LSett.PermissionCheck = value;
+                Save(LSett);
+            }
+        }
+
+        public static WorkingMode CurrentWorkMode
+        {
+            get
+            {
+                var LSett = Load();
+                return LSett.WorkMode;
+            }
+            set
+            {
+                var LSett = Load();
+                LSett.WorkMode = value;
                 Save(LSett);
             }
         }

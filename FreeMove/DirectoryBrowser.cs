@@ -191,8 +191,13 @@ namespace FreeMove
             }
 
             listView_Files.Items.Clear();
-            // 限制搜索结果为文件夹
-            foreach (string path in Everything.Search("folder:" + query))
+            // 根据工作模式决定是否限制搜索结果为文件夹
+            if (Settings.CurrentWorkMode == Settings.WorkingMode.DirectoryOnly)
+            {
+                query = "folder:" + query;
+            }
+
+            foreach (string path in Everything.Search(query))
             {
                 try
                 {
@@ -215,6 +220,27 @@ namespace FreeMove
                         }
 
                         item.Tag = di.FullName;
+                        listView_Files.Items.Add(item);
+                    }
+                    else if (Settings.CurrentWorkMode == Settings.WorkingMode.DirectoryAndFile && File.Exists(path))
+                    {
+                        FileInfo fi = new FileInfo(path);
+                        ListViewItem item = new ListViewItem(fi.Name);
+
+                        bool isReparse = IOHelper.IsReparsePoint(fi.FullName);
+                        if (isReparse)
+                        {
+                            item.SubItems.Add(Properties.Resources.ResourceManager.GetString("Type_Symlink") ?? "Symbolic Link");
+                            item.SubItems.Add(IOHelper.GetSymbolicLinkTarget(fi.FullName) ?? "");
+                            item.ForeColor = Color.Green;
+                        }
+                        else
+                        {
+                            item.SubItems.Add(Properties.Resources.ResourceManager.GetString("Type_File") ?? "File");
+                            item.SubItems.Add(fi.FullName);
+                        }
+
+                        item.Tag = fi.FullName;
                         listView_Files.Items.Add(item);
                     }
                 }
@@ -253,20 +279,34 @@ namespace FreeMove
                     catch (UnauthorizedAccessException) { /* 跳过无权限子目录 */ }
                 }
 
-                // 列出文件
-                try
+                // 根据工作模式决定是否列出文件
+                if (Settings.CurrentWorkMode == Settings.WorkingMode.DirectoryAndFile)
                 {
-                    foreach (string file in Directory.GetFiles(path))
+                    try
                     {
-                        FileInfo fi = new FileInfo(file);
-                        ListViewItem item = new ListViewItem(fi.Name);
-                        item.SubItems.Add(Properties.Resources.ResourceManager.GetString("Type_File") ?? "File");
-                        item.SubItems.Add("");
-                        item.Tag = fi.FullName;
-                        listView_Files.Items.Add(item);
+                        foreach (string file in Directory.GetFiles(path))
+                        {
+                            FileInfo fi = new FileInfo(file);
+                            ListViewItem item = new ListViewItem(fi.Name);
+
+                            bool isReparse = IOHelper.IsReparsePoint(fi.FullName);
+                            if (isReparse)
+                            {
+                                item.SubItems.Add(Properties.Resources.ResourceManager.GetString("Type_Symlink") ?? "Symbolic Link");
+                                item.SubItems.Add(IOHelper.GetSymbolicLinkTarget(fi.FullName) ?? "");
+                                item.ForeColor = Color.Green;
+                            }
+                            else
+                            {
+                                item.SubItems.Add(Properties.Resources.ResourceManager.GetString("Type_File") ?? "File");
+                                item.SubItems.Add("");
+                            }
+                            item.Tag = fi.FullName;
+                            listView_Files.Items.Add(item);
+                        }
                     }
+                    catch (UnauthorizedAccessException) { /* 跳过无权限文件 */ }
                 }
-                catch (UnauthorizedAccessException) { /* 跳过无权限文件 */ }
             }
             catch (UnauthorizedAccessException) { /* 跳过无权限根目录 */ }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
@@ -343,7 +383,7 @@ namespace FreeMove
                     if (IOHelper.IsReparsePoint(path))
                     {
                         string target = IOHelper.GetSymbolicLinkTarget(path);
-                        if (!string.IsNullOrEmpty(target) && Directory.Exists(target))
+                        if (!string.IsNullOrEmpty(target) && (Directory.Exists(target) || File.Exists(target)))
                         {
                             string prompt = string.Format(Properties.Resources.ResourceManager.GetString("Restore_Prompt"), path, target);
                             string title = Properties.Resources.ResourceManager.GetString("Restore_Title");

@@ -1,4 +1,4 @@
-﻿// FreeMove -- Move directories without breaking shortcuts or installations 
+// FreeMove -- Move directories without breaking shortcuts or installations 
 //    Copyright(C) 2020  Luca De Martini
 
 //    This program is free software: you can redistribute it and/or modify
@@ -37,9 +37,25 @@ namespace FreeMove.IO
 
             try
             {
-                fileCount = Directory.GetFiles(pathFrom, "*", SearchOption.AllDirectories).Length;
-                OnProgressChanged(new ProgressChangedEventArgs(0, fileCount));
-                await Task.Run(() => CopyDirectory(pathFrom, pathTo, cts.Token), cts.Token);
+                if (File.Exists(pathFrom))
+                {
+                    fileCount = 1;
+                    OnProgressChanged(new ProgressChangedEventArgs(0, fileCount));
+                    await Task.Run(() => 
+                    {
+                        if (cts.Token.IsCancellationRequested) cts.Token.ThrowIfCancellationRequested();
+                        string destDir = Path.GetDirectoryName(pathTo);
+                        if (!Directory.Exists(destDir)) Directory.CreateDirectory(destDir);
+                        if (!File.Exists(pathTo)) File.Copy(pathFrom, pathTo);
+                        OnProgressChanged(new ProgressChangedEventArgs(1, 1));
+                    }, cts.Token);
+                }
+                else
+                {
+                    fileCount = Directory.GetFiles(pathFrom, "*", SearchOption.AllDirectories).Length;
+                    OnProgressChanged(new ProgressChangedEventArgs(0, fileCount));
+                    await Task.Run(() => CopyDirectory(pathFrom, pathTo, cts.Token), cts.Token);
+                }
             }
             finally
             {

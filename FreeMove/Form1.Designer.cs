@@ -57,6 +57,9 @@ namespace FreeMove
             this.button_Close = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.workModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.directoryOnlyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.directoryAndFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkNowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -195,6 +198,7 @@ namespace FreeMove
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.workModeToolStripMenuItem,
             this.checkForUpdateToolStripMenuItem,
             this.PermissionCheckToolStripMenuItem,
             this.safeModeToolStripMenuItem,
@@ -202,6 +206,29 @@ namespace FreeMove
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(66, 21);
             this.settingsToolStripMenuItem.Text = "Settings";
+            // 
+            // workModeToolStripMenuItem
+            // 
+            this.workModeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.directoryOnlyToolStripMenuItem,
+            this.directoryAndFileToolStripMenuItem});
+            this.workModeToolStripMenuItem.Name = "workModeToolStripMenuItem";
+            this.workModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.workModeToolStripMenuItem.Text = "Working Mode";
+            // 
+            // directoryOnlyToolStripMenuItem
+            // 
+            this.directoryOnlyToolStripMenuItem.Name = "directoryOnlyToolStripMenuItem";
+            this.directoryOnlyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.directoryOnlyToolStripMenuItem.Text = "Directory Only";
+            this.directoryOnlyToolStripMenuItem.Click += new System.EventHandler(this.directoryOnlyToolStripMenuItem_Click);
+            // 
+            // directoryAndFileToolStripMenuItem
+            // 
+            this.directoryAndFileToolStripMenuItem.Name = "directoryAndFileToolStripMenuItem";
+            this.directoryAndFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.directoryAndFileToolStripMenuItem.Text = "Directory and File";
+            this.directoryAndFileToolStripMenuItem.Click += new System.EventHandler(this.directoryAndFileToolStripMenuItem_Click);
             // 
             // contextMenuToolStripMenuItem
             // 
@@ -443,14 +470,16 @@ namespace FreeMove
         private System.Windows.Forms.ToolStripMenuItem fastToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fullToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem contextMenuToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem workModeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem directoryOnlyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem directoryAndFileToolStripMenuItem;
         public System.Windows.Forms.CheckBox chkBox_createDest;
         private System.Windows.Forms.ToolStripMenuItem lunguToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem zhToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem chineseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer_Form1;
-                private FreeMove.DirectoryBrowser directoryBrowser1;
-        
-            }
-        }
+        private FreeMove.DirectoryBrowser directoryBrowser1;
+    }
+}
 
