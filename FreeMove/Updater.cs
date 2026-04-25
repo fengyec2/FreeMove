@@ -91,7 +91,7 @@ namespace FreeMove
             button_Cancel.Click += delegate { Dispose(); };
 
             button_Ok.Enabled = true;
-            button_Ok.Click += delegate { System.Diagnostics.Process.Start("https://github.com/ImDema/FreeMove/releases/latest"); Dispose(); };
+            button_Ok.Click += delegate { System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("https://github.com/fengyec2/FreeMove/releases/latest") { UseShellExecute = true }); Dispose(); };
         }
 
         public async Task<bool> CheckGitHub()
