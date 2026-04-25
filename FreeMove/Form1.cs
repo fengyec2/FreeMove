@@ -118,6 +118,12 @@ namespace FreeMove
                     directoryOnlyToolStripMenuItem.Checked = false;
                     directoryAndFileToolStripMenuItem.Checked = true;
                     break;
+                default:
+                    // 默认为仅目录模式
+                    Settings.CurrentWorkMode = Settings.WorkingMode.DirectoryOnly;
+                    directoryOnlyToolStripMenuItem.Checked = true;
+                    directoryAndFileToolStripMenuItem.Checked = false;
+                    break;
             }
         }
 

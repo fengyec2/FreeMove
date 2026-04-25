@@ -165,7 +165,18 @@ namespace FreeMove
             }
 
             if (LoadedSettings == null)
+            {
                 LoadedSettings = new Settings();
+            }
+            else
+            {
+                // 验证 WorkMode 值有效，如果无效则设为默认值
+                if (LoadedSettings.WorkMode != WorkingMode.DirectoryOnly && 
+                    LoadedSettings.WorkMode != WorkingMode.DirectoryAndFile)
+                {
+                    LoadedSettings.WorkMode = WorkingMode.DirectoryOnly;
+                }
+            }
 
             return LoadedSettings;
         }
