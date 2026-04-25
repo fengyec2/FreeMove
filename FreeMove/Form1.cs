@@ -146,6 +146,10 @@ namespace FreeMove
             infoToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_Info");
             lunguToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_Language");
 
+            workModeToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_WorkingMode") ?? "Working Mode";
+            directoryOnlyToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_DirectoryOnly") ?? "Directory Only";
+            directoryAndFileToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_DirectoryAndFile") ?? "Directory and File";
+
             checkForUpdateToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_CheckForUpdate");
             checkNowToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_CheckNow");
             checkOnProgramStartToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_CheckOnStart");

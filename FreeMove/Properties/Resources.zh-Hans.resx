@@ -623,5 +623,17 @@ https://github.com/fengyec2</value>
   <data name="ContextMenu_SetDest" xml:space="preserve">
     <value>设为目标目录</value>
   </data>
+  <data name="Menu_DirectoryOnly" xml:space="preserve">
+    <value>仅目录</value>
+  </data>
+  <data name="Menu_DirectoryAndFile" xml:space="preserve">
+    <value>目录和文件</value>
+  </data>
+  <data name="Menu_WorkingMode" xml:space="preserve">
+    <value>工作模式</value>
+  </data>
+  <data name="Menu_ShowInExplorer" xml:space="preserve">
+    <value>在文件资源管理器中显示</value>
+  </data>
 </root>
 

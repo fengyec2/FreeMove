@@ -628,4 +628,16 @@ Proceed with caution and make sure you know what you are doing!</value>
   <data name="ContextMenu_SetDest" xml:space="preserve">
     <value>Set as Destination</value>
   </data>
+  <data name="Menu_DirectoryOnly" xml:space="preserve">
+    <value>Directory Only</value>
+  </data>
+  <data name="Menu_DirectoryAndFile" xml:space="preserve">
+    <value>Directory and File</value>
+  </data>
+  <data name="Menu_WorkingMode" xml:space="preserve">
+    <value>Working Mode</value>
+  </data>
+  <data name="Menu_ShowInExplorer" xml:space="preserve">
+    <value>Show in Explorer</value>
+  </data>
 </root>

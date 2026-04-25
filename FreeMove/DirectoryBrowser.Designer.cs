@@ -21,6 +21,8 @@ namespace FreeMove
             this.splitContainer_Main = new System.Windows.Forms.SplitContainer();
             this.treeView_Dirs = new System.Windows.Forms.TreeView();
             this.contextMenu_TreeView = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.showInExplorerToolStripMenuItemTV = new System.Windows.Forms.ToolStripMenuItem();
+            this.showInExplorerToolStripMenuItemLV = new System.Windows.Forms.ToolStripMenuItem();
             this.setAsSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setAsTargetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorTV1 = new System.Windows.Forms.ToolStripSeparator();
@@ -92,6 +94,7 @@ namespace FreeMove
             this.contextMenu_TreeView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.setAsSourceToolStripMenuItem,
             this.setAsTargetToolStripMenuItem,
+            this.showInExplorerToolStripMenuItemTV,
             this.toolStripSeparatorTV1,
             this.newToolStripMenuItemTV,
             this.deleteToolStripMenuItemTV,
@@ -99,6 +102,13 @@ namespace FreeMove
             this.refreshToolStripMenuItemTV});
             this.contextMenu_TreeView.Name = "contextMenu_TreeView";
             this.contextMenu_TreeView.Size = new System.Drawing.Size(147, 142);
+            // 
+            // showInExplorerToolStripMenuItemTV
+            // 
+            this.showInExplorerToolStripMenuItemTV.Name = "showInExplorerToolStripMenuItemTV";
+            this.showInExplorerToolStripMenuItemTV.Size = new System.Drawing.Size(192, 22);
+            this.showInExplorerToolStripMenuItemTV.Text = "Show in Explorer";
+            this.showInExplorerToolStripMenuItemTV.Click += new System.EventHandler(this.showInExplorerToolStripMenuItemTV_Click);
             // 
             // setAsSourceToolStripMenuItem
             // 
@@ -202,6 +212,7 @@ namespace FreeMove
             this.setAsSourceListViewToolStripMenuItem,
             this.setAsTargetListViewToolStripMenuItem,
             this.locateInTreeViewToolStripMenuItem,
+            this.showInExplorerToolStripMenuItemLV,
             this.restoreSymlinkToolStripMenuItem,
             this.toolStripSeparatorLV1,
             this.newToolStripMenuItemLV,
@@ -210,6 +221,13 @@ namespace FreeMove
             this.refreshToolStripMenuItemLV});
             this.contextMenu_ListView.Name = "contextMenu_ListView";
             this.contextMenu_ListView.Size = new System.Drawing.Size(193, 186);
+            // 
+            // showInExplorerToolStripMenuItemLV
+            // 
+            this.showInExplorerToolStripMenuItemLV.Name = "showInExplorerToolStripMenuItemLV";
+            this.showInExplorerToolStripMenuItemLV.Size = new System.Drawing.Size(192, 22);
+            this.showInExplorerToolStripMenuItemLV.Text = "Show in Explorer";
+            this.showInExplorerToolStripMenuItemLV.Click += new System.EventHandler(this.showInExplorerToolStripMenuItemLV_Click);
             // 
             // setAsSourceListViewToolStripMenuItem
             // 
@@ -354,6 +372,8 @@ namespace FreeMove
         private System.Windows.Forms.ToolStripMenuItem setAsTargetListViewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem locateInTreeViewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem restoreSymlinkToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showInExplorerToolStripMenuItemTV;
+        private System.Windows.Forms.ToolStripMenuItem showInExplorerToolStripMenuItemLV;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparatorTV1;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItemTV;
         private System.Windows.Forms.ToolStripMenuItem newFolderToolStripMenuItemTV;

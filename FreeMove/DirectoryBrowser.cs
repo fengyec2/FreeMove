@@ -64,9 +64,11 @@ namespace FreeMove
 
             setAsSourceToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_SetSource") ?? "Set as Source";
             setAsTargetToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_SetTarget") ?? "Set as Target";
+            showInExplorerToolStripMenuItemTV.Text = Properties.Resources.ResourceManager.GetString("Menu_ShowInExplorer") ?? "Show in Explorer";
             setAsSourceListViewToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_SetSource") ?? "Set as Source";
             setAsTargetListViewToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_SetTarget") ?? "Set as Target";
             locateInTreeViewToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_LocateInTreeView") ?? "Locate in TreeView";
+            showInExplorerToolStripMenuItemLV.Text = Properties.Resources.ResourceManager.GetString("Menu_ShowInExplorer") ?? "Show in Explorer";
             restoreSymlinkToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_RestoreSymlink") ?? "Restore Symbolic Link";
 
             // TreeView Menu
@@ -369,6 +371,30 @@ namespace FreeMove
                 if (!string.IsNullOrEmpty(path))
                 {
                     LocatePathInTreeView(path);
+                }
+            }
+        }
+
+        private void showInExplorerToolStripMenuItemTV_Click(object sender, EventArgs e)
+        {
+            if (treeView_Dirs.SelectedNode != null)
+            {
+                string path = (string)treeView_Dirs.SelectedNode.Tag;
+                if (!string.IsNullOrEmpty(path))
+                {
+                    System.Diagnostics.Process.Start("explorer.exe", $"/select,\"{path}\"");
+                }
+            }
+        }
+
+        private void showInExplorerToolStripMenuItemLV_Click(object sender, EventArgs e)
+        {
+            if (listView_Files.SelectedItems.Count > 0)
+            {
+                string path = (string)listView_Files.SelectedItems[0].Tag;
+                if (!string.IsNullOrEmpty(path))
+                {
+                    System.Diagnostics.Process.Start("explorer.exe", $"/select,\"{path}\"");
                 }
             }
         }
