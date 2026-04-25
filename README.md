@@ -4,7 +4,7 @@
 
 <img src="https://img.shields.io/github/license/fengyec2/FreeMove" alt="License"/> <img src="https://img.shields.io/github/v/release/fengyec2/FreeMove" alt="Version"/> <img src="https://img.shields.io/github/actions/workflow/status/fengyec2/FreeMove/build-release.yml" alt="Build"/> <img src="https://img.shields.io/github/downloads/fengyec2/FreeMove/total" alt="Downloads"/>
 
-Move directories freely without breaking installations or shortcuts
+Move directories or files freely without breaking installations or shortcuts
 
 You can use this tool to move programs that install on `C:\` by default to another drive to save space on your main drive
 
@@ -21,7 +21,7 @@ You can use this tool to move programs that install on `C:\` by default to anoth
 - [x] Quickly restore symbolic links
 - [x] Everything search integration
 - [x] Context menu integration
-- [ ] Individual file symbolic links (Planned)
+- [x] Individual file symbolic links
 
 ## Download
 
@@ -127,6 +127,10 @@ Select a symbolic link and right click "Restore symbolic link".
 #### Manual move
 
 Delete the junction in the old location (this won't delete the content) and move the directory back to its original position.
+
+### Q: How to create multiple symbolic links for the same file or folder?
+
+A: Right-click the existing symbolic link in File Explorer and then select "Copy". Then paste paste it where you want.
 
 ### Q: Everything not found or DLL missing
 
