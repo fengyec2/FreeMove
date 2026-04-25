@@ -188,8 +188,8 @@ namespace FreeMove
             Enabled = false;
             try
             {
-                // 先验证目标文件夹是否存在
-                if (!Directory.Exists(targetPath))
+                // 先验证目标文件或文件夹是否存在
+                if (!Directory.Exists(targetPath) && !File.Exists(targetPath))
                 {
                     MessageBox.Show(Properties.Resources.ResourceManager.GetString("Restore_InvalidTarget"),
                         Properties.Resources.ResourceManager.GetString("ErrorTitle"),
