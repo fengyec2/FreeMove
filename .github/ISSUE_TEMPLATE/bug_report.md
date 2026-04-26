@@ -3,12 +3,14 @@ name: Bug report
 about: Create a report to help us improve
 title: "[Bug report]"
 labels: bug
-assignees: ''
+assignees: fengyec2
 
 ---
 
 **Describe the bug**
-A clear and concise description of what the bug is. Both English and Chinese is accepted.
+A clear and concise description of what the bug is. Both English and Chinese is accepted. 
+
+清晰而简洁地描述这个 Bug 是什么。英文和中文都可以接受。
 
 **To Reproduce**
 Steps to reproduce the behavior:

@@ -3,12 +3,16 @@ name: Feature request
 about: Suggest an idea for this project
 title: "[Feature request]"
 labels: enhancement
-assignees: ''
+assignees: fengyec2
 
 ---
 
 **Is your feature request related to a problem? Please describe.**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+
+Both English and Chinese is accepted. 
+
+英文和中文都可以接受。
 
 **Describe the solution you'd like**
 A clear and concise description of what you want to happen.
