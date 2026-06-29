@@ -1,6 +1,6 @@
 # FreeMove
 
-[简体中文](README.zh-CN.md) · [English](README.md)
+[🇨🇳 简体中文](README.zh-CN.md) · [🇺🇸 English](README.md)
 
 <img src="https://img.shields.io/github/license/fengyec2/FreeMove" alt="License"/> <img src="https://img.shields.io/github/v/release/fengyec2/FreeMove" alt="Version"/> <img src="https://img.shields.io/github/actions/workflow/status/fengyec2/FreeMove/build-release.yml" alt="Build"/> <img src="https://img.shields.io/github/downloads/fengyec2/FreeMove/total" alt="Downloads"/>
 
@@ -22,6 +22,8 @@ You can use this tool to move programs that install on `C:\` by default to anoth
 - [x] Everything search integration
 - [x] Context menu integration
 - [x] Individual file symbolic links
+
+*Currently I have no ideas about future features, please let me know if you have any through PRs or issues.*
 
 ## Download
 
@@ -122,7 +124,7 @@ A: Uninstall the program just as you would normally without deleting the junctio
 
 #### Using the GUI
 
-Select a symbolic link and right click "Restore symbolic link".
+Select a symbolic link and right click it and select "Restore symbolic link".
 
 #### Manual move
 
@@ -130,7 +132,7 @@ Delete the junction in the old location (this won't delete the content) and move
 
 ### Q: How to create multiple symbolic links for the same file or folder?
 
-A: Right-click the existing symbolic link in File Explorer and then select "Copy". Then paste paste it where you want.
+A: Right-click the existing symbolic link in File Explorer and then select "Copy". Then paste it where you want like a normal file.
 
 ### Q: Everything not found or DLL missing
 
@@ -142,4 +144,4 @@ A: The Everything search integration requires the Everything program to be runni
 
 ## Contributing
 
-The project is originally developed by [imDema](https://github.com/imDema). I am currently maintaining the project and am open to contributions. If you are interested in contributing, leave an issue or comment on an open issue and let me know!
+The [original project](https://github.com/imDema/FreeMove) is developed by [imDema](https://github.com/imDema). I am currently maintaining the project and am open to contributions. If you are interested in contributing, leave an issue or comment on an open issue and let me know!

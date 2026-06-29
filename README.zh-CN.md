@@ -1,6 +1,6 @@
 # FreeMove
 
-[English](README.md) · [简体中文](README.zh-CN.md)
+[🇺🇸 English](README.md) · [🇨🇳 简体中文](README.zh-CN.md)
 
 
 <img src="https://img.shields.io/github/license/fengyec2/FreeMove" alt="License"/> <img src="https://img.shields.io/github/v/release/fengyec2/FreeMove" alt="Version"/> <img src="https://img.shields.io/github/actions/workflow/status/fengyec2/FreeMove/build-release.yml" alt="Build"/> <img src="https://img.shields.io/github/downloads/fengyec2/FreeMove/total" alt="Downloads"/>
@@ -24,6 +24,8 @@
 - [x] Everything 搜索集成
 - [x] 上下文菜单集成
 - [x] 单个文件符号链接
+
+*目前没想到其他功能，如果你有好的建议，欢迎提交 PR 或 Issue。*
 
 ## 下载
 
@@ -123,7 +125,7 @@ A：像平常一样卸载程序，不要删除联接点。卸载程序会正常�
 
 #### 使用 GUI
 
-选择一个符号链接，右键点击“恢复符号链接”。
+选择一个符号链接，右键，点击“恢复符号链接”。
 
 #### 手动移动
 
@@ -131,7 +133,7 @@ A：像平常一样卸载程序，不要删除联接点。卸载程序会正常�
 
 ### Q：如何为同一个文件（夹）创建多个符号链接
 
-A：直接在文件资源管理器中右键复制已经创建的符号链接，即可创建多个符号链接。
+A：直接在文件资源管理器中右键复制已经创建的符号链接，像普通文件一样粘贴到你想要的位置。
 
 ### Q：未找到 Everything 或 DLL 丢失
 
@@ -143,4 +145,4 @@ A：Everything 搜索集成功能需要 Everything 程序正在运行。请确�
 
 ## 贡献
 
-该项目最初由 [imDema](https://github.com/imDema) 开发。我目前维护该项目并欢迎贡献。如果你有兴趣贡献，请在 issue 中留言或在已有 issue 下评论。
+[原项目](https://github.com/imDema/FreeMove) 是由 [imDema](https://github.com/imDema) 开发。我目前维护该项目并欢迎贡献。如果你有兴趣贡献，请在 issue 中留言或在已有 issue 下评论。
