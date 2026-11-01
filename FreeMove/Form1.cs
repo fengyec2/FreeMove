@@ -28,6 +28,7 @@ namespace FreeMove
     {
         bool safeMode = true;
         bool skipSecurityChecks = false;
+        ToolStripMenuItem recommendedMovesToolStripMenuItem;
 
         #region Initialization
         public Form1(bool skipSecurityChecks = false, string sourcePath = null, string destPath = null)
@@ -41,6 +42,11 @@ namespace FreeMove
             directoryBrowser1.SourceSelected += (s, path) => textBox_From.Text = path;
             directoryBrowser1.TargetSelected += (s, path) => textBox_To.Text = path;
             directoryBrowser1.RestoreRequested += async (s, args) => await RestoreLink(args.Symlink, args.Target, args.Move);
+
+            // "Recommended moves" sits first in the menu bar so it is easy to find
+            recommendedMovesToolStripMenuItem = new ToolStripMenuItem("Recommended moves");
+            recommendedMovesToolStripMenuItem.Click += RecommendedMovesToolStripMenuItem_Click;
+            menuStrip1.Items.Insert(0, recommendedMovesToolStripMenuItem);
 
             if (!string.IsNullOrEmpty(sourcePath))
                 textBox_From.Text = sourcePath;
@@ -151,6 +157,8 @@ namespace FreeMove
             settingsToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_Settings");
             infoToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_Info");
             lunguToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_Language");
+
+            recommendedMovesToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_RecommendedMoves") ?? "Recommended moves";
 
             workModeToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_WorkingMode") ?? "Working Mode";
             directoryOnlyToolStripMenuItem.Text = Properties.Resources.ResourceManager.GetString("Menu_DirectoryOnly") ?? "Directory Only";
@@ -464,12 +472,12 @@ namespace FreeMove
             Enabled = true;
         }
 
-        private async Task BeginMove(string source, string destination)
+        private async Task BeginMove(string source, string destination, bool? createDestination = null)
         {
             //Move files
             using (ProgressDialog progressDialog = new ProgressDialog(Properties.Resources.ResourceManager.GetString("MovingFilesTitle")))
             {
-                IO.MoveOperation moveOp = IOHelper.MoveDir(source, destination, chkBox_createDest.Checked);
+                IO.MoveOperation moveOp = IOHelper.MoveDir(source, destination, createDestination ?? chkBox_createDest.Checked);
 
                 moveOp.ProgressChanged += (sender, e) => progressDialog.UpdateProgress(e);
                 moveOp.End += (sender, e) => progressDialog.Invoke((Action)progressDialog.Close);

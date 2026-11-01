@@ -635,5 +635,111 @@ https://github.com/fengyec2</value>
   <data name="Menu_ShowInExplorer" xml:space="preserve">
     <value>在文件资源管理器中显示</value>
   </data>
+  <data name="Menu_RecommendedMoves" xml:space="preserve">
+    <value>推荐迁移</value>
+  </data>
+  <data name="Rec_Title" xml:space="preserve">
+    <value>推荐迁移</value>
+  </data>
+  <data name="Rec_MoveTo" xml:space="preserve">
+    <value>迁移到：</value>
+  </data>
+  <data name="Rec_MinSize" xml:space="preserve">
+    <value>最小大小 (MB)：</value>
+  </data>
+  <data name="Rec_Scan" xml:space="preserve">
+    <value>扫描</value>
+  </data>
+  <data name="Rec_ColFolder" xml:space="preserve">
+    <value>文件夹</value>
+  </data>
+  <data name="Rec_ColSize" xml:space="preserve">
+    <value>大小</value>
+  </data>
+  <data name="Rec_ColType" xml:space="preserve">
+    <value>类型</value>
+  </data>
+  <data name="Rec_ColDest" xml:space="preserve">
+    <value>将迁移到</value>
+  </data>
+  <data name="Rec_SelectAll" xml:space="preserve">
+    <value>全选</value>
+  </data>
+  <data name="Rec_SelectNone" xml:space="preserve">
+    <value>全不选</value>
+  </data>
+  <data name="Rec_MoveSelected" xml:space="preserve">
+    <value>迁移所选</value>
+  </data>
+  <data name="Rec_Hint" xml:space="preserve">
+    <value>文件夹按大小排序。勾选要迁移的项目；每个文件夹迁移后会在原位置留下链接，程序可继续正常运行。</value>
+  </data>
+  <data name="Rec_Scanning" xml:space="preserve">
+    <value>正在扫描 {0}</value>
+  </data>
+  <data name="Rec_NoneFound" xml:space="preserve">
+    <value>未找到超过最小大小的可迁移文件夹。</value>
+  </data>
+  <data name="Rec_KindProgram" xml:space="preserve">
+    <value>程序</value>
+  </data>
+  <data name="Rec_KindAppData" xml:space="preserve">
+    <value>应用数据</value>
+  </data>
+  <data name="Rec_KindUser" xml:space="preserve">
+    <value>用户文件夹</value>
+  </data>
+  <data name="Rec_KindOther" xml:space="preserve">
+    <value>其他</value>
+  </data>
+  <data name="Rec_Status" xml:space="preserve">
+    <value>已选择 {0} 项，共 {1}。目标可用空间：{2}。</value>
+  </data>
+  <data name="Rec_NotEnoughSpace" xml:space="preserve">
+    <value>目标空间不足以容纳所选项目。</value>
+  </data>
+  <data name="Rec_DestInvalid" xml:space="preserve">
+    <value>请输入完整的目标路径，例如 D:\FreeMove。</value>
+  </data>
+  <data name="Rec_DestSameDrive" xml:space="preserve">
+    <value>目标必须位于 Windows 所在驱动器以外的驱动器。</value>
+  </data>
+  <data name="Rec_DestNotReady" xml:space="preserve">
+    <value>驱动器 {0} 不可用。</value>
+  </data>
+  <data name="Rec_DestNotNtfs" xml:space="preserve">
+    <value>驱动器 {0} 为 {1} 格式；创建链接需要 NTFS 驱动器。</value>
+  </data>
+  <data name="Rec_ConfirmTitle" xml:space="preserve">
+    <value>确认迁移</value>
+  </data>
+  <data name="Rec_ConfirmMessage" xml:space="preserve">
+    <value>将 {0} 个文件夹（共 {1}）迁移到 {2}？
+
+{3}
+
+继续前请关闭使用这些文件夹的程序。每个文件夹迁移后会在原位置留下链接。</value>
+  </data>
+  <data name="Rec_SummaryTitle" xml:space="preserve">
+    <value>推荐迁移</value>
+  </data>
+  <data name="Rec_SummaryMoved" xml:space="preserve">
+    <value>已迁移 {0} 个文件夹，在 {2} 上释放约 {1}。</value>
+  </data>
+  <data name="Rec_SummaryFailed" xml:space="preserve">
+    <value>以下文件夹未迁移，保持原样：</value>
+  </data>
+  <data name="Rec_SummaryCancelled" xml:space="preserve">
+    <value>批量迁移已取消；其余文件夹未作改动。</value>
+  </data>
+  <data name="Rec_MoveBackFailed" xml:space="preserve">
+    <value>移回也失败了（{0}）；文件现分散在 {1} 和 {2} 中。</value>
+  </data>
+  <data name="Rec_LinkFailed" xml:space="preserve">
+    <value>无法创建链接（{0}）；文件夹已移回原位置。</value>
+  </data>
+  <data name="Rec_LinkFailedStranded" xml:space="preserve">
+    <value>无法创建链接（{0}），也无法将文件夹移回（{1}）。其文件现位于 {2}。</value>
+  </data>
 </root>
 

@@ -640,4 +640,110 @@ Proceed with caution and make sure you know what you are doing!</value>
   <data name="Menu_ShowInExplorer" xml:space="preserve">
     <value>Show in Explorer</value>
   </data>
+  <data name="Menu_RecommendedMoves" xml:space="preserve">
+    <value>Recommended moves</value>
+  </data>
+  <data name="Rec_Title" xml:space="preserve">
+    <value>Recommended moves</value>
+  </data>
+  <data name="Rec_MoveTo" xml:space="preserve">
+    <value>Move to:</value>
+  </data>
+  <data name="Rec_MinSize" xml:space="preserve">
+    <value>Minimum size (MB):</value>
+  </data>
+  <data name="Rec_Scan" xml:space="preserve">
+    <value>Scan</value>
+  </data>
+  <data name="Rec_ColFolder" xml:space="preserve">
+    <value>Folder</value>
+  </data>
+  <data name="Rec_ColSize" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="Rec_ColType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Rec_ColDest" xml:space="preserve">
+    <value>Will be moved to</value>
+  </data>
+  <data name="Rec_SelectAll" xml:space="preserve">
+    <value>Select all</value>
+  </data>
+  <data name="Rec_SelectNone" xml:space="preserve">
+    <value>Select none</value>
+  </data>
+  <data name="Rec_MoveSelected" xml:space="preserve">
+    <value>Move selected</value>
+  </data>
+  <data name="Rec_Hint" xml:space="preserve">
+    <value>Folders are ranked by size. Tick the ones to move; each is moved and linked back so programs keep working.</value>
+  </data>
+  <data name="Rec_Scanning" xml:space="preserve">
+    <value>Scanning {0}</value>
+  </data>
+  <data name="Rec_NoneFound" xml:space="preserve">
+    <value>No movable folders above the minimum size were found.</value>
+  </data>
+  <data name="Rec_KindProgram" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="Rec_KindAppData" xml:space="preserve">
+    <value>App data</value>
+  </data>
+  <data name="Rec_KindUser" xml:space="preserve">
+    <value>User folder</value>
+  </data>
+  <data name="Rec_KindOther" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="Rec_Status" xml:space="preserve">
+    <value>{0} selected, {1} total. Free on destination: {2}.</value>
+  </data>
+  <data name="Rec_NotEnoughSpace" xml:space="preserve">
+    <value>Not enough free space for this selection.</value>
+  </data>
+  <data name="Rec_DestInvalid" xml:space="preserve">
+    <value>Enter a full destination path, e.g. D:\FreeMove.</value>
+  </data>
+  <data name="Rec_DestSameDrive" xml:space="preserve">
+    <value>The destination must be on a different drive than Windows.</value>
+  </data>
+  <data name="Rec_DestNotReady" xml:space="preserve">
+    <value>Drive {0} is not available.</value>
+  </data>
+  <data name="Rec_DestNotNtfs" xml:space="preserve">
+    <value>Drive {0} is {1}; links need an NTFS drive.</value>
+  </data>
+  <data name="Rec_ConfirmTitle" xml:space="preserve">
+    <value>Confirm move</value>
+  </data>
+  <data name="Rec_ConfirmMessage" xml:space="preserve">
+    <value>Move {0} folder(s), {1} in total, to {2}?
+
+{3}
+
+Close the programs that use these folders before continuing. Each folder is moved and a link is left in its place.</value>
+  </data>
+  <data name="Rec_SummaryTitle" xml:space="preserve">
+    <value>Recommended moves</value>
+  </data>
+  <data name="Rec_SummaryMoved" xml:space="preserve">
+    <value>Moved {0} folder(s), freeing about {1} on {2}.</value>
+  </data>
+  <data name="Rec_SummaryFailed" xml:space="preserve">
+    <value>These were not moved and were left as they were:</value>
+  </data>
+  <data name="Rec_SummaryCancelled" xml:space="preserve">
+    <value>The batch was cancelled; remaining folders were not touched.</value>
+  </data>
+  <data name="Rec_MoveBackFailed" xml:space="preserve">
+    <value>Moving back also failed ({0}); the files are split between {1} and {2}.</value>
+  </data>
+  <data name="Rec_LinkFailed" xml:space="preserve">
+    <value>Could not create the link ({0}); the folder was moved back.</value>
+  </data>
+  <data name="Rec_LinkFailedStranded" xml:space="preserve">
+    <value>Could not create the link ({0}) and could not move the folder back ({1}). Its files are now in {2}.</value>
+  </data>
 </root>

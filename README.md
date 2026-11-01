@@ -55,6 +55,17 @@ scoop install freemove
 
 Run the executable and use the GUI
 
+### Recommended Moves
+
+Open **Recommended moves** from the menu bar to let FreeMove find what to move for you:
+
+1. FreeMove scans the Windows drive (installed programs, AppData, Downloads/Videos/Music/Pictures, and folders you created at the drive root) and lists the folders above the minimum size, largest first.
+2. System, driver and security folders, OneDrive folders, and folders that are already links are never suggested.
+3. Pick a destination (defaults to `D:\FreeMove`) and tick the folders to move. Each one is placed at a mirrored path, e.g. `C:\Program Files\Foo` → `D:\FreeMove\Program Files\Foo`, and a link is left in its original place.
+4. If a folder can't be moved (usually because a program is still using it), it is rolled back and the batch continues. A summary at the end shows what moved and how much space was freed.
+
+Close the programs you are moving first.
+
 ### Command Line Arguments
 
 | Argument | Description |
